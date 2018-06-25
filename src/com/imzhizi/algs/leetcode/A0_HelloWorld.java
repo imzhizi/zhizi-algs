@@ -13,8 +13,12 @@ public class A0_HelloWorld {
      *
      */
     public static void main(String[] args) {
-        int[] nums={2,6,1};
-        Arrays.sort(nums);
-        System.out.println(nums[0]+" "+nums[1]+" "+nums[2]);
+        int x=0;
+        int y=0;
+        for (x = 30,y=0;  x>=10||y<10;x--,y++) {
+            x/=2;
+            y+=2;
+        }
+        System.out.println(x+","+y);
     }
 }
