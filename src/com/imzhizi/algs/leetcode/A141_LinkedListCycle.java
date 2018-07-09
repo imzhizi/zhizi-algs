@@ -6,6 +6,15 @@ import java.util.HashSet;
  * created by zhizi on 2018/7/9
  */
 public class A141_LinkedListCycle {
+    /**
+     * 题目分析：
+     * 判断循环链表，很容易想到的就是把每个 node 存起来，如果新加的 node 已存在，则说明成环
+     *
+     * 运行时长：16ms
+     *
+     * 总结：
+     * 这个方法不算好，实现为先，之后再优化。
+     */
     public static boolean hasCycle(ListNode head) {
         HashSet<ListNode> nodes=new HashSet<>();
         while(head!=null){
