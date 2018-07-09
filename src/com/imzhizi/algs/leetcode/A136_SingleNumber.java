@@ -17,7 +17,7 @@ public class A136_SingleNumber {
      *
      * 总结：无
      */
-    public int singleNumber(int[] nums) {
+    int singleNumber(int[] nums) {
         HashSet<Integer> set=new HashSet<>();
         for (int i = 0; i < nums.length; i++) {
             if(set.contains(nums[i])){
@@ -43,7 +43,7 @@ public class A136_SingleNumber {
      * 总结：高级，高级
      *
      */
-    public int singleNumber2(int[] nums) {
+    int singleNumber2(int[] nums) {
         int ans=0;
         for (int i = 0; i < nums.length; i++) ans=ans^nums[i];
         return ans;
