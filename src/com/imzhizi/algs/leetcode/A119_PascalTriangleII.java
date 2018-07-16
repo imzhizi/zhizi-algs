@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class A119_PascalTriangleII {
     public List<Integer> getRow(int rowIndex) {
+        //todo 未完成
         List<Integer> result=new ArrayList<>();
 
         return result;

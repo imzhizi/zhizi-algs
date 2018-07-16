@@ -20,7 +20,7 @@ public class A167_TwoSumII {
      * 总结：
      * 我在想是否可以通过这个去改造第一题呢，但我失败了，因为第一题要求返回的是数字原来的位置
      */
-    public static int[] twoSum(int[] numbers, int target) {
+    static int[] twoSum(int[] numbers, int target) {
         int right=numbers.length-1;
         int left=0;
         while (numbers[left]+numbers[right]!=target){

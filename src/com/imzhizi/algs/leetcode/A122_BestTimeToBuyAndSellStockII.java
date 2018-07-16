@@ -5,6 +5,7 @@ package com.imzhizi.algs.leetcode;
  */
 public class A122_BestTimeToBuyAndSellStockII {
     public int maxProfit(int[] prices) {
+        //todo 未完成
         int profit=0;
         int totalProfit=0;
         int price=prices[0];

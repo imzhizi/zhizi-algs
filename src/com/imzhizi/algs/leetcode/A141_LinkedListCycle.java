@@ -3,6 +3,7 @@ package com.imzhizi.algs.leetcode;
 import java.util.HashSet;
 
 /**
+ * Given a linked list, determine if it has a cycle in it.
  * created by zhizi on 2018/7/9
  */
 public class A141_LinkedListCycle {
