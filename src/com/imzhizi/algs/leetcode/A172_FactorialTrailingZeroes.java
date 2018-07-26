@@ -20,7 +20,7 @@ public class A172_FactorialTrailingZeroes {
      * 运行时长：16 ms
      *
      * 总结：
-     * 多思考吧
+     * 多思考吧c
      */
     int trailingZeroes(int n) {
         int ret=0;
