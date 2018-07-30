@@ -72,7 +72,7 @@ public class A189_RotateArray {
 
     public static void main(String[] args) {
         int[] nums=new int[]{1,2,3,4,5,6,7};
-//        rotate1A(nums,3);
+        rotate1A(nums,3);
 //        rotate1B(nums,3);
 //        rotate2(nums,3);
     }
