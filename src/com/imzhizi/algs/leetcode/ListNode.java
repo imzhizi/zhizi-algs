@@ -10,4 +10,11 @@ public class ListNode {
     ListNode(int x) {
         val = x;
     }
+
+    @Override
+    public String toString() {
+        if (this.next!=null)
+        return this.val+"->"+this.next.toString();
+        else return this.val+"";
+    }
 }
