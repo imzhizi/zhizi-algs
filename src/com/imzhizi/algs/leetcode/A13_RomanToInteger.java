@@ -1,26 +1,29 @@
 package com.imzhizi.algs.leetcode;
 
 
+import java.util.HashMap;
+
 /**
- * 13. Roman to Integer
  * Given a roman numeral, convert it to an integer.
  * Input is guaranteed to be within the range from 1 to 3999.
  * created by zhizi on 2018/4/13
  */
 public class A13_RomanToInteger {
     /**
-     * 函数描述：
+     * 题目分析：
      * 经室友提点，总结了罗马数字的特点，发现不用写得那么复杂
      * 当存在一个罗马数字时，假如左边的单位小于右边，那么右边一定是要被减去的，而大于等于右边，则是加上去
-     * 接下来的一个很长的循环是针对各种情况做了if判断
-     * 时长：130 ms
-     * <p>
+     * 接下来的一个很长的循环是针对各种情况做了 if 判断
+     *
+     * 时长：68 ms / 10%
+     *
      * 总结：
      * 做了修改之后代码的长度和可读性有所提升，不过时间倒是没太大变化😂
      */
-    public static int romanToInt2(String s) {
-        int[] roman = new int[s.length()];
-        for (int i = roman.length - 1; i >= 0; i--) {
+    public static int romanToInt1(String s) {
+        int length=s.length();
+        int[] roman = new int[length];
+        for (int i = 0; i < length; i++) {
             switch (s.charAt(i)) {
                 case 'I':
                     roman[i] = 1;
@@ -45,101 +48,95 @@ public class A13_RomanToInteger {
                     break;
             }
         }
-        int result = 0;
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (i == s.length() - 1 || roman[i] >= roman[i + 1])
-                result += roman[i];
-            else result -= roman[i];
+        int sum = roman[length-1];
+        for (int i = length - 2; i >= 0; i--) {
+            if (roman[i] < roman[i + 1])
+                sum -= roman[i];
+            else sum += roman[i];
+        }
+        return sum;
+    }
+
+    /**
+     * 题目分析：
+     * 核心思路没有变，依然是通过 switch 对字母进行转换，但在 romanToInt1() 中是先进行转换然后处理，需要两次遍历
+     * 其实可以在转换的同时进行处理，只需要一次遍历即可，但需要注意保存结果
+     *
+     * 运行时长：48ms / 75%
+     *
+     * 总结：
+     * 算法分析还是要回归到最本初的，O(n) 的降低总是有效果的
+     */
+    public static int romanToInt1B(String s) {
+        int num=0;
+        int sum=0;
+        for (int i = s.length()-1; i >=0 ; i--) {
+            int last=num;
+            switch (s.charAt(i)) {
+                case 'I':
+                    num = 1;
+                    break;
+                case 'V'://5
+                    num = 5;
+                    break;
+                case 'X':
+                    num = 10;
+                    break;
+                case 'L'://50
+                    num = 50;
+                    break;
+                case 'C':
+                    num = 100;
+                    break;
+                case 'D'://500
+                    num = 500;
+                    break;
+                case 'M':
+                    num = 1000;
+                    break;
+            }
+            if (num>=last) sum+=num;
+            else sum-=num;
+        }
+
+       return sum;
+    }
+
+    /**
+     * 题目分析：
+     * 使用了 map 替换的方式来进行值的计算，减少了一次的遍历，但维护一个HashMap成本同样很高，所以运行时间仍然很长
+     *
+     * 运行时长：52ms / 38%
+     *
+     * 总结：
+     *
+     */
+    public static int romanToInt2(String s) {
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        int length=s.length();
+        int result = map.get(s.charAt(length-1));
+        for (int i = length - 2; i >= 0; i--) {
+            if (map.get(s.charAt(i))<map.get(s.charAt(i+1)))
+                result -= map.get(s.charAt(i));
+            else result += map.get(s.charAt(i));
         }
         return result;
     }
 
-    /**
-     * 函数描述：
-     * 非常无脑的办法，因为各单位之间没有关系，所以使用switch函数将String转化为有一定意义的char[]
-     * 接下来的一个很长的循环是针对各种情况做了if判断
-     * 时长：139 ms
-     * <p>
-     * 总结：
-     * 程序非常的长，耗时也比较久
-     */
-    public static int romanToInt(String s) {
-        char[] cs = s.toCharArray();
-
-        for (int i = cs.length - 1; i >= 0; i--) {
-            switch (cs[i]) {
-                case 'I':
-                    cs[i] = '0';
-                    break;
-                case 'V'://5
-                    cs[i] = '1';
-                    break;
-                case 'X':
-                    cs[i] = '2';
-                    break;
-                case 'L'://50
-                    cs[i] = '3';
-                    break;
-                case 'C':
-                    cs[i] = '4';
-                    break;
-                case 'D'://500
-                    cs[i] = '5';
-                    break;
-                case 'M':
-                    cs[i] = '6';
-                    break;
-            }
-        }
-
-        short[] total = new short[4];
-        int position;
-
-        for (int i = cs.length - 1; i >= 0; i--) {
-            position = (cs[i] - 48) / 2;
-            if ((cs[i] - 48) % 2 == 0) {
-                if (i > 1 && cs[i] == cs[i - 1] && cs[i] == cs[i - 2]) { //3
-                    total[position] += 3;
-                    if (i > 2 && cs[i] == cs[i - 3] - 1) {//8 VIII
-                        total[position] += 5;
-                        i--;
-                    }
-                    i -= 2;
-                } else if (i > 1 && cs[i] == cs[i - 1]) { //2
-                    total[position] += 2;
-                    if (i > 2 && cs[i] == cs[i - 2] - 1) {//7 VII
-                        total[position] += 5;
-                        i--;
-                    }
-                    i--;
-                } else if (i > 0 && cs[i] == cs[i - 1] - 1) {//6 VI XC
-                    total[position] += 6;
-                    i--;
-                } else if (i > 0 && cs[i] == cs[i - 1] + 2) {//9 IX
-                    position--;
-                    total[position] += 9;
-                    i--;
-                } else {
-                    total[position]++; //1
-                }
-            } else {
-                if (i > 0 && cs[i] == cs[i - 1] + 1) {//4 IV
-                    total[position] += 4;
-                    i--;
-                } else {
-                    total[position] += 5;
-                }
-            }
-        }
-        return total[3] * 1000 + total[2] * 100 + total[1] * 10 + total[0];
-    }
-
     public static void main(String[] args) {
-        System.out.println(romanToInt2("MMMDLXXXVI"));//3586
-        System.out.println(romanToInt2("MCMXCVI"));//1996
-        System.out.println(romanToInt2("MMMCCCXXXIII"));//3333
-        System.out.println(romanToInt2("M"));//1000
-        System.out.println(romanToInt2("XCIX"));//99
-        System.out.println(romanToInt2("CMIX"));//909
+        System.out.println(romanToInt1B("MMMDLXXXVI"));//3586
+        System.out.println(romanToInt1B("MCMXCVI"));//1996
+        System.out.println(romanToInt1B("MMMCCCXXXIII"));//3333
+        System.out.println(romanToInt1B("M"));//1000
+        System.out.println(romanToInt1B("XCIX"));//99
+        System.out.println(romanToInt1B("CMIX"));//909
     }
 }
