@@ -1,34 +1,33 @@
 package com.imzhizi.algs.leetcode;
 
 /**
- * 20. Valid Parentheses
  * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
- * <p>
+ * 
  * An input string is valid if:
  * Open brackets must be closed by the same type of brackets.
  * Open brackets must be closed in the correct order.
- * <p>
+ * 
  * Note that an empty string is also considered valid.
- * <p>
+ *
  * Example 1:
- * Input: "()"
- * Output: true
- * <p>
+ *  Input: "()"
+ *  Output: true
+ * 
  * Example 2:
- * Input: "()[]{}"
- * Output: true
- * <p>
+ *  Input: "()[]{}"
+ *  Output: true
+ * 
  * Example 3:
- * Input: "(]"
- * Output: false
- * <p>
+ *  Input: "(]"
+ *  Output: false
+ * 
  * Example 4:
- * Input: "([)]"
- * Output: false
- * <p>
+ *  Input: "([)]"
+ *  Output: false
+ * 
  * Example 5:
- * Input: "{[]}"
- * Output: true
+ *  Input: "{[]}"
+ *  Output: true
  * created by zhizi on 2018/4/18
  */
 public class A20_ValidParentheses {
@@ -36,9 +35,9 @@ public class A20_ValidParentheses {
      * 函数描述：
      * 括号匹配是典型的栈的应用，原本想要使用JavaAPI内置的Stack类，但发现用一个char[]和一个栈顶指针可以轻松模拟一个栈
      * 若栈为空，则直接进栈；不为空进栈，与栈顶括号尝试匹配，若匹配则一起出栈，不匹配则进栈
-     * <p>
-     * 运行时长：7 ms
-     * <p>
+     * 
+     * 运行时长：4ms / 99%
+     * 
      * 总结：
      * 栈的简单使用，通过ASCII编码判断左右括号非常快捷
      */

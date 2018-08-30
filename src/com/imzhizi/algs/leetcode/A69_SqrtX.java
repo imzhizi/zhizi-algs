@@ -4,11 +4,11 @@ package com.imzhizi.algs.leetcode;
  * Implement int sqrt(int x).
  * Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
  * Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
- * <p>
+ *
  * Example 1:
  * Input: 4
  * Output: 2
- * <p>
+ *
  * Example 2:
  * Input: 8
  * Output: 2
@@ -22,7 +22,7 @@ public class A69_SqrtX {
     /**
      * 函数描述：
      * 求一个数字的算术平方根，这我是不会的，但我猜想是存在算法的，果不其然
-     * 我使用的属于比较传统的——牛顿迭代法求开方，据说这个算法来源于牛顿-拉弗森方法
+     * 我使用的属于比较传统的 —— 牛顿迭代法求开方，据说这个算法来源于牛顿-拉弗森方法
      * 这个方法是一个数学方法，大致来说当你要解f(x)=x^2-a，那么根就是x轴与f(x)的交点
      * 而通过一次一次地求取交点附近点的切线与x轴的垂点，让垂点不断地逼近交点，此时垂点就越接近于根值
      * 运行时长：38 ms
