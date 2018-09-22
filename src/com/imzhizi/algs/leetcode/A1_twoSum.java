@@ -46,6 +46,7 @@ public class A1_twoSum {
             if (map.containsKey(temp)) return new int[]{map.get(temp),i};
             map.put(nums[i],i);
         }
+
         return null;
     }
 

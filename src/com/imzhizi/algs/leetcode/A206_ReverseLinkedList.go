@@ -1,9 +1,12 @@
 package main
 
-// Reverse a singly linked list.
-// Example:
-//	Input: 1->2->3->4->5->NULL
-//	Output: 5->4->3->2->1->NULL
+/*
+	Reverse a singly linked list.
+	Example:
+		Input: 1->2->3->4->5->NULL
+		Output: 5->4->3->2->1->NULL
+	created by zhizi on 9/4/18
+*/
 
 type ListNode struct {
 	Val  int

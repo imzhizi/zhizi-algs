@@ -12,9 +12,9 @@ package com.imzhizi.algs.leetcode;
  */
 public class A53_MaximumSubarray {
     /**
-     * 函数描述：
+     * 题目分析：
      * 尝试使用动态规划来写这道题，将问题域进行转化；
-     * 使用数组sum[j]，j表示结尾为j的子串的最大和，注意⚠️：是️以j为结尾，所以这个结果中一定包含了nums[j]；
+     * 使用数组sum[j]，j表示结尾为j的子串的最大和，注意：⚠️是️以j为结尾，所以这个结果中一定包含了nums[j]；
      * 如果j结尾的最的子列长度大于1，那么sum[j]=sum[j-1]+num[j]；
      * 子串必定以数据中的某个数字结尾，因此最大和也就是sum[]中的最大值
      * 运行时长：15 ms
@@ -25,7 +25,6 @@ public class A53_MaximumSubarray {
      * 另一方面如果存在递推，一个结果可能被多次计算，那就可以通过数表来查找数据进而减少计算
      */
     public static int maxSubArray3(int[] nums) {
-        //最终版
         int max = nums[0];
         int lmax= nums[0];
         for (int i = 1; i < nums.length; i++) {
@@ -37,29 +36,13 @@ public class A53_MaximumSubarray {
             max = Math.max(max, lmax);
         }
         return max;
-
-        //原始版
-//        int[] result = new int[nums.length];
-//        result[0] = nums[0];
-//        int max = nums[0];
-//        for (int i = 1; i < nums.length; i++) {
-//            if (result[i - 1] > 0) {
-//                result[i] = result[i - 1] + nums[i];
-//            } else {
-//                result[i] = nums[i];
-//            }
-//            max = Math.max(max, result[i]);
-//        }
-//        return max;
     }
 
     /**
-     * 函数描述：
+     * 题目分析：
      * 最初只想到穷举法，通过三重循环直接把所有可能的结果累加计算出来，然后通过排序找到最大值
      * 经过优化成为二重循环，因为从i到n的和，都可以通过1到n的和减去1到i-1的和得出，可以节约一重循环
-     * 而通过排序寻找最大值也要一次O(nlogn)，其实可以边计算边寻找最大值
-     * result我本来是n*n的二维数组，将所有的结果保存起来，结果会空间超支，后来发现可以只用一个数字
-     * 运行时长：198 ms
+     * 运行时长：133ms / 1.5%
      *
      * 总结：见上方
      */
@@ -69,7 +52,7 @@ public class A53_MaximumSubarray {
         for (int i = 0; i < nums.length; i++) {
             for (int j = i; j < nums.length; j++) {
                 if (i == j)
-                    temp = nums[i];
+                    temp = nums[i];//每行重置
                 else
                     temp = temp + nums[j];
                 max = Math.max(max, temp);//边计算边寻找最大值
