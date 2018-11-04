@@ -13,6 +13,7 @@ Thumbs.db
 # Config files from IDEA
 .idea
 .idea/*.*
+*.iml
 
 # Compiled Java files
 *.class
