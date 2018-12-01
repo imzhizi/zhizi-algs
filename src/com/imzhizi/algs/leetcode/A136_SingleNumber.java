@@ -45,7 +45,8 @@ public class A136_SingleNumber {
      */
     int singleNumber2(int[] nums) {
         int ans=0;
-        for (int i = 0; i < nums.length; i++) ans=ans^nums[i];
+        for (int i = 0; i < nums.length; i++)
+            ans=ans^nums[i];
         return ans;
     }
 }
