@@ -11,10 +11,9 @@ public class A0_HelloWorld {
      *
      */
     public static void main(String[] args) {
-
-        for (int x = 30,y=0;  x>=10||y<10;x--,y++) {
-            x/=2;
-            y+=2;
+        String[] strs="hello".split("");
+        for (int i = 0; i < strs.length; i++) {
+            System.out.println(strs[i]);
         }
     }
 }

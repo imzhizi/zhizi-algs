@@ -20,11 +20,12 @@ public class A278_FirstBadVersion {
 
     /**
      * 题目分析：
-     * 本质上是一种二分查找
+     * 这道题看起来很复杂, 其实本质上是一种二分查找, 但跟二分查找不同的点在于 isBadVersion 是优化点
+     * 要尽量减少 isBadVersion 的调用, 所以优化的重点就放在 isBadVersion 的调用次数
      *
      * 运行时长：13ms / 51%
      *
-     * 总结：
+     * 总结：在 n 非常大的时候, 计算中间值时会超 int, 此时使用 (end-begin)/2 是个小技巧
      *
      */
     static int firstBadVersion(int n) {
@@ -43,12 +44,12 @@ public class A278_FirstBadVersion {
 
     /**
      * 题目分析：
-     *
+     * 无
      *
      * 运行时长：13ms / 51%
      *
      * 总结：
-     *
+     * 原来不必使用递归, 循环即可, 只可惜没什么优化效果
      */
     static int firstBadVersion2(int n) {
         int begin=1;
