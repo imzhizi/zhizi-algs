@@ -33,7 +33,7 @@ public class A326_PowerOfThree {
     }
 
     static boolean isPowerOfThree2(int n) {
-        //没想到好办法
+        // 想尝试但没想到好办法
         return false;
     }
 

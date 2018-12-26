@@ -12,12 +12,13 @@ package com.imzhizi.algs.leetcode;
 public class A342_PowerOfFour {
     /**
      * 题目分析：
-     *
+     * 这个比计算 3 的幂有想法，只要是 2 的幂，都是 1 开始，后面全是 0 的二进制
+     * 如果是 4 的幂，只要0的个数是2的倍数即可，所以产生了两种写法
      *
      * 运行时长：3ms / 6%
      *
      * 总结：
-     *
+     * 但没想到效率都很低，可能要使用到位运算才能降低时间复杂度。
      */
     static boolean isPowerOfFour0(int num) {
         char[] chars=Integer.toBinaryString(num).toCharArray();
