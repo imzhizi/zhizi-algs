@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Example 1:
  * Input: pattern = "abba", str = "dog cat cat dog"
  * Output: true
- * created by zhizi on 2018-12-04
+ * created by zhizi on 2018/12/04
  */
 public class A290_WordPattern {
     static boolean wordPattern(String pattern, String str) {

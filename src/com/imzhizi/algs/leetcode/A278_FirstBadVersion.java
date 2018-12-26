@@ -13,7 +13,7 @@ package com.imzhizi.algs.leetcode;
  *
  * Then 4 is the first bad version.
  *
- * created by zhizi on 2018-11-29
+ * created by zhizi on 2018/11/29
  */
 public class A278_FirstBadVersion {
     static int firstBad=1;

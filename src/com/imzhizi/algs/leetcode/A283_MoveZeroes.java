@@ -10,7 +10,7 @@ package com.imzhizi.algs.leetcode;
  * You must do this in-place without making a copy of the array.
  * Minimize the total number of operations.
  *
- * created by zhizi on 2018-11-29
+ * created by zhizi on 2018/11/29
  */
 public class A283_MoveZeroes {
     /**
