@@ -24,7 +24,7 @@ public class LeetCode1901 {
      * 1ms / 82%
      *
      * 总结
-     * 虽然搞了点小手段希望能优化，但也没什么效果，就这样吧
+     * 虽然搞了点小手段希望能优化（也就是判断链表长度，一次移动两个结点），但也没什么效果，就这样吧
      */
     public ListNode middleNode(ListNode head) {
         ListNode node = head;
@@ -72,33 +72,52 @@ public class LeetCode1901 {
      * 两个链表中的数字逐个相加，主要问题就是进位问题，如果选一个链表存储结果，当链表不够的时候需要新建结点
      *
      * 时长
-     * 1ms / 82%
+     * 23ms / 82%
      *
      * 总结
-     *
+     * 新建结点问题比预想中的要复杂，因为新建的结点需要有前置结点，因此需要总是用前置结点来操作
+     * 两链表长度可能会不同，因此在过程中要拼接链表形成最长的结果链表
+     * 进位判断使用  add = sum / 10; sum = sum % 10; 比最初使用 if(sum>9) 效果好很多
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode head=l1;
-        int add=0;
+        ListNode head = new ListNode(0);
+        ListNode result = head;
+        head.next = l1;
+        int add = 0;
+        int sum = 0;
+
         while (l1 != null || l2 != null) {
-            int sum = l1.val + l2.val + add;
-            add=0;
-            if (sum > 9) {
-                add=1;
-                sum=sum-10;
+            if (l1 == null) {
+                sum = l2.val + add;
+                head.next = l2;
+                l2 = l2.next;
+            } else if (l2 == null) {
+                sum = l1.val + add;
+                head.next = l1;
+                l1 = l1.next;
+            } else {
+                sum = l1.val + l2.val + add;
+                l1 = l1.next;
+                l2 = l2.next;
             }
-            l1.val=sum;
-            l1=l1.next;
-            l2=l2.next;
+
+            add = sum / 10;
+            sum = sum % 10;
+
+            head.next.val = sum;
+            head = head.next;
         }
-        if (add!=0){
-            l1=new ListNode(add);
+
+        if (add != 0) {
+            head.next = new ListNode(add);
         }
-        return head;
+
+        return result.next;
     }
 
     @Test
     public void test2(){
+        ListNode node = new ListNode(0);
         ListNode node1 = new ListNode(2);
         ListNode node2 = new ListNode(4);
         ListNode node3 = new ListNode(3);
@@ -121,11 +140,13 @@ public class LeetCode1901 {
         Assert.assertEquals(node7, addTwoNumbers(node1,node4));
 
         ListNode node10=new ListNode(2);
-        ListNode node11=new ListNode(1);
-        node10.next=node11;
+        node10.next= new ListNode(1);
 
         Assert.assertEquals(node10, addTwoNumbers(node6,node9));
 
+        Assert.assertEquals(node10, addTwoNumbers(node10,node));
+
+        Assert.assertEquals(node10, addTwoNumbers(node,node10));
     }
 
 
