@@ -17,6 +17,18 @@ public class ListNode {
         this.next = node;
     }
 
+    /**
+     * [Delete Node in a Linked List - LeetCode](https://leetcode.com/problems/delete-node-in-a-linked-list/)
+     */
+    public void deleteNode(ListNode node) {
+        ListNode head=this;
+        while (head.val!=node.val){
+            head=head.next;
+        }
+        head.val=head.next.val;
+        head.next=head.next.next;
+    }
+
     @Override
     public String toString() {
         if (this.next != null)

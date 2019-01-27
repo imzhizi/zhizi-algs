@@ -153,6 +153,95 @@ public class LeetCode1901 {
 
     /**
      * 题目
+     * [Delete Node in a Linked List - LeetCode](https://leetcode.com/problems/delete-node-in-a-linked-list/)
+     *
+     * 分析
+     * 其实没太看懂这道题的意思，个人理解是为 ListNode 编写一个成员函数，功能是删除一个特定的 node
+     *
+     * 时长
+     * N/A
+     *
+     * 总结
+     * 并没有弄明白这道题的点，但对于链表的操作，学到新的一招
+     * 对于 head，如果想要删除自身，那么可以把 next 的 val 复制过来，然后把 next 给删掉
+     */
+
+    @Test
+    public void test237(){
+        ListNode node1 = new ListNode(4);
+        ListNode node2 = new ListNode(5);
+        ListNode node3 = new ListNode(1);
+        ListNode node4 = new ListNode(9);
+        node1.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
+
+        node1.deleteNode(node2);
+    }
+
+    /**
+     * 题目
+     * [Rotate List - LeetCode](https://leetcode.com/problems/rotate-list/)
+     *
+     * 分析
+     * 旋转链表，两种思路，一种是实现一个链表旋转函数，然后根据输入的 k 的不同执行不同的次数
+     * 根据长度直接找到旋转的位置，直接找到旋转的最终状态，打算试试这种思路
+     *
+     * 时长
+     * 7ms / 97%
+     *
+     * 总结
+     * 执行了第二种方法，过滤掉了不需要旋转的可能（k%n为0），直接找到最终循转状态
+     * 关键点为把后一部分挪到前一部分的前面，也就是要让尾的 next 指向 head，然后断掉新 head 前的连接
+     * 巧妙点在于计算链表长度的时候做成了循环链表， 仅需断开而不需要再去链接 head
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k==0) return head;
+
+        ListNode node = head;
+
+        //计算 head 长度
+        int n = 1;
+        while (node.next != null) {
+            n++;
+            node = node.next;
+        }
+        if (k % n == 0) return head;
+
+        // 直接做成循环链表，在必要的时候断开即可
+        node.next=head;
+
+        // 1->2->3->4->null 循转3次，也就是倒数第3个结点为 head
+        // 此时需要的结点就位于head的倒数第3个结点之前的那个结点，k：4-3=1 也就是目标结点
+        k = n - (k % n);
+        node = head;
+        // 而移动到第 k 个结点需要移动 k-1 次
+        while (--k != 0) {
+            node = node.next;
+        }
+
+        ListNode result = node.next;
+        node.next = null;
+
+        return result;
+    }
+
+    @Test
+    public void test61(){
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(5);
+        node1.next=node2;
+        node2.next=node3;
+        node3.next=node4;
+
+        System.out.println(rotateRight(node1,2));
+    }
+
+
+    /**
+     * 题目
      *
      *
      * 分析
@@ -164,5 +253,7 @@ public class LeetCode1901 {
      * 总结
      *
      */
-
+    @Test
+    public void test(){
+    }
 }
