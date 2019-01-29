@@ -196,7 +196,7 @@ public class LeetCode1901 {
      * 巧妙点在于计算链表长度的时候做成了循环链表， 仅需断开而不需要再去链接 head
      */
     public ListNode rotateRight(ListNode head, int k) {
-        if (head == null || head.next == null || k==0) return head;
+        if (head == null || head.next == null || k == 0) return head;
 
         ListNode node = head;
 
@@ -209,7 +209,7 @@ public class LeetCode1901 {
         if (k % n == 0) return head;
 
         // 直接做成循环链表，在必要的时候断开即可
-        node.next=head;
+        node.next = head;
 
         // 1->2->3->4->null 循转3次，也就是倒数第3个结点为 head
         // 此时需要的结点就位于head的倒数第3个结点之前的那个结点，k：4-3=1 也就是目标结点
@@ -227,18 +227,60 @@ public class LeetCode1901 {
     }
 
     @Test
-    public void test61(){
+    public void test61() {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
         ListNode node3 = new ListNode(3);
         ListNode node4 = new ListNode(5);
-        node1.next=node2;
-        node2.next=node3;
-        node3.next=node4;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
 
-        System.out.println(rotateRight(node1,2));
+        System.out.println(rotateRight(node1, 2));
     }
 
+
+    /**
+     * 题目
+     * [Squares of a Sorted Array - LeetCode](https://leetcode.com/problems/squares-of-a-sorted-array/)
+     *
+     * 分析
+     * 将一个有序的递增整数数组平方，结果仍然保持有序、递增，关键点就在于负数的平方
+     * 不难想到最大的数字一定来自于数组中最大或者最小的，也就是数组的左右两端
+     * 左右两端比较平方或绝对值均可，总之更大的放在结果数组的末尾，逐次前移
+     *
+     * 时长
+     * 7ms / 96%
+     *
+     * 总结
+     *
+     */
+    public int[] sortedSquares(int[] A) {
+        int length = A.length;
+        int[] result = new int[length];
+        int head = 0;
+        int foot = length - 1;
+
+        for (int i = length - 1; i >= 0; i--) {
+            if (Math.abs(A[head]) <= Math.abs(A[foot])) {
+                result[i] = A[foot] * A[foot];
+                foot--;
+            } else {
+                result[i] = A[head] * A[head];
+                head++;
+            }
+        }
+        return result;
+    }
+
+
+    @Test
+    public void test977() {
+        int[] a = {-4, -1, 0, 3, 10};
+        a = sortedSquares(a);
+        for (int i : a)
+            System.out.println(i);
+    }
 
     /**
      * 题目
