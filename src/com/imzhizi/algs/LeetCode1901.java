@@ -284,17 +284,163 @@ public class LeetCode1901 {
 
     /**
      * 题目
+     * [Sort Array By Parity - LeetCode](https://leetcode.com/problems/sort-array-by-parity/)
+     *
+     * 分析
+     * 把数组中的元素分成偶数和奇数两部分，可以想到的方法就是遍历数组，然后在结果数组中从两端开始填充
+     *
+     * 时长
+     * 法一：10ms / 法二：9ms - 90%
+     *
+     * 总结
+     * 第一种思路和分析中一样，非常规整的写法
+     * 但第一种方法实际上做了许多的无效移动，同时，似乎可以直接在原数组上存储结果
+     * 由于是不要求顺序、仅做奇偶划分，所以假如已经是奇数/偶数，则原地保留，无需移动
+     * 所以有了第二种做法，在空间上和时间上都有优化
+     */
+    public int[] sortArrayByParity(int[] A) {
+        int length = A.length;
+        int[] result = new int[length];
+        int head = 0;
+        int foot = length - 1;
+        for (int i : A) {
+            if (i % 2 == 0) {
+                result[head++] = i;
+            } else {
+                result[foot--] = i;
+            }
+        }
+        return result;
+    }
+
+    public int[] sortArrayByParity2(int[] A) {
+        int foot = A.length - 1;
+        int temp;
+        for (int i = 0; i < foot; i++) {
+            if (A[i] % 2 != 0) {
+                while (A[foot] % 2 != 0 && foot > i)
+                    foot--;
+                temp = A[foot];
+                A[foot] = A[i];
+                A[i] = temp;
+                foot--;
+                i--;
+            }
+        }
+        return A;
+    }
+
+    @Test
+    public void test905(){
+        int[] a = {-4, -1, 0, 3, 10};
+        a = sortArrayByParity(a);
+        for (int i : a)
+            System.out.println(i);
+
+        a = sortArrayByParity2(a);
+        for (int i : a)
+            System.out.println(i);
+    }
+
+    /**
+     * 题目
+     * [Longest Continuous Increasing Subsequence - LeetCode](https://leetcode.com/problems/longest-continuous-increasing-subsequence/)
+     *
+     * 分析
+     * 求最长连续递增子串的长度，无外乎遍历一次，计算每一个递增子串的长度，把其中最大的保存起来
+     *
+     * 时长
+     * 2ms / 100%
+     *
+     * 总结
+     * 将过程中的较大子串长度保存起来的位置值得考虑，可以每次循环都保存，但其实每次子串结束保存即可
+     */
+    public int findLengthOfLCIS(int[] nums) {
+        if (nums.length == 0) return 0;
+
+        int m = 1;
+        int max = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i - 1]) {
+                m++;
+            } else {
+                max = Math.max(m,max);
+                m = 1;
+            }
+        }
+        return Math.max(m,max);
+    }
+
+    @Test
+    public void test674(){
+        int[] a = {1,3,5,4,7};
+        System.out.println(findLengthOfLCIS(a));
+    }
+
+    /**
+     * 题目
+     * [Flipping an Image - LeetCode](https://leetcode.com/problems/flipping-an-image/)
+     *
+     * 分析
+     * 把一个矩阵先水平翻转，然后取反，可以想到的是，两个操作可以同步进行
+     * 同时取反可以通过和 1 异或实现，1^1=0 1^0=1
+     *
+     * 时长
+     * 8 ms / 5%
+     *
+     * 总结
+     *
+     */
+    public int[][] flipAndInvertImage(int[][] A) {
+        if (A.length == 0 || A[0].length == 0) return A;
+        int height = A.length;
+        int width = A[0].length;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width / 2; j++) {
+                int head = A[i][j];
+                A[i][j] = A[i][width - 1 - j] ^ 1;
+                A[i][width - 1 - j] = head ^ 1;
+            }
+            if (width % 2 != 0)
+            A[i][width / 2] = A[i][width / 2] ^ 1;
+        }
+
+        return A;
+    }
+
+    public int[][] flipAndInvertImage2(int[][] A) {
+
+    }
+
+    @Test
+    public void test832() {
+        int[][] A = {
+                {1,1,0,0},{1,0,0,1},{0,1,1,1},{1,0,1,0}
+        };
+        A = flipAndInvertImage(A);
+        for (int[] a : A) {
+            for (int i : a) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * 题目
      *
      *
      * 分析
      *
      *
      * 时长
-     * 1ms / 82%
+     * ms / %
      *
      * 总结
      *
      */
+
+
     @Test
     public void test(){
     }
