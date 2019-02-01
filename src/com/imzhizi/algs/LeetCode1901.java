@@ -3,6 +3,8 @@ package com.imzhizi.algs;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class LeetCode1901 {
     /**
      * 可以根据题目序号或题目名称搜索找到对应题目
@@ -277,9 +279,8 @@ public class LeetCode1901 {
     @Test
     public void test977() {
         int[] a = {-4, -1, 0, 3, 10};
-        a = sortedSquares(a);
-        for (int i : a)
-            System.out.println(i);
+        int[] b = {0, 1, 9, 16, 100};
+        Assert.assertArrayEquals(b,sortedSquares(a));
     }
 
     /**
@@ -374,7 +375,7 @@ public class LeetCode1901 {
     @Test
     public void test674(){
         int[] a = {1,3,5,4,7};
-        System.out.println(findLengthOfLCIS(a));
+        Assert.assertEquals(3,findLengthOfLCIS(a));
     }
 
     /**
@@ -386,62 +387,160 @@ public class LeetCode1901 {
      * 同时取反可以通过和 1 异或实现，1^1=0 1^0=1
      *
      * 时长
-     * 8 ms / 5%
+     * 3ms - 100% / 4ms
      *
      * 总结
-     *
+     * 似乎 LeetCode 的 OJ 有点问题，时长并不完全靠谱，第一种方法是对称交换的方法
+     * 第二种则是新建一个结果数组，然后依次将结果保存进去，其实 意义不大
      */
     public int[][] flipAndInvertImage(int[][] A) {
         if (A.length == 0 || A[0].length == 0) return A;
         int height = A.length;
         int width = A[0].length;
+
         for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width / 2; j++) {
+            for (int j = 0; j < (width+1) / 2; j++) {
                 int head = A[i][j];
                 A[i][j] = A[i][width - 1 - j] ^ 1;
                 A[i][width - 1 - j] = head ^ 1;
             }
-            if (width % 2 != 0)
-            A[i][width / 2] = A[i][width / 2] ^ 1;
         }
 
         return A;
     }
 
     public int[][] flipAndInvertImage2(int[][] A) {
+        if (A.length == 0 || A[0].length == 0) return A;
+        int height = A.length;
+        int width = A[0].length;
+        int[][] result=new int[height][width];
 
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                result[i][j] = A[i][width - 1 - j] ^ 1;
+            }
+        }
+
+        return result;
     }
 
     @Test
     public void test832() {
         int[][] A = {
-                {1,1,0,0},{1,0,0,1},{0,1,1,1},{1,0,1,0}
+                {1, 1, 0},
+                {1, 0, 1},
+                {1, 1, 1}
         };
-        A = flipAndInvertImage(A);
-        for (int[] a : A) {
-            for (int i : a) {
-                System.out.print(i + " ");
-            }
-            System.out.println();
+        int[][] B = {
+                {1, 0, 0},
+                {0, 1, 0},
+                {0, 0, 0}
+        };
+        Assert.assertArrayEquals(B, flipAndInvertImage2(A));
+        // 数组对象均为地址传递，方法一对A进行了修改，所以先执行方法二
+        Assert.assertArrayEquals(B, flipAndInvertImage(A));
+}
+
+    /**
+     * 题目
+     * [ Array Partition I - LeetCode ](https://leetcode.com/problems/array-partition-i/)
+     *
+     * 分析
+     * 把一个数组中的数字结成一对一对的，然后计算其中较小数字的和
+     * 可以想到的一种方法是先排序，然后计算偶数位上的和
+     *
+     * 时长
+     * 21 ms / 83 %
+     *
+     * 总结
+     * 也想过在排序的同时进行比较和求和，但还是失败了，目前这种方法也还可以接受
+     */
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int i = 0; i < nums.length; i += 2) {
+            sum += nums[i];
         }
+        return sum;
+    }
+
+    @Test
+    public void test561() {
+        int[] nums = {1, 4, 3, 2};
+        Assert.assertEquals(4, arrayPairSum(nums));
     }
 
     /**
      * 题目
+     * [Sort Array By Parity II - LeetCode](https://leetcode.com/problems/sort-array-by-parity-ii/)
      *
+     * 分析
+     * 最近几道数列的题目都还不错，支持多种答案，题意也似乎有一些实际场景在其中
+     * 这一题是让奇数数字位于奇数位，偶数在偶数位保存
+     * 最简单的思路，遍历数组，逐个保存在结果数组中，这种方法的时间复杂度和空间复杂度都是 O(n)
+     * 如果不新建结果数组，可以只遍历奇数位，在出现偶数时到偶数位遍历
+     *
+     * 时长
+     * 5 ms / 98 %
+     *
+     * 总结
+     *
+     */
+    public int[] sortArrayByParityII(int[] A) {
+        int odd = 1;
+        for (int even = 0; even < A.length; even += 2) {
+            if (A[even] % 2 != 0) {
+                while (A[odd] % 2 != 0) odd += 2;
+                int temp = A[even];
+                A[even] = A[odd];
+                A[odd] = temp;
+                odd += 2;
+            }
+        }
+        return A;
+    }
+
+    @Test
+    public void test922() {
+        int[] a={4,2,5,7};
+        int[] b={4,5,2,7};
+        Assert.assertArrayEquals(b,sortArrayByParityII(a));
+    }
+
+    /**
+     * 题目
+     * [Fibonacci Number - LeetCode](https://leetcode.com/problems/fibonacci-number/)
      *
      * 分析
      *
      *
      * 时长
-     * ms / %
+     * 1 ms / 100 %
      *
      * 总结
      *
      */
+    public int fib(int N) {
+        int llast=0;
+        int last=1;
+        for (int i = 2; i <= N ; i++) {
+            int temp=last;
+            last=llast+last;
+            llast=temp;
+        }
+        return last;
+    }
 
+    public int fib2(int N) {
+        if (N == 0) return 0;
+        if (N == 1) return 1;
+        return fib2(N - 1) + fib2(N - 2);
+    }
 
     @Test
-    public void test(){
+    public void test509() {
+        System.out.println(fib(5));
+        System.out.println(fib(13));
+        System.out.println(fib(25));
     }
 }
