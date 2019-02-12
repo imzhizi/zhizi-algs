@@ -484,7 +484,7 @@ public class LeetCode1901 {
      * 5 ms / 98 %
      *
      * 总结
-     *
+     * 无
      */
     public int[] sortArrayByParityII(int[] A) {
         int odd = 1;
@@ -512,13 +512,13 @@ public class LeetCode1901 {
      * [Fibonacci Number - LeetCode](https://leetcode.com/problems/fibonacci-number/)
      *
      * 分析
-     *
+     * 很简单的一道题，很容易想到循环和递归两种做法
      *
      * 时长
-     * 1 ms / 100 %
+     * 1ms - 100% / 12ms
      *
      * 总结
-     *
+     * 无
      */
     public int fib(int N) {
         int llast=0;
