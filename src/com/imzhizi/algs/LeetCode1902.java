@@ -3,10 +3,7 @@ package com.imzhizi.algs;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * created by zhizi on 2019-02-04
@@ -27,15 +24,15 @@ public class LeetCode1902 {
      */
     public int thirdMax(int[] nums) {
         Arrays.sort(nums);
-        int loc=1;
-        for (int i = nums.length-2; i >=0; i--) {
-            if (nums[i+1]>nums[i])
+        int loc = 1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            if (nums[i + 1] > nums[i])
                 loc++;
-            if (loc==3)
+            if (loc == 3)
                 return nums[i];
         }
 
-        return nums[nums.length-1];
+        return nums[nums.length - 1];
     }
 
     /*
@@ -72,9 +69,9 @@ public class LeetCode1902 {
 
     @Test
     public void test414() {
-        Assert.assertEquals(3,thirdMax2(new int[]{3, 1, 1}));
-        Assert.assertEquals(2,thirdMax2(new int[]{2, 1}));
-        Assert.assertEquals(1,thirdMax2(new int[]{2, 3, 2, 1}));
+        Assert.assertEquals(3, thirdMax2(new int[]{3, 1, 1}));
+        Assert.assertEquals(2, thirdMax2(new int[]{2, 1}));
+        Assert.assertEquals(1, thirdMax2(new int[]{2, 3, 2, 1}));
     }
 
 
@@ -93,14 +90,14 @@ public class LeetCode1902 {
     同时 k 取负数时的情况也被过滤，缺点是这种方法效率太低
      */
     public int findPairs(int[] nums, int k) {
-        int result=0;
-        HashSet<Integer> set=new HashSet<>();
+        int result = 0;
+        HashSet<Integer> set = new HashSet<>();
         for (int i = 0; i < nums.length; i++) {
-            for (int j = i+1; j < nums.length; j++) {
-                int max=Math.max(nums[i],nums[j]);
-                int min=Math.min(nums[i],nums[j]);
-                if (max-min==k){
-                    if (!set.contains(max)){
+            for (int j = i + 1; j < nums.length; j++) {
+                int max = Math.max(nums[i], nums[j]);
+                int min = Math.min(nums[i], nums[j]);
+                if (max - min == k) {
+                    if (!set.contains(max)) {
                         result++;
                         set.add(max);
                     }
@@ -129,11 +126,10 @@ public class LeetCode1902 {
         // 当k取0时，多个相同的数字只能记为出现一次
         else if (k == 0) {
             for (int i = 0; i < nums.length; i++) {
-                if (numSet.contains(nums[i])&&!appearSet.contains(nums[i])){
-                        result++;
-                        appearSet.add(nums[i]);
-                }
-                else
+                if (numSet.contains(nums[i]) && !appearSet.contains(nums[i])) {
+                    result++;
+                    appearSet.add(nums[i]);
+                } else
                     numSet.add(nums[i]);
             }
             return result;
@@ -158,9 +154,9 @@ public class LeetCode1902 {
 
     @Test
     public void test532() {
-        Assert.assertEquals(2,findPairs2(new int[]{3, 1, 4, 1, 5}, 2));
-        Assert.assertEquals(1,findPairs2(new int[]{3, 1, 4, 1, 5}, 0));
-        Assert.assertEquals(1,findPairs2(new int[]{1, 1, 1, 1, 5}, 0));
+        Assert.assertEquals(2, findPairs2(new int[]{3, 1, 4, 1, 5}, 2));
+        Assert.assertEquals(1, findPairs2(new int[]{3, 1, 4, 1, 5}, 0));
+        Assert.assertEquals(1, findPairs2(new int[]{1, 1, 1, 1, 5}, 0));
     }
 
     /**
@@ -201,14 +197,12 @@ public class LeetCode1902 {
     }
 
 
-
     /**
      * 题目：[Find All Numbers Disappeared in an Array - LeetCode](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)
      *
      * 分析：从一个数列中找到所有消失的数字，根据提示，最优解法能达到 O(n) 时间复杂度和 O(1) 空间复杂度
      *
      * 总结：很多时候面对一个所有数据都需要保存的数列总是无从下手，想要新建一个数列来保存结果，这道题提供了别的思路
-     *
      */
 
     /*
@@ -217,14 +211,14 @@ public class LeetCode1902 {
      */
     public List<Integer> findDisappearedNumbers(int[] nums) {
         ArrayList<Integer> list = new ArrayList<>();
-        int[] loc=new int[nums.length];
+        int[] loc = new int[nums.length];
 
         for (int i = 0; i < nums.length; i++) {
-            loc[nums[i]-1]++;
+            loc[nums[i] - 1]++;
         }
 
         for (int i = 0; i < loc.length; i++) {
-            if (loc[i]==0) list.add(i+1);
+            if (loc[i] == 0) list.add(i + 1);
         }
 
         return list;
@@ -257,7 +251,6 @@ public class LeetCode1902 {
     }
 
 
-
     @Test
     public void test448() {
         ArrayList<Integer> list = new ArrayList<>();
@@ -284,17 +277,17 @@ public class LeetCode1902 {
     原本以为是连续数字，没想到是 1，直接判断是否唯一，计算最大长度即可。
      */
     public int findMaxConsecutiveOnes(int[] nums) {
-        int length=0;
-        int max=0;
+        int length = 0;
+        int max = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i]==1){
+            if (nums[i] == 1) {
                 length++;
-            }else {
-                max=Math.max(max,length);
-                length=0;
+            } else {
+                max = Math.max(max, length);
+                length = 0;
             }
         }
-        return Math.max(max,length);
+        return Math.max(max, length);
     }
 
     /**
@@ -312,8 +305,8 @@ public class LeetCode1902 {
         int rr = nums.length;
         int cc = nums[0].length;
 
-        if (r!=rr && (rr*cc)%r==0 ) {
-            int[][] result = new int[r][(rr*cc)/r];
+        if (r != rr && (rr * cc) % r == 0) {
+            int[][] result = new int[r][(rr * cc) / r];
             int m = 0;
             int n = 0;
 
@@ -339,13 +332,138 @@ public class LeetCode1902 {
                 {1, 2},
                 {3, 4}
         };
-        Assert.assertArrayEquals(new int[][]{{1,2,3,4}},matrixReshape(nums,1,4));
-        Assert.assertArrayEquals(nums,matrixReshape(new int[][]{{1,2,3,4}},2,2));
+        Assert.assertArrayEquals(new int[][]{{1, 2, 3, 4}}, matrixReshape(nums, 1, 4));
+        Assert.assertArrayEquals(nums, matrixReshape(new int[][]{{1, 2, 3, 4}}, 2, 2));
 
     }
 
 
+    /**
+     * 题目：[Shortest Unsorted Continuous Subarray - LeetCode](https://leetcode.com/problems/shortest-unsorted-continuous-subarray/)
+     *
+     * 分析：求最短待排序子串的长度，存在已经递增，但是后面出现更小数字的情况，感觉不太好处理
+     *
+     * 总结：
+     */
 
+    /*
+     思路一：190ms - 2.7%
+     假如先排序，然后逐一对比即可找到该子串，但这样明显效果不好，先考虑其他算法
+     可以尝试使用类似于插入排序的方法，一旦遇到不匹配的情况，即视为子串开始，然后从后向前寻找结束，但这种方法也很慢
+     这种方法果然慢的可以，时间复杂度接近于 O(n^2)
+     */
+    public int findUnsortedSubarray(int[] nums) {
+        int begin = -1;
+        int end = -1;
+
+        int i = 0;
+        int j = nums.length - 1;
+
+       while ((begin==-1||end==-1)&&i<=j){
+            int min = nums[i];
+            int max = nums[i];
+
+            for (int m = i + 1; m <= j; m++) {
+                min = Math.min(min, nums[m]);
+                max = Math.max(max,nums[m]);
+            }
+
+            if (begin==-1&& min != nums[i++]) begin = --i;
+            if (end==-1&& max != nums[j--]) end = ++j+1;
+        }
+
+
+        return end - begin;
+    }
+
+    /*
+    思路二：18ms - 61%
+    忘记考虑这种做法需要有一个数组专门用作对比使用，所以时间复杂度为 O(n + nlogn + n)
+    还是比第一种方法快了许多的，但这还处于暴力比较的阶段
+    */
+    public int findUnsortedSubarray1(int[] nums) {
+        int[] sortNums = nums.clone();
+        Arrays.sort(sortNums);
+
+        int i = 0;
+        int j = nums.length - 1;
+
+        while (i <= j && (nums[i] == sortNums[i] || nums[j] == sortNums[j])) {
+            if (i == j) return 0;
+            if (nums[i] == sortNums[i]) i++;
+            if (nums[j] == sortNums[j]) j--;
+        }
+
+        return j - i + 1;
+    }
+
+
+    /*
+    思路三：ms - %
+    抄的方法，需要再琢磨
+    */
+    public int findUnsortedSubarray2(int[] nums) {
+        int i = 0, j = -1;
+        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+
+        for (int l = 0, r = nums.length - 1; r >= 0; l++, r--) {
+            max = Math.max(max, nums[l]);
+            if (nums[l] != max) j = l; //正向寻找最大数
+
+            min = Math.min(min, nums[r]);
+            if (nums[r] != min) i = r; //逆向寻找最小数
+        }
+        return (j - i + 1);
+    }
+
+    @Test
+    public void test581() {
+        Assert.assertEquals(5, findUnsortedSubarray(new int[]{2, 6, 4, 8, 10, 9, 15}));
+    }
+
+
+    /**
+     * 题目：[Can Place Flowers - LeetCode](https://leetcode.com/problems/can-place-flowers/)
+     *
+     * 分析：能不能种花，我想得很简单，假如前面是0，后面是0，那就可以种，遍历即可
+     *
+     * 总结：跟预想的差不多
+     */
+
+    /*
+     思路一：6ms - 85%
+     跟分析中说得一样，希望通过一次遍历来确认是否可以种花
+     我发现自身存在一个问题，不喜欢自己思考问题，总是直接提交平台，希望平台来进一步发现找到我程序不合适的地方
+     同时这道题的测试用例挺差的，有很多
+     */
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        if (flowerbed.length == 1) return flowerbed[0] == 0 || n == 0;
+
+        if (flowerbed[0] == 0 && flowerbed[1] == 0) {
+            n--;
+            flowerbed[0] = 1;
+        }
+
+        for (int i = 2; i < flowerbed.length - 2; i++) {
+            if (flowerbed[i - 1] == 0 && flowerbed[i] == 0 && flowerbed[i + 1] == 0) {
+                n--;
+                flowerbed[i++] = 1;
+            }
+        }
+
+        if (flowerbed[flowerbed.length - 2] == 0 && flowerbed[flowerbed.length - 1] == 0) {
+            n--;
+            flowerbed[flowerbed.length - 1] = 1;
+        }
+
+        return n <= 0;
+    }
+
+    @Test
+    public void test605() {
+        Assert.assertEquals(true,canPlaceFlowers(new int[]{1,0,0,0,1},1));
+        Assert.assertEquals(false,canPlaceFlowers(new int[]{1,0,0,0,1},2));
+    }
 
     /**
      * 题目：
@@ -358,8 +476,6 @@ public class LeetCode1902 {
     /*
      思路一：ms - %
      */
-
-
     @Test
     public void test() {
 
