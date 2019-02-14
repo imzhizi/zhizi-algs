@@ -437,7 +437,7 @@ public class LeetCode1902 {
      同时这道题的测试用例挺差的，有很多
      */
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
-        if (flowerbed.length == 1) return flowerbed[0] == 0 || n == 0;
+        if (flowerbed.length == 1) return flowerbed[0] == 0 || n == 0;//
 
         if (flowerbed[0] == 0 && flowerbed[1] == 0) {
             n--;
@@ -464,6 +464,135 @@ public class LeetCode1902 {
         Assert.assertEquals(true,canPlaceFlowers(new int[]{1,0,0,0,1},1));
         Assert.assertEquals(false,canPlaceFlowers(new int[]{1,0,0,0,1},2));
     }
+
+    /**
+     * 题目：[Maximum Product of Three Numbers - LeetCode](https://leetcode.com/problems/maximum-product-of-three-numbers/)
+     *
+     * 分析：可以借鉴之前寻找第三名的做法，在一次遍历中找出所有最值
+     *
+     * 总结：要记住这种在一次循环中寻找多个最值的思路
+     */
+
+    /*
+     思路一：8ms - 75%
+     少考虑了负数，如果存在负数，那么最大的就是最大的正数乘以最小的两个负数，所以需要寻找的不仅是前三名还有倒数两名
+     */
+    public int maximumProduct(int[] nums) {
+        int max1 = Integer.MIN_VALUE;
+
+        int max2 = Integer.MIN_VALUE;
+        int max3 = Integer.MIN_VALUE;
+
+        int min1 = Integer.MAX_VALUE;
+        int min2 = Integer.MAX_VALUE;
+
+
+        for (int l = 0; l < nums.length; l++) {
+            if (min1 <= nums[l]) {
+                min2 = Math.min(min2, nums[l]);
+            } else {
+                min2 = min1;
+                min1 = nums[l];
+            }
+
+            if (max1 >= nums[l]) {
+                if (max2 >= nums[l]) {
+                    max3 = Math.max(max3, nums[l]);
+                } else {
+                    max3 = max2;
+                    max2 = nums[l];
+                }
+            } else {
+                max3 = max2;
+                max2 = max1;
+                max1 = nums[l];
+            }
+        }
+
+        return max1 * Math.max(min1 * min2, max2 * max3);
+    }
+
+    @Test
+    public void test628() {
+        Assert.assertEquals(24, maximumProduct(new int[]{1, 2, 3, 4}));
+        Assert.assertEquals(720, maximumProduct(new int[]{-4, -2, -3, -1, 60}));
+    }
+
+
+    /**
+     * 题目：[Maximum Average Subarray I - LeetCode](https://leetcode.com/problems/maximum-average-subarray-i/)
+     *
+     * 分析：平均值最大的子串，因为长度是确定的，很容易想得的一种思路是一次遍历，逐个求平均值比较得出
+     *      进而可以想到不必每次都求平均值，其实相当于固定长度的最大子串和，那求最大子串和的方法是什么？或许可以参考并加以利用
+     *
+     * 总结：算法真奇妙，确实利用到了之前求最大子串中保留上一步计算结果降低计算次数的方法，效果也十分明显
+     */
+
+    /*
+     思路一：412ms - 7%
+     如果通过遍历逐个计算来做，那么每次都要计算和，所以复杂度为 O(k*n)
+     */
+    public double findMaxAverage(int[] nums, int k) {
+        int maxSum = Integer.MIN_VALUE;
+
+        for (int i = 0; i <= nums.length - k; i++) {
+            int sum = 0;
+            for (int j = i; j < i + k; j++) {
+                sum += nums[j];
+            }
+            maxSum = Math.max(maxSum, sum);
+        }
+
+        return ((double) maxSum) / k;
+    }
+
+    /*
+     思路二：8ms - 99%
+     没想到思路一这么慢，所以必须要想其他办法，突然意识到，其实我也可以仿照以前的做法
+     事实上每次不必重新求一个sum，对于现有的sum，只要减去第一个，加上新的一个即可，不过第一个sum要逐个相加得出
+     这样时间复杂度降低到 O(k+n) 应该是一个有效的优化
+     */
+    public double findMaxAverage1(int[] nums, int k) {
+        int sum=0;
+        for (int i = 0; i < k; i++) sum += nums[i];
+        int maxSum = sum;
+
+        for (int i = 1; i <= nums.length - k; i++) {
+            sum-=nums[i-1];
+            sum+=nums[i+k-1];
+            maxSum = Math.max(maxSum, sum);
+        }
+
+        return ((double) maxSum) / k;
+    }
+
+
+    @Test
+    public void test643() {
+        Assert.assertEquals(12.75,findMaxAverage(new int[]{1,12,-5,-6,50,3},4),0);
+        Assert.assertEquals(5,findMaxAverage(new int[]{5},1),0);
+    }
+
+    /**
+     * 题目：[Image Smoother - LeetCode](https://leetcode.com/problems/image-smoother/)
+     *
+     * 分析：
+     *
+     * 总结：
+     */
+    public int[][] imageSmoother(int[][] M) {
+
+        return null;
+    }
+
+    /*
+     思路一：ms - %
+     */
+    @Test
+    public void test661() {
+
+    }
+
 
     /**
      * 题目：
