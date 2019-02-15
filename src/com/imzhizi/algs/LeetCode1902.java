@@ -574,25 +574,114 @@ public class LeetCode1902 {
     }
 
     /**
-     * 题目：[Image Smoother - LeetCode](https://leetcode.com/problems/image-smoother/)
+     * 题目：[Non-decreasing Array - LeetCode](https://leetcode.com/problems/non-decreasing-array/)
      *
-     * 分析：
+     * 分析：至多修改一个数字，能否变成递增不减数列，搞个计数器，遍历一次就可以了吧
      *
-     * 总结：
+     * 总结：其实远没有想象得简单，做了很久，脑中的逻辑比较混乱，所以在正确思路附近徘徊了许久
      */
-    public int[][] imageSmoother(int[][] M) {
 
-        return null;
+    /* 思路一：9ms - 100% - 发现异常时直接填入进行修改，记录修改次数，若接下来再次修改则 false，反之 true */
+    public boolean checkPossibility(int[] nums) {
+        int count = 0; // 表示出现异常的次数
+
+        for (int i = 0; i < nums.length - 1; i++) {
+            // 假如说当前的数字为B，当B大于C的时候不满足不减数列，即出现异常，此时有两种情况
+            if (nums[i] > nums[i + 1]) {
+                count++;
+                if (i > 0 && nums[i + 1] < nums[i - 1]) //B大于C，A也大于C，说明C自身有问题，要修改C
+                    nums[i + 1] = nums[i];
+                else    // A小于C，说明是自己B的问题，B改为A/C都万事大吉
+                    nums[i] = nums[i + 1];
+            } else if (count > 1) { // 这个判断是一个很重要的优化
+                return false;
+            }
+        }
+
+        return count <= 1; // 异常带来的修改不超过一次即可
     }
 
-    /*
-     思路一：ms - %
-     */
     @Test
-    public void test661() {
+    public void test665() {
+        Assert.assertTrue(checkPossibility(new int[]{4, 2, 3}));
+        Assert.assertTrue(checkPossibility(new int[]{-1, 4, 2, 3}));
+        Assert.assertTrue(checkPossibility(new int[]{2, 4, 4, 2, 5}));
+        Assert.assertTrue(checkPossibility(new int[]{1, 3, 4, 2}));
 
+        Assert.assertFalse(checkPossibility(new int[]{3, 4, 2, 3}));
     }
 
+
+    /**
+     * 题目：[Degree of an Array - LeetCode](https://leetcode.com/problems/degree-of-an-array/)
+     *
+     * 分析：数列的度就是一个数列中出现次数最多数字出现的次数，求这个子串的长度，也就是以此数开始，以此数结束的子串长度
+     *
+     * 总结：复杂的问题还是要理清楚，想清楚之后才又解决的可能
+     */
+
+    /* 思路一：24ms - 78% - 非常的朴实的思路 */
+    public int findShortestSubArray(int[] nums) {
+        HashMap<Integer, Integer> countMap = new HashMap<>(); // countmap 用来保存数字出现的次数
+        HashMap<Integer, Integer> indexMap = new HashMap<>(); //indexmap 用来保存数字第一次出现的位置
+
+        int length = 1; //用 length 表示含有出现最多数字的子串
+        int count = 1;  // 使用 count 表示当前出现次数最多的数字
+
+        for (int i = 0; i < nums.length; i++) {
+            //如何更新count和length，遍历中一旦发现map中含有某一数字，就使count加一：countMap.put(nums[i], v)
+            // length 则通过当前数字的下标减去第一次出现的坐标来计算
+            if (countMap.containsKey(nums[i])) {
+                int v = countMap.get(nums[i]) + 1;
+                if (v > count) {
+                    count = v;
+                    length = i - indexMap.get(nums[i]) + 1;
+                } else if (v == count) {
+                    length = Math.min(length, i - indexMap.get(nums[i]) + 1);
+                }
+                countMap.put(nums[i], v);
+            } else {
+                countMap.put(nums[i], 1); // 第一次出现时出现次数为1
+                indexMap.put(nums[i], i); // 第一次出现的坐标
+            }
+        }
+
+        return length;
+    }
+
+    /* 思路二：9ms - 99%
+    其实和思路一是相同的做法，只不过从 Hashmap 换成了数组，难道是 contains() 函数比较慢吗 */
+    public int findShortestSubArray1(int[] nums) {
+        int[] countMap = new int[50000];
+        int[] indexMap = new int[50000];
+        int length = 1;
+        int count = 1;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (countMap[nums[i]] != 0) {
+                int v = countMap[nums[i]] + 1;
+                if (v > count) {
+                    count = v;
+                    length = i - indexMap[nums[i]] + 1;
+                } else if (v == count) {
+                    length = Math.min(length, i - indexMap[nums[i]] + 1);
+                }
+                countMap[nums[i]]++;
+            } else {
+                countMap[nums[i]]++;
+                indexMap[nums[i]] = i;
+            }
+        }
+
+        return length;
+    }
+
+
+    @Test
+    public void test697() {
+        Assert.assertEquals(2, findShortestSubArray(new int[]{1, 2, 2, 3, 1}));
+        Assert.assertEquals(7, findShortestSubArray(new int[]{2, 1, 1, 2, 1, 3, 3, 3, 1, 3, 1, 3, 2}));
+    }
 
     /**
      * 题目：
