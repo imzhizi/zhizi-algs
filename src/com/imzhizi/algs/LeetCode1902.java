@@ -17,11 +17,7 @@ public class LeetCode1902 {
      * 总结：看似简单的一道题目，其实并不好处理，不过最后确实也没使用比较好的方法解决
      */
 
-    /*
-    思路一：4ms - 70%
-    本来想直接排序，然后返回倒数第三个数字，但需要处理并列问题，所以需要找到真正的第三名
-    只好对排序好的数列进行遍历，找出真正的第三名
-     */
+    /* 思路一：4ms - 70% - 很容易想到的蠢方法, 先直接排序，然后返回倒数找到第三名 */
     public int thirdMax(int[] nums) {
         Arrays.sort(nums);
         int loc = 1;
@@ -359,17 +355,17 @@ public class LeetCode1902 {
         int i = 0;
         int j = nums.length - 1;
 
-       while ((begin==-1||end==-1)&&i<=j){
+        while ((begin == -1 || end == -1) && i <= j) {
             int min = nums[i];
             int max = nums[i];
 
             for (int m = i + 1; m <= j; m++) {
                 min = Math.min(min, nums[m]);
-                max = Math.max(max,nums[m]);
+                max = Math.max(max, nums[m]);
             }
 
-            if (begin==-1&& min != nums[i++]) begin = --i;
-            if (end==-1&& max != nums[j--]) end = ++j+1;
+            if (begin == -1 && min != nums[i++]) begin = --i;
+            if (end == -1 && max != nums[j--]) end = ++j + 1;
         }
 
 
@@ -398,11 +394,9 @@ public class LeetCode1902 {
     }
 
 
-    /*
-    思路三：ms - %
-    抄的方法，需要再琢磨
-    */
+    /* 思路三：ms - % - */
     public int findUnsortedSubarray2(int[] nums) {
+        //todo 抄的方法，需要再琢磨
         int i = 0, j = -1;
         int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
 
@@ -461,8 +455,8 @@ public class LeetCode1902 {
 
     @Test
     public void test605() {
-        Assert.assertEquals(true,canPlaceFlowers(new int[]{1,0,0,0,1},1));
-        Assert.assertEquals(false,canPlaceFlowers(new int[]{1,0,0,0,1},2));
+        Assert.assertTrue(canPlaceFlowers(new int[]{1, 0, 0, 0, 1}, 1));
+        Assert.assertFalse(canPlaceFlowers(new int[]{1, 0, 0, 0, 1}, 2));
     }
 
     /**
@@ -523,7 +517,7 @@ public class LeetCode1902 {
      * 题目：[Maximum Average Subarray I - LeetCode](https://leetcode.com/problems/maximum-average-subarray-i/)
      *
      * 分析：平均值最大的子串，因为长度是确定的，很容易想得的一种思路是一次遍历，逐个求平均值比较得出
-     *      进而可以想到不必每次都求平均值，其实相当于固定长度的最大子串和，那求最大子串和的方法是什么？或许可以参考并加以利用
+     * 进而可以想到不必每次都求平均值，其实相当于固定长度的最大子串和，那求最大子串和的方法是什么？或许可以参考并加以利用
      *
      * 总结：算法真奇妙，确实利用到了之前求最大子串中保留上一步计算结果降低计算次数的方法，效果也十分明显
      */
@@ -553,13 +547,13 @@ public class LeetCode1902 {
      这样时间复杂度降低到 O(k+n) 应该是一个有效的优化
      */
     public double findMaxAverage1(int[] nums, int k) {
-        int sum=0;
+        int sum = 0;
         for (int i = 0; i < k; i++) sum += nums[i];
         int maxSum = sum;
 
         for (int i = 1; i <= nums.length - k; i++) {
-            sum-=nums[i-1];
-            sum+=nums[i+k-1];
+            sum -= nums[i - 1];
+            sum += nums[i + k - 1];
             maxSum = Math.max(maxSum, sum);
         }
 
@@ -569,8 +563,8 @@ public class LeetCode1902 {
 
     @Test
     public void test643() {
-        Assert.assertEquals(12.75,findMaxAverage(new int[]{1,12,-5,-6,50,3},4),0);
-        Assert.assertEquals(5,findMaxAverage(new int[]{5},1),0);
+        Assert.assertEquals(12.75, findMaxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4), 0);
+        Assert.assertEquals(5, findMaxAverage(new int[]{5}, 1), 0);
     }
 
     /**
@@ -684,6 +678,74 @@ public class LeetCode1902 {
     }
 
     /**
+     * 题目：[1-bit and 2-bit Characters - LeetCode](https://leetcode.com/problems/1-bit-and-2-bit-characters/)
+     *
+     * 分析：主要是要判断一个字符串是以10结尾， 还是以0结尾，那核心就在于在前方做好断句
+     *
+     * 总结：一道很简单的题目，其实前面的都不太重要，主要是为了知道最后两位是一个 2-bit 还是 1-bit 的字符
+     * 所以执行过程中只要能判断是两位，跳过即可
+     */
+
+    /* 思路一：3ms - 100% - 某种程度上，这也算贪心算法 */
+    public boolean isOneBitCharacter(int[] bits) {
+        for (int i = 0; i < bits.length; i++) {
+            if (i == bits.length - 1) return true;
+            if (bits[i] == 1) i++;
+        }
+        return false;
+    }
+
+    @Test
+    public void test717() {
+        Assert.assertTrue(isOneBitCharacter(new int[]{1, 0, 0}));
+        Assert.assertFalse(isOneBitCharacter(new int[]{1, 1, 1, 0}));
+    }
+
+    /**
+     * 题目：[Find Pivot Index - LeetCode](https://leetcode.com/problems/find-pivot-index/)
+     *
+     * 分析：这个坐标两端数字的和相等，显然可以两侧辗转相加，哪边和比较小哪边就向中间移动
+     * 但事实上这道题我做了很久很久还是没做出来，在负数参与进来之后，情况越来越多，脑子越想越乱
+     *
+     * 总结：
+     */
+
+    /* 思路一：17ms - 64% - 参考了讨论区的一种很简洁的做法 */
+    /* 思路就是先求出总和 total，然后再逐个判断，如果这个点是 pivot，那么这个点之前的和 sum 一定等于这个点之后的数据的和
+       即 sum+nums[pivot]+sum=total
+     */
+    public int pivotIndex(int[] nums) {
+        int total = 0, sum = 0;
+        for (int i : nums) total += i;
+        for (int i = 0; i < nums.length; i++) {
+            if (sum * 2 == total - nums[i]) return i;
+            sum += nums[i];
+        }
+        return -1;
+    }
+
+
+    /* 思路一：ms - % - */
+    public int pivotIndex1(int[] nums) {
+        //todo
+        return -1;
+    }
+
+
+    @Test
+    public void test724() {
+        Assert.assertEquals(3, pivotIndex(new int[]{1, 7, 3, 6, 5, 6}));
+        Assert.assertEquals(-1, pivotIndex(new int[]{1, 2, 3}));
+        Assert.assertEquals(1, pivotIndex(new int[]{-1, -1, -1, -1, 0, 1}));
+        Assert.assertEquals(2, pivotIndex(new int[]{-1, -1, -1, -1, -1, 0}));
+        Assert.assertEquals(2, pivotIndex(new int[]{-1, -1, -1, -1, 0, -1}));
+        Assert.assertEquals(2, pivotIndex(new int[]{-1, -1, -1, 0, -1, -1}));
+        Assert.assertEquals(3, pivotIndex(new int[]{-1, -1, 0, -1, -1, -1}));
+        Assert.assertEquals(3, pivotIndex(new int[]{-1, 0, -1, -1, -1, -1}));
+    }
+
+
+    /**
      * 题目：
      *
      * 分析：
@@ -691,9 +753,7 @@ public class LeetCode1902 {
      * 总结：
      */
 
-    /*
-     思路一：ms - %
-     */
+    /* 思路一：ms - % - */
     @Test
     public void test() {
 

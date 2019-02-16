@@ -13,17 +13,14 @@ public class LeetCode1901 {
      */
 
 
-
     /**
-     * 题目
-     * [Middle of the Linked List - LeetCode](https://leetcode.com/problems/middle-of-the-linked-list/)
+     * 题目: [Middle of the Linked List - LeetCode](https://leetcode.com/problems/middle-of-the-linked-list/)
      *
      * 分析
      * 最近懈怠了许多，一直没刷题，新的一年也要加油啊～
      * 题目就是很蠢的找一个链表的中间节点，没想到什么好办法，就老老实实遍历，时间复杂度为 O(n+n/2)
      *
-     * 时长
-     * 1ms / 82%
+     * 时长: 1ms / 82%
      *
      * 总结
      * 虽然搞了点小手段希望能优化（也就是判断链表长度，一次移动两个结点），但也没什么效果，就这样吧
@@ -65,16 +62,13 @@ public class LeetCode1901 {
     }
 
 
-
     /**
-     * 题目
-     * [Add Two Numbers - LeetCode](https://leetcode.com/problems/add-two-numbers/)
+     * 题目: [Add Two Numbers - LeetCode](https://leetcode.com/problems/add-two-numbers/)
      *
      * 分析
      * 两个链表中的数字逐个相加，主要问题就是进位问题，如果选一个链表存储结果，当链表不够的时候需要新建结点
      *
-     * 时长
-     * 23ms / 82%
+     * 时长: 23ms / 82%
      *
      * 总结
      * 新建结点问题比预想中的要复杂，因为新建的结点需要有前置结点，因此需要总是用前置结点来操作
@@ -118,50 +112,47 @@ public class LeetCode1901 {
     }
 
     @Test
-    public void test2(){
+    public void test2() {
         ListNode node = new ListNode(0);
         ListNode node1 = new ListNode(2);
         ListNode node2 = new ListNode(4);
         ListNode node3 = new ListNode(3);
-        node1.next=node2;
-        node2.next=node3;
+        node1.next = node2;
+        node2.next = node3;
 
         ListNode node4 = new ListNode(5);
         ListNode node5 = new ListNode(6);
         ListNode node6 = new ListNode(4);
-        node4.next=node5;
-        node5.next=node6;
+        node4.next = node5;
+        node5.next = node6;
 
 
         ListNode node7 = new ListNode(7);
         ListNode node8 = new ListNode(0);
         ListNode node9 = new ListNode(8);
-        node7.next=node8;
-        node8.next=node9;
+        node7.next = node8;
+        node8.next = node9;
 
-        Assert.assertEquals(node7, addTwoNumbers(node1,node4));
+        Assert.assertEquals(node7, addTwoNumbers(node1, node4));
 
-        ListNode node10=new ListNode(2);
-        node10.next= new ListNode(1);
+        ListNode node10 = new ListNode(2);
+        node10.next = new ListNode(1);
 
-        Assert.assertEquals(node10, addTwoNumbers(node6,node9));
+        Assert.assertEquals(node10, addTwoNumbers(node6, node9));
 
-        Assert.assertEquals(node10, addTwoNumbers(node10,node));
+        Assert.assertEquals(node10, addTwoNumbers(node10, node));
 
-        Assert.assertEquals(node10, addTwoNumbers(node,node10));
+        Assert.assertEquals(node10, addTwoNumbers(node, node10));
     }
 
 
-
     /**
-     * 题目
-     * [Delete Node in a Linked List - LeetCode](https://leetcode.com/problems/delete-node-in-a-linked-list/)
+     * 题目: [Delete Node in a Linked List - LeetCode](https://leetcode.com/problems/delete-node-in-a-linked-list/)
      *
      * 分析
      * 其实没太看懂这道题的意思，个人理解是为 ListNode 编写一个成员函数，功能是删除一个特定的 node
      *
-     * 时长
-     * N/A
+     * 时长: N/A
      *
      * 总结
      * 并没有弄明白这道题的点，但对于链表的操作，学到新的一招
@@ -169,7 +160,7 @@ public class LeetCode1901 {
      */
 
     @Test
-    public void test237(){
+    public void test237() {
         ListNode node1 = new ListNode(4);
         ListNode node2 = new ListNode(5);
         ListNode node3 = new ListNode(1);
@@ -182,15 +173,13 @@ public class LeetCode1901 {
     }
 
     /**
-     * 题目
-     * [Rotate List - LeetCode](https://leetcode.com/problems/rotate-list/)
+     * 题目: [Rotate List - LeetCode](https://leetcode.com/problems/rotate-list/)
      *
      * 分析
      * 旋转链表，两种思路，一种是实现一个链表旋转函数，然后根据输入的 k 的不同执行不同的次数
      * 根据长度直接找到旋转的位置，直接找到旋转的最终状态，打算试试这种思路
      *
-     * 时长
-     * 7ms / 97%
+     * 时长: 7ms / 97%
      *
      * 总结
      * 执行了第二种方法，过滤掉了不需要旋转的可能（k%n为0），直接找到最终循转状态
@@ -243,19 +232,16 @@ public class LeetCode1901 {
 
 
     /**
-     * 题目
-     * [Squares of a Sorted Array - LeetCode](https://leetcode.com/problems/squares-of-a-sorted-array/)
+     * 题目: [Squares of a Sorted Array - LeetCode](https://leetcode.com/problems/squares-of-a-sorted-array/)
      *
      * 分析
      * 将一个有序的递增整数数组平方，结果仍然保持有序、递增，关键点就在于负数的平方
      * 不难想到最大的数字一定来自于数组中最大或者最小的，也就是数组的左右两端
      * 左右两端比较平方或绝对值均可，总之更大的放在结果数组的末尾，逐次前移
      *
-     * 时长
-     * 7ms / 96%
+     * 时长: 7ms / 96%
      *
      * 总结
-     *
      */
     public int[] sortedSquares(int[] A) {
         int length = A.length;
@@ -280,18 +266,16 @@ public class LeetCode1901 {
     public void test977() {
         int[] a = {-4, -1, 0, 3, 10};
         int[] b = {0, 1, 9, 16, 100};
-        Assert.assertArrayEquals(b,sortedSquares(a));
+        Assert.assertArrayEquals(b, sortedSquares(a));
     }
 
     /**
-     * 题目
-     * [Sort Array By Parity - LeetCode](https://leetcode.com/problems/sort-array-by-parity/)
+     * 题目: [Sort Array By Parity - LeetCode](https://leetcode.com/problems/sort-array-by-parity/)
      *
      * 分析
      * 把数组中的元素分成偶数和奇数两部分，可以想到的方法就是遍历数组，然后在结果数组中从两端开始填充
      *
-     * 时长
-     * 法一：10ms / 法二：9ms - 90%
+     * 时长: 法一：10ms / 法二：9ms - 90%
      *
      * 总结
      * 第一种思路和分析中一样，非常规整的写法
@@ -332,7 +316,7 @@ public class LeetCode1901 {
     }
 
     @Test
-    public void test905(){
+    public void test905() {
         int[] a = {-4, -1, 0, 3, 10};
         a = sortArrayByParity(a);
         for (int i : a)
@@ -344,14 +328,12 @@ public class LeetCode1901 {
     }
 
     /**
-     * 题目
-     * [Longest Continuous Increasing Subsequence - LeetCode](https://leetcode.com/problems/longest-continuous-increasing-subsequence/)
+     * 题目: [Longest Continuous Increasing Subsequence - LeetCode](https://leetcode.com/problems/longest-continuous-increasing-subsequence/)
      *
      * 分析
      * 求最长连续递增子串的长度，无外乎遍历一次，计算每一个递增子串的长度，把其中最大的保存起来
      *
-     * 时长
-     * 2ms / 100%
+     * 时长: 2ms / 100%
      *
      * 总结
      * 将过程中的较大子串长度保存起来的位置值得考虑，可以每次循环都保存，但其实每次子串结束保存即可
@@ -365,29 +347,27 @@ public class LeetCode1901 {
             if (nums[i] > nums[i - 1]) {
                 m++;
             } else {
-                max = Math.max(m,max);
+                max = Math.max(m, max);
                 m = 1;
             }
         }
-        return Math.max(m,max);
+        return Math.max(m, max);
     }
 
     @Test
-    public void test674(){
-        int[] a = {1,3,5,4,7};
-        Assert.assertEquals(3,findLengthOfLCIS(a));
+    public void test674() {
+        int[] a = {1, 3, 5, 4, 7};
+        Assert.assertEquals(3, findLengthOfLCIS(a));
     }
 
     /**
-     * 题目
-     * [Flipping an Image - LeetCode](https://leetcode.com/problems/flipping-an-image/)
+     * 题目: [Flipping an Image - LeetCode](https://leetcode.com/problems/flipping-an-image/)
      *
      * 分析
      * 把一个矩阵先水平翻转，然后取反，可以想到的是，两个操作可以同步进行
      * 同时取反可以通过和 1 异或实现，1^1=0 1^0=1
      *
-     * 时长
-     * 3ms - 100% / 4ms
+     * 时长: 3ms - 100% / 4ms
      *
      * 总结
      * 似乎 LeetCode 的 OJ 有点问题，时长并不完全靠谱，第一种方法是对称交换的方法
@@ -399,7 +379,7 @@ public class LeetCode1901 {
         int width = A[0].length;
 
         for (int i = 0; i < height; i++) {
-            for (int j = 0; j < (width+1) / 2; j++) {
+            for (int j = 0; j < (width + 1) / 2; j++) {
                 int head = A[i][j];
                 A[i][j] = A[i][width - 1 - j] ^ 1;
                 A[i][width - 1 - j] = head ^ 1;
@@ -413,7 +393,7 @@ public class LeetCode1901 {
         if (A.length == 0 || A[0].length == 0) return A;
         int height = A.length;
         int width = A[0].length;
-        int[][] result=new int[height][width];
+        int[][] result = new int[height][width];
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -439,18 +419,16 @@ public class LeetCode1901 {
         Assert.assertArrayEquals(B, flipAndInvertImage2(A));
         // 数组对象均为地址传递，方法一对A进行了修改，所以先执行方法二
         Assert.assertArrayEquals(B, flipAndInvertImage(A));
-}
+    }
 
     /**
-     * 题目
-     * [ Array Partition I - LeetCode ](https://leetcode.com/problems/array-partition-i/)
+     * 题目: [ Array Partition I - LeetCode ](https://leetcode.com/problems/array-partition-i/)
      *
      * 分析
      * 把一个数组中的数字结成一对一对的，然后计算其中较小数字的和
      * 可以想到的一种方法是先排序，然后计算偶数位上的和
      *
-     * 时长
-     * 21 ms / 83 %
+     * 时长: 21 ms / 83 %
      *
      * 总结
      * 也想过在排序的同时进行比较和求和，但还是失败了，目前这种方法也还可以接受
@@ -471,8 +449,7 @@ public class LeetCode1901 {
     }
 
     /**
-     * 题目
-     * [Sort Array By Parity II - LeetCode](https://leetcode.com/problems/sort-array-by-parity-ii/)
+     * 题目: [Sort Array By Parity II - LeetCode](https://leetcode.com/problems/sort-array-by-parity-ii/)
      *
      * 分析
      * 最近几道数列的题目都还不错，支持多种答案，题意也似乎有一些实际场景在其中
@@ -480,8 +457,7 @@ public class LeetCode1901 {
      * 最简单的思路，遍历数组，逐个保存在结果数组中，这种方法的时间复杂度和空间复杂度都是 O(n)
      * 如果不新建结果数组，可以只遍历奇数位，在出现偶数时到偶数位遍历
      *
-     * 时长
-     * 5 ms / 98 %
+     * 时长: 5 ms / 98 %
      *
      * 总结
      * 无
@@ -502,31 +478,29 @@ public class LeetCode1901 {
 
     @Test
     public void test922() {
-        int[] a={4,2,5,7};
-        int[] b={4,5,2,7};
-        Assert.assertArrayEquals(b,sortArrayByParityII(a));
+        int[] a = {4, 2, 5, 7};
+        int[] b = {4, 5, 2, 7};
+        Assert.assertArrayEquals(b, sortArrayByParityII(a));
     }
 
     /**
-     * 题目
-     * [Fibonacci Number - LeetCode](https://leetcode.com/problems/fibonacci-number/)
+     * 题目: [Fibonacci Number - LeetCode](https://leetcode.com/problems/fibonacci-number/)
      *
      * 分析
      * 很简单的一道题，很容易想到循环和递归两种做法
      *
-     * 时长
-     * 1ms - 100% / 12ms
+     * 时长: 1ms - 100% / 12ms
      *
      * 总结
      * 无
      */
     public int fib(int N) {
-        int llast=0;
-        int last=1;
-        for (int i = 2; i <= N ; i++) {
-            int temp=last;
-            last=llast+last;
-            llast=temp;
+        int llast = 0;
+        int last = 1;
+        for (int i = 2; i <= N; i++) {
+            int temp = last;
+            last = llast + last;
+            llast = temp;
         }
         return last;
     }
