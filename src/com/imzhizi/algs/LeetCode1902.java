@@ -18,7 +18,7 @@ public class LeetCode1902 {
      */
 
     /* 思路一：4ms - 70% - 很容易想到的蠢方法, 先直接排序，然后返回倒数找到第三名 */
-    public int thirdMax(int[] nums) {
+    int thirdMax(int[] nums) {
         Arrays.sort(nums);
         int loc = 1;
         for (int i = nums.length - 2; i >= 0; i--) {
@@ -36,7 +36,7 @@ public class LeetCode1902 {
     思路是遍历数列，每个数字都与min、mid、max三个数字进行比较，保存最大的三个数字
     但因为数列中存在 Integer.MIN_VALUE，所以只有当三个数字足够小才能成功传值
      */
-    public int thirdMax2(int[] nums) {
+    int thirdMax2(int[] nums) {
         long min = Long.MIN_VALUE;
         long mid = Long.MIN_VALUE;
         long max = Long.MIN_VALUE;
@@ -85,7 +85,7 @@ public class LeetCode1902 {
     但事实上，题目要求的 k-diff 指的是绝对值，又因为 <i,j> 和 <j,i> 等同，所以可以总是用大数减小数与 k 比较（max和min）
     同时 k 取负数时的情况也被过滤，缺点是这种方法效率太低
      */
-    public int findPairs(int[] nums, int k) {
+    private int findPairs(int[] nums, int k) {
         int result = 0;
         HashSet<Integer> set = new HashSet<>();
         for (int i = 0; i < nums.length; i++) {
@@ -110,7 +110,7 @@ public class LeetCode1902 {
     思路一是逐个尝试，也可以直接计算出来对应数字，去查看是否存在
     但是因为 k 取值的关系，需要情况处理，此方法的弊端是维护两个HashSet，内存占用较大
      */
-    public int findPairs2(int[] nums, int k) {
+    private int findPairs2(int[] nums, int k) {
         int result = 0;
         HashSet<Integer> numSet = new HashSet<>();
         HashSet<Integer> appearSet = new HashSet<>();
@@ -169,7 +169,7 @@ public class LeetCode1902 {
      1、有得赚就买，这很容易理解，只要今天的比明天价格低，买了就能赚
      2、比明天赚得多就卖，已经买了如何决定卖不卖呢？只要比明天多，即便后面有赚得更多的，但明天可以买
      */
-    public int maxProfit(int[] prices) {
+    private int maxProfit(int[] prices) {
         int profit = 0;
         int hold = -1;
 
@@ -205,7 +205,7 @@ public class LeetCode1902 {
      思路一：10ms - 64%
      使用一种近似于哈希的思想，记录下哪些数字出现了，未出现的在数组中就为0
      */
-    public List<Integer> findDisappearedNumbers(int[] nums) {
+    private List<Integer> findDisappearedNumbers(int[] nums) {
         ArrayList<Integer> list = new ArrayList<>();
         int[] loc = new int[nums.length];
 
@@ -225,7 +225,7 @@ public class LeetCode1902 {
      这个方法是在讨论区学到的，通过不断地交换使得所有的数字都回到了应该在的位置，本质和思路一相近
      很棒的一个方法
      */
-    public List<Integer> findDisappearedNumbers2(int[] nums) {
+    List<Integer> findDisappearedNumbers2(int[] nums) {
         ArrayList<Integer> list = new ArrayList<>();
 
         for (int i = 0; i < nums.length; i++) {
@@ -272,7 +272,7 @@ public class LeetCode1902 {
     思路一：4ms - 99%
     原本以为是连续数字，没想到是 1，直接判断是否唯一，计算最大长度即可。
      */
-    public int findMaxConsecutiveOnes(int[] nums) {
+    private int findMaxConsecutiveOnes(int[] nums) {
         int length = 0;
         int max = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -297,7 +297,7 @@ public class LeetCode1902 {
     /*
      思路一：3ms - 100%
      */
-    public int[][] matrixReshape(int[][] nums, int r, int c) {
+    private int[][] matrixReshape(int[][] nums, int r, int c) {
         int rr = nums.length;
         int cc = nums[0].length;
 
@@ -348,7 +348,7 @@ public class LeetCode1902 {
      可以尝试使用类似于插入排序的方法，一旦遇到不匹配的情况，即视为子串开始，然后从后向前寻找结束，但这种方法也很慢
      这种方法果然慢的可以，时间复杂度接近于 O(n^2)
      */
-    public int findUnsortedSubarray(int[] nums) {
+    private int findUnsortedSubarray(int[] nums) {
         int begin = -1;
         int end = -1;
 
@@ -377,7 +377,7 @@ public class LeetCode1902 {
     忘记考虑这种做法需要有一个数组专门用作对比使用，所以时间复杂度为 O(n + nlogn + n)
     还是比第一种方法快了许多的，但这还处于暴力比较的阶段
     */
-    public int findUnsortedSubarray1(int[] nums) {
+    private int findUnsortedSubarray1(int[] nums) {
         int[] sortNums = nums.clone();
         Arrays.sort(sortNums);
 
@@ -395,7 +395,7 @@ public class LeetCode1902 {
 
 
     /* 思路三：ms - % - */
-    public int findUnsortedSubarray2(int[] nums) {
+    private int findUnsortedSubarray2(int[] nums) {
         //todo 抄的方法，需要再琢磨
         int i = 0, j = -1;
         int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
@@ -430,7 +430,7 @@ public class LeetCode1902 {
      我发现自身存在一个问题，不喜欢自己思考问题，总是直接提交平台，希望平台来进一步发现找到我程序不合适的地方
      同时这道题的测试用例挺差的，有很多
      */
-    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+    private boolean canPlaceFlowers(int[] flowerbed, int n) {
         if (flowerbed.length == 1) return flowerbed[0] == 0 || n == 0;//
 
         if (flowerbed[0] == 0 && flowerbed[1] == 0) {
@@ -471,7 +471,7 @@ public class LeetCode1902 {
      思路一：8ms - 75%
      少考虑了负数，如果存在负数，那么最大的就是最大的正数乘以最小的两个负数，所以需要寻找的不仅是前三名还有倒数两名
      */
-    public int maximumProduct(int[] nums) {
+    private int maximumProduct(int[] nums) {
         int max1 = Integer.MIN_VALUE;
 
         int max2 = Integer.MIN_VALUE;
@@ -526,7 +526,7 @@ public class LeetCode1902 {
      思路一：412ms - 7%
      如果通过遍历逐个计算来做，那么每次都要计算和，所以复杂度为 O(k*n)
      */
-    public double findMaxAverage(int[] nums, int k) {
+    private double findMaxAverage(int[] nums, int k) {
         int maxSum = Integer.MIN_VALUE;
 
         for (int i = 0; i <= nums.length - k; i++) {
@@ -546,7 +546,7 @@ public class LeetCode1902 {
      事实上每次不必重新求一个sum，对于现有的sum，只要减去第一个，加上新的一个即可，不过第一个sum要逐个相加得出
      这样时间复杂度降低到 O(k+n) 应该是一个有效的优化
      */
-    public double findMaxAverage1(int[] nums, int k) {
+    private double findMaxAverage1(int[] nums, int k) {
         int sum = 0;
         for (int i = 0; i < k; i++) sum += nums[i];
         int maxSum = sum;
@@ -576,7 +576,7 @@ public class LeetCode1902 {
      */
 
     /* 思路一：9ms - 100% - 发现异常时直接填入进行修改，记录修改次数，若接下来再次修改则 false，反之 true */
-    public boolean checkPossibility(int[] nums) {
+    private boolean checkPossibility(int[] nums) {
         int count = 0; // 表示出现异常的次数
 
         for (int i = 0; i < nums.length - 1; i++) {
@@ -615,7 +615,7 @@ public class LeetCode1902 {
      */
 
     /* 思路一：24ms - 78% - 非常的朴实的思路 */
-    public int findShortestSubArray(int[] nums) {
+    private int findShortestSubArray(int[] nums) {
         HashMap<Integer, Integer> countMap = new HashMap<>(); // countmap 用来保存数字出现的次数
         HashMap<Integer, Integer> indexMap = new HashMap<>(); //indexmap 用来保存数字第一次出现的位置
 
@@ -645,7 +645,7 @@ public class LeetCode1902 {
 
     /* 思路二：9ms - 99%
     其实和思路一是相同的做法，只不过从 Hashmap 换成了数组，难道是 contains() 函数比较慢吗 */
-    public int findShortestSubArray1(int[] nums) {
+    private int findShortestSubArray1(int[] nums) {
         int[] countMap = new int[50000];
         int[] indexMap = new int[50000];
         int length = 1;
@@ -687,7 +687,7 @@ public class LeetCode1902 {
      */
 
     /* 思路一：3ms - 100% - 某种程度上，这也算贪心算法 */
-    public boolean isOneBitCharacter(int[] bits) {
+    private boolean isOneBitCharacter(int[] bits) {
         for (int i = 0; i < bits.length; i++) {
             if (i == bits.length - 1) return true;
             if (bits[i] == 1) i++;
@@ -714,7 +714,7 @@ public class LeetCode1902 {
     /* 思路就是先求出总和 total，然后再逐个判断，如果这个点是 pivot，那么这个点之前的和 sum 一定等于这个点之后的数据的和
        即 sum+nums[pivot]+sum=total
      */
-    public int pivotIndex(int[] nums) {
+    private int pivotIndex(int[] nums) {
         int total = 0, sum = 0;
         for (int i : nums) total += i;
         for (int i = 0; i < nums.length; i++) {
@@ -726,7 +726,7 @@ public class LeetCode1902 {
 
 
     /* 思路一：ms - % - */
-    public int pivotIndex1(int[] nums) {
+    private int pivotIndex1(int[] nums) {
         //todo
         return -1;
     }
@@ -742,20 +742,5 @@ public class LeetCode1902 {
         Assert.assertEquals(2, pivotIndex(new int[]{-1, -1, -1, 0, -1, -1}));
         Assert.assertEquals(3, pivotIndex(new int[]{-1, -1, 0, -1, -1, -1}));
         Assert.assertEquals(3, pivotIndex(new int[]{-1, 0, -1, -1, -1, -1}));
-    }
-
-
-    /**
-     * 题目：
-     *
-     * 分析：
-     *
-     * 总结：
-     */
-
-    /* 思路一：ms - % - */
-    @Test
-    public void test() {
-
     }
 }
