@@ -1,4 +1,4 @@
-package com.imzhizi.algs.CodingInterviews;
+package com.imzhizi.algs.CodingInterview;
 
 import com.imzhizi.algs.LeetCode.ListNode;
 import com.imzhizi.algs.LeetCode.TreeNode;
@@ -6,7 +6,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Part1 {
     @Test
@@ -201,19 +202,251 @@ public class Part1 {
 
     }
 
+    // 在root1种寻找所有val 为 root2 的结点
+    public boolean HasSubtree(TreeNode root1, TreeNode root2) {
+        if (root1 == null || root2 == null) return false;
+
+        if (root1.val == root2.val) {
+            return compare(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
+        }
+
+        return HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
+    }
+
+    // 原来子结构不是完全一致, 而是局部一致, 因此root2遍历结束即可
+    public boolean compare(TreeNode root1, TreeNode root2) {
+        if (root2 == null) return true;
+        if (root1 == null) return false;
+        if (root1.val != root2.val) return false;
+
+        return compare(root1.left, root2.left) && compare(root1.right, root2.right);
+
+    }
+
     @Test
     public void No15() {
 
     }
 
+    public void Mirror(TreeNode root) {
+        if (root == null) return;
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        Mirror(root.left);
+        Mirror(root.right);
+    }
+
     @Test
     public void No16() {
+        int[][] matrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}};
+        ArrayList<Integer> result = printMatrix(matrix);
+        for (Integer integer : result) {
+            System.out.print(integer + " ");
+        }
+    }
 
+    public ArrayList<Integer> printMatrix(int[][] matrix) {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        int h = matrix.length;
+        int w = matrix[0].length;
+
+        int i = 0;
+        int j = 0;
+        int loop = 0;
+        int count = h * w;
+        while (count > 0) {
+            while (count > 0 && j < w - loop) {
+                count--;
+                result.add(matrix[i][j++]);
+            }
+            j--;
+            i++;
+            while (count > 0 && i < h - loop) {
+                count--;
+                result.add(matrix[i++][j]);
+            }
+            j--;
+            i--;
+            while (count > 0 && j >= loop) {
+                count--;
+                result.add(matrix[i][j--]);
+            }
+
+            j++;
+            i--;
+            loop++;
+
+            while (count > 0 && i >= loop) {
+                count--;
+                result.add(matrix[i--][j]);
+            }
+
+            i++;
+            j++;
+        }
+
+        return result;
     }
 
     @Test
     public void No17() {
+        MinStack stack = new MinStack();
+    }
 
+    @Test
+    public void No18() {
+        int[] push = {1, 2, 3, 4, 5};
+        int[] pop = {4, 5, 3, 2, 1};
+        System.out.println(IsPopOrder2(push, pop));
+    }
+
+    public boolean IsPopOrder(int[] pushA, int[] popA) {
+        List<Integer> list = Arrays.stream(pushA).boxed().collect(Collectors.toList());
+        int i = 0;
+        int j = 0;
+        while (list.size() != 0 && i < list.size()) {
+            if (list.get(i) == popA[j]) {
+                list.remove(i);
+                i = i - 2;
+                j++;
+            }
+            i++;
+        }
+        System.out.println(j);
+        if (j != pushA.length) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean IsPopOrder2(int[] pushA, int[] popA) {
+        int[] stack = new int[pushA.length];
+        int index = -1;
+        int length = pushA.length;
+        int push = 0;
+        int pop = 0;
+
+        while (push < length) {
+            stack[++index] = pushA[push++];
+            while (stack[index] == popA[pop]) {
+                pop++;
+                index--;
+            }
+        }
+
+        if (pop == length) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Test
+    public void No19() {
+        TreeNode root = new TreeNode(0);
+        System.out.println(PrintFromTopToBottom(root));
+    }
+
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<TreeNode> nodes = new ArrayList<>();
+        ArrayList<Integer> result = new ArrayList<>();
+        nodes.add(root);
+        while (nodes.isEmpty()) {
+            TreeNode node = nodes.get(0);
+            result.add(node.val);
+            nodes.remove(0);
+            if (node.left != null) {
+                nodes.add(node.left);
+            }
+            if (node.right != null) {
+                nodes.add(node.right);
+            }
+        }
+
+        return result;
+    }
+
+    @Test
+    public void No20() {
+        System.out.println(VerifySquenceOfBST(new int[]{3, 5, 4, 7, 9, 8, 6}));
+        System.out.println(VerifySquenceOfBST(new int[]{1, 2, 3, 4, 5}));
+        System.out.println(VerifySquenceOfBST(new int[]{7, 4, 6, 5}));
+    }
+
+    public boolean VerifySquenceOfBST(int[] sequence) {
+        return Verify(sequence, 0, sequence.length - 1);
+    }
+
+    public boolean Verify(int[] sequence, int head, int tail) {
+        if (head >= tail) return true;
+
+        int root = sequence[tail];
+        int i = 0;
+        // find root
+        for (i = head; i <= tail; i++) {
+            if (sequence[i] < root) {
+                break;
+            }
+        }
+
+        for (int j = i + 1; j < tail; j++) {
+            if (sequence[j] > root) return false;
+        }
+
+        return Verify(sequence, 0, i - 1) && Verify(sequence, i, tail - 1);
+    }
+
+    @Test
+//  感觉路径的计算非常困难，只能够朴实的层层递归，先全部加进去，然后排序，再记一次，Comparator o2-o1是降序
+    public void N021() {
+        TreeNode root = new TreeNode(2);
+        TreeNode l = new TreeNode(3);
+        TreeNode r = new TreeNode(5);
+        TreeNode ll = new TreeNode(2);
+        l.left = ll;
+        root.left = l;
+        root.right = r;
+        System.out.println(root);
+        System.out.println(FindPath(root, 7));
+
+    }
+
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target) {
+        ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
+        ArrayList<Integer> path = new ArrayList<>();
+        CalPath(paths, path, root, target);
+
+        paths.sort((o1, o2) -> o2.size() - o1.size());
+
+        return paths;
+    }
+
+    public void CalPath(List<ArrayList<Integer>> paths, ArrayList<Integer> path, TreeNode root, int target) {
+        if(root==null) return;
+        int val = root.val;
+        if(root.right==null&&root.left==null){
+            if (val == target) {
+                path.add(val);
+                paths.add(path);
+                return;
+            }else{
+                return;
+            }
+        }else{
+            if (val < target) {
+                path.add(val);
+                ArrayList<Integer> right = (ArrayList<Integer>) path.clone();
+                if (root.left == null) return;
+                else CalPath(paths, path, root.left, target - val);
+                if (root.right == null) return;
+                else CalPath(paths, right, root.right, target - val);
+            }
+            return;
+        }
     }
 
 }
