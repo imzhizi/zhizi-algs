@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -426,17 +427,17 @@ public class Part1 {
     }
 
     public void CalPath(List<ArrayList<Integer>> paths, ArrayList<Integer> path, TreeNode root, int target) {
-        if(root==null) return;
+        if (root == null) return;
         int val = root.val;
-        if(root.right==null&&root.left==null){
+        if (root.right == null && root.left == null) {
             if (val == target) {
                 path.add(val);
                 paths.add(path);
                 return;
-            }else{
+            } else {
                 return;
             }
-        }else{
+        } else {
             if (val < target) {
                 path.add(val);
                 ArrayList<Integer> right = (ArrayList<Integer>) path.clone();
@@ -449,4 +450,55 @@ public class Part1 {
         }
     }
 
+    @Test
+//        复杂链表的复制
+    public void No22() {
+    }
+
+    @Test
+//        二叉搜索树与双向链表
+    public void No23() {
+    }
+
+    @Test
+//        字符串的排列
+    public void No24() {
+        char[] str = new char[10];
+        String s = String.valueOf(str);
+        char[] newStr = str.clone();
+    }
+
+    @Test
+// 数组中出现次数超过一半的数字
+    public void No25() {
+    }
+
+    public int MoreThanHalfNum_Solution(int[] array) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int length = array.length;
+        for (int i = 0; i < length; i++) {
+            if (map.containsKey(array[i])) {
+                map.put(array[i], map.get(array[i]) + 1);
+            } else {
+                map.put(array[i], 1);
+            }
+            if (map.get(array[i]) > length / 2) {
+                return array[i];
+            }
+        }
+        return 0;
+    }
+
+
+    @Test
+// 最小的K个数
+    public void No26() {
+
+    }
+
+    public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
+
+        return null;
+
+    }
 }
