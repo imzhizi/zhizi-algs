@@ -1,4 +1,4 @@
-package com.imzhizi.algs.LeetCode;
+package com.imzhizi.algs;
 
 import java.util.Objects;
 

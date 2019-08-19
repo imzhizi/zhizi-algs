@@ -1,5 +1,6 @@
 package com.imzhizi.algs.LeetCode;
 
+import com.imzhizi.algs.ListNode;
 import org.junit.Assert;
 import org.junit.Test;
 

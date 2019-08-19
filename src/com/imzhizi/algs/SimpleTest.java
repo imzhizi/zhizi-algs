@@ -27,4 +27,30 @@ public class SimpleTest {
         System.out.println(pq.poll());
         System.out.println(pq.poll());
     }
+
+    // 01 背包问题
+    @Test
+    public void test01Bag() {
+        int v = 6;
+        int[] volumes = new int[]{3, 2, 4};
+        int[] values = new int[]{5, 4, 2};
+        System.out.println(calculate(v, volumes, values, 0));
+    }
+
+    public int calculate(int v, int[] volumes, int[] values, int index) {
+        if (index == volumes.length) {
+            return 0;
+        }
+
+        int valueA = 0;
+        int valueB = 0;
+
+        if (volumes[index] < v) {
+            valueA = calculate(v - volumes[index], volumes, values, index + 1) + values[index];
+        } else {
+            valueB = calculate(v, volumes, values, index + 1);
+        }
+
+        return Math.max(valueA, valueB);
+    }
 }

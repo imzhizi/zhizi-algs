@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode.LeetCode2018;
 
-import com.imzhizi.algs.LeetCode.ListNode;
+import com.imzhizi.algs.ListNode;
 
 /**
  * Remove all elements from a linked list of integers that have value val.

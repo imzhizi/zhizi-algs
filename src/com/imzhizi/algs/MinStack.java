@@ -1,4 +1,4 @@
-package com.imzhizi.algs.CodingInterview;
+package com.imzhizi.algs;
 
 import java.util.PriorityQueue;
 

@@ -1,4 +1,4 @@
-package com.imzhizi.algs.LeetCode;
+package com.imzhizi.algs;
 
 /**
  * Definition for a binary tree node.

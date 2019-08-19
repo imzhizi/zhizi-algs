@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode.LeetCode2018;
 
-import com.imzhizi.algs.LeetCode.TreeNode;
+import com.imzhizi.algs.TreeNode;
 
 /**
  * Given two binary trees, write a function to check if they are the same or not.

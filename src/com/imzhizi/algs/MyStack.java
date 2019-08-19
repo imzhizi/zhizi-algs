@@ -1,4 +1,4 @@
-package com.imzhizi.algs.LeetCode.LeetCode2018;
+package com.imzhizi.algs;
 
 /**
  * 225. Implement Stack using Queues
