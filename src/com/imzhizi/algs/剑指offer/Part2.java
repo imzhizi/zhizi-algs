@@ -1,5 +1,6 @@
 package com.imzhizi.algs.剑指offer;
 
+import com.imzhizi.algs.ListNode;
 import com.imzhizi.algs.TreeNode;
 import org.junit.Test;
 
@@ -10,33 +11,33 @@ public class Part2 {
      * [表示数值的字符串_牛客网]( https://www.nowcoder.com/practice/6f8c901d091949a5837e24bb82a731f2 )
      */
     @Test
-    public void No20(){
-        
+    public void No20() {
+
     }
 
     public boolean isNumeric(char[] str) {
-        
-        boolean div=false;
-        boolean sci=false;
-        
-        for(int i=0;i<str.length;i++){
-            if(str[i]=='e'||str[i]=='E') {
-                if(i==str.length-1) return false;
-                else sci=true;
-            }else if(str[i]=='.'){
-                if(div){
+
+        boolean div = false;
+        boolean sci = false;
+
+        for (int i = 0; i < str.length; i++) {
+            if (str[i] == 'e' || str[i] == 'E') {
+                if (i == str.length - 1) return false;
+                else sci = true;
+            } else if (str[i] == '.') {
+                if (div) {
                     return false;
-                }else{
-                    if(sci) return false;
-                    else div=true;
+                } else {
+                    if (sci) return false;
+                    else div = true;
                 }
-            }else if(str[i]=='+'||str[i]=='-'){
-                if(i!=0&&str[i-1]!='e'&&str[i-1]!='E') return false;
-            }else if(str[i]<'0'||str[i]>'9'){
+            } else if (str[i] == '+' || str[i] == '-') {
+                if (i != 0 && str[i - 1] != 'e' && str[i - 1] != 'E') return false;
+            } else if (str[i] < '0' || str[i] > '9') {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -100,6 +101,40 @@ public class Part2 {
     @Test
     //
     public void No23() {
+        System.out.println(EntryNodeOfLoop(new ListNode(1)).val);
+    }
+
+    // 18ms
+    public ListNode EntryNodeOfLoop(ListNode pHead) {
+        List<ListNode> list = new ArrayList<>();
+
+        while (pHead != null) {
+            for (ListNode node : list) {
+                if (node.val == pHead.val) {
+                    return pHead;
+                }
+            }
+            list.add(pHead);
+            pHead = pHead.next;
+        }
+
+        return null;
+    }
+
+    // 使用HashSet优化了一丢丢
+    public ListNode EntryNodeOfLoop2(ListNode pHead)
+    {
+        HashSet<Integer> set=new HashSet<>();
+
+        while(pHead!=null){
+            if(set.contains(pHead.val)){
+                return pHead;
+            }
+            set.add(pHead.val);
+            pHead=pHead.next;
+        }
+
+        return null;
     }
 
 

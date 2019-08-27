@@ -42,17 +42,43 @@ public class Part5 {
      */
     @Test
     public void No50_2() {
-        System.out.println(FirstNotRepeatingChar("AAbbcdddw"));
+        Insert('g');
+        System.out.println(FirstAppearingOnce());
+        Insert('o');
+        System.out.println(FirstAppearingOnce());
+        Insert('o');
+        System.out.println(FirstAppearingOnce());
+        Insert('g');
+        System.out.println(FirstAppearingOnce());
+        Insert('l');
+        System.out.println(FirstAppearingOnce());
+        Insert('e');
+        System.out.println(FirstAppearingOnce());
     }
+
+    private HashMap<Character, Integer> map = new HashMap<>();
+    private int index = 1;
 
     //Insert one char from stringstream
     public void Insert(char ch) {
-
+        if (map.containsKey(ch)) {
+            map.remove(ch);
+        } else {
+            map.put(ch, index++);
+        }
     }
 
     //return the first appearence once char in current stringstream
     public char FirstAppearingOnce() {
-        return 'a';
+        char ch = '#';
+        int min = Integer.MAX_VALUE;
+        for (char c : map.keySet()) {
+            if (map.get(c) < min) {
+                min=map.get(c);
+                ch = c;
+            }
+        }
+        return ch;
     }
 
     /**
