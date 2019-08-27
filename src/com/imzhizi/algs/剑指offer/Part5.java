@@ -1,6 +1,7 @@
 package com.imzhizi.algs.剑指offer;
 
 import com.imzhizi.algs.TreeNode;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
@@ -108,11 +109,66 @@ public class Part5 {
     }
 
     /**
-     *
+     * [数字在排序数组中出现的次数_牛客网]( https://www.nowcoder.com/practice/70610bf967994b22bb1c26f9ae901fa2 )
      */
     @Test
-    public void No53() {
+    public void No53_1() {
+        System.out.println(GetNumberOfK2(new int[]{1, 2, 3, 3, 3, 3}, 3));
+    }
 
+    // 特别愚蠢的一种方法
+    // 16ms
+    public int GetNumberOfK(int[] array, int k) {
+        int count = 0;
+        for (int i : array) {
+            if (i == k) count++;
+        }
+        return count;
+    }
+
+    // 特别愚蠢的一种方法改良版
+    // 15ms
+    public int GetNumberOfK1(int[] array, int k) {
+        int count = 0;
+        boolean flag = false;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == k) {
+                count++;
+                flag = true;
+            } else if (flag && array[i] != k) {
+                break;
+            }
+        }
+        return count;
+    }
+
+    // 因为数组是有序的，全部遍历显得过于浪费时间，因此使用二分查找
+    // 15ms
+    public int GetNumberOfK2(int[] array, int k) {
+        int count = 0;
+
+        int s = 0;
+        int e = array.length - 1;
+        int m = (s + e) / 2;
+
+        while (s != m) {
+            if (array[m] < k) {
+                s = m;
+                m = (s + e) / 2;
+            } else if (array[m] > k) {
+                e = m;
+                m = (s + e) / 2;
+            } else {
+                while (m > 0 && array[m - 1] == k) {
+                    m--;
+                }
+                break;
+            }
+        }
+
+        while (m < array.length && array[m++] == k) count++;
+
+        return count;
     }
 
     /**
@@ -148,16 +204,15 @@ public class Part5 {
     }
 
     public boolean IsBalanced_Solution(TreeNode root) {
-        if (calcateDepth(root) == -1) return false;
-        else return true;
+        return calculateDepth(root) != -1;
     }
 
-    private int calcateDepth(TreeNode root) {
+    private int calculateDepth(TreeNode root) {
         if (root == null) return 0;
         if (root.left == null && root.right == null) return 1;
 
-        int left = calcateDepth(root.left);
-        int right = calcateDepth(root.right);
+        int left = calculateDepth(root.left);
+        int right = calculateDepth(root.right);
 
         if (left == -1 || right == -1) return -1;
         if (Math.abs(left - right) > 1) return -1;
@@ -204,15 +259,49 @@ public class Part5 {
      */
     @Test
     public void No57() {
-
     }
 
     /**
-     *
+     * 运行时间：16ms
+     * [翻转单词顺序列_牛客网]( https://www.nowcoder.com/practice/3194a4f4cf814f63919d0790578d51f3 )
+     * <p>
+     * 占用内存：9404k
      */
     @Test
-    public void No58() {
+    public void No58_1() {
+        System.out.println(ReverseSentence(""));
+        Assert.assertEquals(" ", ReverseSentence(" "));
+        Assert.assertEquals("", ReverseSentence(""));
+        Assert.assertEquals("I am a student.", ReverseSentence("student. a am I"));
+    }
 
+    public String ReverseSentence(String str) {
+        String[] words = str.split(" ");
+        if (words.length < 1) return str;
+        StringBuilder result = new StringBuilder();
+        for (int i = words.length - 1; i > 0; i--) {
+            result.append(words[i]).append(" ");
+        }
+        result.append(words[0]);
+        return result.toString();
+    }
+
+    /**
+     * [左旋转字符串_牛客网]( https://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec )
+     */
+    @Test
+    public void No58_2() {
+        System.out.println(LeftRotateString("abc", 2));
+    }
+
+    public String LeftRotateString(String str, int n) {
+        if (str.length() == n || str.isEmpty()) {
+            return str;
+        } else {
+            n = n % str.length();
+        }
+
+        return str.substring(n) + str.substring(0, n);
     }
 
     /**

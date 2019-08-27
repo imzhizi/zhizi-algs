@@ -6,12 +6,46 @@ import org.junit.Test;
 import java.util.*;
 
 public class Part2 {
+    /**
+     * [表示数值的字符串_牛客网]( https://www.nowcoder.com/practice/6f8c901d091949a5837e24bb82a731f2 )
+     */
+    @Test
+    public void No20(){
+        
+    }
+
+    public boolean isNumeric(char[] str) {
+        
+        boolean div=false;
+        boolean sci=false;
+        
+        for(int i=0;i<str.length;i++){
+            if(str[i]=='e'||str[i]=='E') {
+                if(i==str.length-1) return false;
+                else sci=true;
+            }else if(str[i]=='.'){
+                if(div){
+                    return false;
+                }else{
+                    if(sci) return false;
+                    else div=true;
+                }
+            }else if(str[i]=='+'||str[i]=='-'){
+                if(i!=0&&str[i-1]!='e'&&str[i-1]!='E') return false;
+            }else if(str[i]<'0'||str[i]>'9'){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
 
     /**
      * 感觉路径的计算非常困难，只能够朴实的层层递归，先全部加进去，然后排序，再记一次，Comparator o2-o1是降序
      */
     @Test
-    public void N021() {
+    public void No21() {
         TreeNode root = new TreeNode(2);
         TreeNode l = new TreeNode(3);
         TreeNode r = new TreeNode(5);
@@ -64,8 +98,31 @@ public class Part2 {
     }
 
     @Test
-//        二叉搜索树与双向链表
+    //
     public void No23() {
+    }
+
+
+    /**
+     * [数组中重复的数字_牛客网]( https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8 )
+     */
+    @Test
+    public void No23_2() {
+        int[] duplication = new int[]{-1};
+        System.out.println(duplicate(new int[]{}, 0, duplication));
+        System.out.println(duplication[0]);
+    }
+
+    public boolean duplicate(int[] numbers, int length, int[] duplication) {
+        boolean[] k = new boolean[length];
+        for (int i = 0; i < k.length; i++) {
+            if (k[numbers[i]]) {
+                duplication[0] = numbers[i];
+                return true;
+            }
+            k[numbers[i]] = true;
+        }
+        return false;
     }
 
     @Test
