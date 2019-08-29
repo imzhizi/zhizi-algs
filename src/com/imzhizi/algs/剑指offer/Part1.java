@@ -296,52 +296,33 @@ public class Part1 {
     }
 
     @Test
-    public void No18() {
-        int[] push = {1, 2, 3, 4, 5};
-        int[] pop = {4, 5, 3, 2, 1};
-        System.out.println(IsPopOrder2(push, pop));
+    public void No18_1() {
+
     }
 
-    public boolean IsPopOrder(int[] pushA, int[] popA) {
-        List<Integer> list = Arrays.stream(pushA).boxed().collect(Collectors.toList());
-        int i = 0;
-        int j = 0;
-        while (list.size() != 0 && i < list.size()) {
-            if (list.get(i) == popA[j]) {
-                list.remove(i);
-                i = i - 2;
-                j++;
-            }
-            i++;
-        }
-        System.out.println(j);
-        if (j != pushA.length) {
-            return false;
-        } else {
-            return true;
-        }
+    @Test
+    public void No18_2() {
+        deleteDuplication(new ListNode(1));
     }
 
-    public boolean IsPopOrder2(int[] pushA, int[] popA) {
-        int[] stack = new int[pushA.length];
-        int index = -1;
-        int length = pushA.length;
-        int push = 0;
-        int pop = 0;
-
-        while (push < length) {
-            stack[++index] = pushA[push++];
-            while (stack[index] == popA[pop]) {
-                pop++;
-                index--;
+    public ListNode deleteDuplication(ListNode pHead){
+        ListNode root=new ListNode(0);
+        root.next=pHead;
+        pHead=root;
+        while(pHead.next!=null&&pHead.next.next!=null){
+            ListNode node=pHead.next;
+            if(node.val==node.next.val){
+                ListNode next=node.next;
+                while(next!=null&&node.val==next.val){
+                    next=next.next;
+                }
+                pHead.next=next;
+            }else{
+                pHead=pHead.next;
             }
         }
-
-        if (pop == length) {
-            return true;
-        } else {
-            return false;
-        }
+        
+        return root.next;
     }
 
     @Test
