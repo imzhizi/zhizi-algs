@@ -2,6 +2,8 @@ package com.imzhizi.algs.剑指offer;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 public class Part3 {
     @Test
     public void No31() {

@@ -241,9 +241,7 @@ public class Part1 {
     public void No16() {
         int[][] matrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}};
         ArrayList<Integer> result = printMatrix(matrix);
-        for (Integer integer : result) {
-            System.out.print(integer + " ");
-        }
+        result.forEach(integer -> System.out.print(integer + " "));
     }
 
     public ArrayList<Integer> printMatrix(int[][] matrix) {
@@ -305,23 +303,23 @@ public class Part1 {
         deleteDuplication(new ListNode(1));
     }
 
-    public ListNode deleteDuplication(ListNode pHead){
-        ListNode root=new ListNode(0);
-        root.next=pHead;
-        pHead=root;
-        while(pHead.next!=null&&pHead.next.next!=null){
-            ListNode node=pHead.next;
-            if(node.val==node.next.val){
-                ListNode next=node.next;
-                while(next!=null&&node.val==next.val){
-                    next=next.next;
+    public ListNode deleteDuplication(ListNode pHead) {
+        ListNode root = new ListNode(0);
+        root.next = pHead;
+        pHead = root;
+        while (pHead.next != null && pHead.next.next != null) {
+            ListNode node = pHead.next;
+            if (node.val == node.next.val) {
+                ListNode next = node.next;
+                while (next != null && node.val == next.val) {
+                    next = next.next;
                 }
-                pHead.next=next;
-            }else{
-                pHead=pHead.next;
+                pHead.next = next;
+            } else {
+                pHead = pHead.next;
             }
         }
-        
+
         return root.next;
     }
 
