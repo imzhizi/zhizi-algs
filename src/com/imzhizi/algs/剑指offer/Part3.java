@@ -1,4 +1,6 @@
 package com.imzhizi.algs.剑指offer;
+
+import com.imzhizi.algs.TreeNode;
 import org.junit.Test;
 
 import java.util.*;
@@ -51,6 +53,57 @@ public class Part3 {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * 二叉树中和为某一值的路径
+     * 感觉路径的计算非常困难，只能够朴实的层层递归，先全部加进去，然后排序，再记一次，Comparator o2-o1是降序
+     */
+    @Test
+    public void No34() {
+        TreeNode root = new TreeNode(2);
+        TreeNode l = new TreeNode(3);
+        TreeNode r = new TreeNode(5);
+        TreeNode ll = new TreeNode(2);
+        l.left = ll;
+        root.left = l;
+        root.right = r;
+        System.out.println(root);
+        System.out.println(FindPath(root, 7));
+    }
+
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target) {
+        ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
+        ArrayList<Integer> path = new ArrayList<>();
+        CalPath(paths, path, root, target);
+
+        paths.sort((o1, o2) -> o2.size() - o1.size());
+
+        return paths;
+    }
+
+    public void CalPath(List<ArrayList<Integer>> paths, ArrayList<Integer> path, TreeNode root, int target) {
+        if (root == null) return;
+        int val = root.val;
+        if (root.right == null && root.left == null) {
+            if (val == target) {
+                path.add(val);
+                paths.add(path);
+                return;
+            } else {
+                return;
+            }
+        } else {
+            if (val < target) {
+                path.add(val);
+                ArrayList<Integer> right = (ArrayList<Integer>) path.clone();
+                if (root.left == null) return;
+                else CalPath(paths, path, root.left, target - val);
+                if (root.right == null) return;
+                else CalPath(paths, right, root.right, target - val);
+            }
+            return;
         }
     }
 }

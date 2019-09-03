@@ -2,6 +2,7 @@ package com.imzhizi.algs.剑指offer;
 
 import com.imzhizi.algs.ListNode;
 import com.imzhizi.algs.MinStack;
+import com.imzhizi.algs.TreeLinkNode;
 import com.imzhizi.algs.TreeNode;
 import org.junit.Test;
 
@@ -143,32 +144,30 @@ public class Part1 {
         return head;
     }
 
-
+    /**
+     * [二叉树的下一个结点_牛客网]( https://www.nowcoder.com/practice/9023a0c988684a53960365b889ceaf5e )
+     */
     @Test
     public void No8() {
-        int[] pres = new int[]{1, 2, 4, 5, 3, 6, 7};
-        reOrderArray(pres);
-        System.out.println(Arrays.toString(pres));
+
     }
 
-    public void reOrderArray(int[] array) {
-        // 感觉只能先搞个临时数组存偶数, 然后奇数覆盖式保存
-        // 最后把偶数存回去
-        int[] even = new int[array.length];
-        int[] odd = new int[array.length];
-        int e = 0;
-        int o = 0;
-
-        for (int i : array) {
-            if (i % 2 != 0) {
-                odd[o++] = i;
-            } else {
-                even[e++] = i;
+    public TreeLinkNode GetNext(TreeLinkNode pNode) {
+        if (pNode.left == null && pNode.right == null) {
+            while (pNode.next != null && pNode.next.right == pNode) {
+                pNode = pNode.next;
             }
+            return pNode.next;
+        } else if (pNode.right != null) {
+            TreeLinkNode right = pNode.right;
+            while (right.left != null) {
+                right = right.left;
+            }
+            return right;
+        } else if (pNode.next != null && pNode.next.left == pNode) {
+            return pNode.next;
         }
-
-        System.arraycopy(odd, 0, array, 0, o);
-        System.arraycopy(even, 0, array, o, e);
+        return null;
     }
 
     @Test

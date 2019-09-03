@@ -43,54 +43,33 @@ public class Part2 {
 
 
     /**
-     * 感觉路径的计算非常困难，只能够朴实的层层递归，先全部加进去，然后排序，再记一次，Comparator o2-o1是降序
+     * 重排列，使得奇数位于偶数前面
      */
     @Test
     public void No21() {
-        TreeNode root = new TreeNode(2);
-        TreeNode l = new TreeNode(3);
-        TreeNode r = new TreeNode(5);
-        TreeNode ll = new TreeNode(2);
-        l.left = ll;
-        root.left = l;
-        root.right = r;
-        System.out.println(root);
-        System.out.println(FindPath(root, 7));
-
+        int[] pres = new int[]{1, 2, 4, 5, 3, 6, 7};
+        reOrderArray(pres);
+        System.out.println(Arrays.toString(pres));
     }
 
-    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target) {
-        ArrayList<ArrayList<Integer>> paths = new ArrayList<>();
-        ArrayList<Integer> path = new ArrayList<>();
-        CalPath(paths, path, root, target);
+    public void reOrderArray(int[] array) {
+        // 感觉只能先搞个临时数组存偶数, 然后奇数覆盖式保存
+        // 最后把偶数存回去
+        int[] even = new int[array.length];
+        int[] odd = new int[array.length];
+        int e = 0;
+        int o = 0;
 
-        paths.sort((o1, o2) -> o2.size() - o1.size());
-
-        return paths;
-    }
-
-    public void CalPath(List<ArrayList<Integer>> paths, ArrayList<Integer> path, TreeNode root, int target) {
-        if (root == null) return;
-        int val = root.val;
-        if (root.right == null && root.left == null) {
-            if (val == target) {
-                path.add(val);
-                paths.add(path);
-                return;
+        for (int i : array) {
+            if (i % 2 != 0) {
+                odd[o++] = i;
             } else {
-                return;
+                even[e++] = i;
             }
-        } else {
-            if (val < target) {
-                path.add(val);
-                ArrayList<Integer> right = (ArrayList<Integer>) path.clone();
-                if (root.left == null) return;
-                else CalPath(paths, path, root.left, target - val);
-                if (root.right == null) return;
-                else CalPath(paths, right, root.right, target - val);
-            }
-            return;
         }
+
+        System.arraycopy(odd, 0, array, 0, o);
+        System.arraycopy(even, 0, array, o, e);
     }
 
     @Test
