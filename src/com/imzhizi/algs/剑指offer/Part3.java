@@ -56,6 +56,71 @@ public class Part3 {
         }
     }
 
+
+    /**
+     * [把二叉树打印成多行_牛客网]( https://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288 )
+     */
+    @Test
+    public void No32_2() {
+
+    }
+
+    public ArrayList<ArrayList<Integer>> Print2(TreeNode pRoot) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<TreeNode> list = new ArrayList<TreeNode>();
+        if (pRoot == null) return result;
+        else list.add(pRoot);
+        while (!list.isEmpty()) {
+            ArrayList<Integer> ints = new ArrayList<Integer>();
+            int size = list.size();
+            for (int i = size - 1; i >= 0; i--) {
+                TreeNode node = list.get(0);
+                list.remove(0);
+                ints.add(node.val);
+                if (node.left != null) list.add(node.left);
+                if (node.right != null) list.add(node.right);
+            }
+            result.add(ints);
+        }
+        return result;
+    }
+
+    /**
+     * [按之字形顺序打印二叉树_牛客网]( https://www.nowcoder.com/practice/91b69814117f4e8097390d107d2efbe0 )
+     */
+    @Test
+    public void No32_3() {
+
+    }
+
+    public ArrayList<ArrayList<Integer>> Print3(TreeNode pRoot) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<TreeNode> list = new ArrayList<TreeNode>();
+        if (pRoot == null) return result;
+        else list.add(pRoot);
+        int layer = 0;
+        while (!list.isEmpty()) {
+            ArrayList<Integer> ints = new ArrayList<Integer>();
+            int size = list.size();
+            for (int i = size - 1; i >= 0; i--) {
+                TreeNode node = list.get(i);
+                list.remove(i);
+                ints.add(node.val);
+                if (layer % 2 == 0) {
+                    if (node.left != null) list.add(node.left);
+                    if (node.right != null) list.add(node.right);
+                } else {
+                    if (node.right != null) list.add(node.right);
+                    if (node.left != null) list.add(node.left);
+                }
+            }
+            result.add(ints);
+            layer++;
+        }
+        return result;
+    }
+
+
     /**
      * 二叉树中和为某一值的路径
      * 感觉路径的计算非常困难，只能够朴实的层层递归，先全部加进去，然后排序，再记一次，Comparator o2-o1是降序

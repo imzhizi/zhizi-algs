@@ -212,4 +212,25 @@ public class Part2 {
 
         return max;
     }
+
+    /**
+     * [对称的二叉树_牛客网]( https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb )
+     */
+    @Test
+    public void No28(){
+        
+    }
+
+    boolean isSymmetrical(TreeNode pRoot){
+        if(pRoot==null) return true;
+        return compare(pRoot.left,pRoot.right);
+    }
+    
+    boolean compare(TreeNode left, TreeNode right){
+        if(left==null&&right==null) return true;
+        if(left==null||right==null) return false;
+        if(left.val!=right.val) return false;
+        
+        return compare(left.left,right.right)&&compare(left.right,right.left);
+    }
 }
