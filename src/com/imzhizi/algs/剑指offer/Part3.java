@@ -155,20 +155,93 @@ public class Part3 {
             if (val == target) {
                 path.add(val);
                 paths.add(path);
-                return;
-            } else {
-                return;
             }
         } else {
             if (val < target) {
                 path.add(val);
                 ArrayList<Integer> right = (ArrayList<Integer>) path.clone();
-                if (root.left == null) return;
-                else CalPath(paths, path, root.left, target - val);
-                if (root.right == null) return;
-                else CalPath(paths, right, root.right, target - val);
+                if (root.left != null)
+                    CalPath(paths, path, root.left, target - val);
+                if (root.right != null)
+                    CalPath(paths, right, root.right, target - val);
             }
-            return;
         }
+    }
+
+    /**
+     * [序列化二叉树_牛客网]( https://www.nowcoder.com/practice/cf7e25aa97c04cc1a68c8f040e71fb84 )
+     */
+    @Test
+    public void No37() {
+//        TreeNode node = new TreeNode(1);
+//        node.left = new TreeNode(2);
+//        node.right = new TreeNode(3);
+//        node.left.right = new TreeNode(4);
+//        node.right.left = new TreeNode(5);
+//        node.right.right = new TreeNode(6);
+//
+//        String str = Serialize(node);
+//        System.out.println(str);
+//        TreeNode root = Deserialize(str);
+//        System.out.println(root);
+
+        String str = Serialize(null);
+        System.out.println(str);
+        TreeNode root = Deserialize(str);
+        System.out.println(root);
+
+    }
+
+    private String Serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        List<TreeNode> list = new ArrayList<TreeNode>();
+        list.add(root);
+        if (root != null) sb.append(root.val).append("!");
+        else sb.append("#!");
+        while (!list.isEmpty()) {
+            int size = list.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = list.get(0);
+                list.remove(0);
+                if (node == null) break;
+
+                if (node.left != null) {
+                    list.add(node.left);
+                    sb.append(node.left.val).append("!");
+                } else {
+                    sb.append("#!");
+                }
+                if (node.right != null) {
+                    list.add(node.right);
+                    sb.append(node.right.val).append("!");
+                } else {
+                    sb.append("#!");
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
+    private TreeNode Deserialize(String str) {
+        String[] strs = str.split("!");
+        TreeNode[] list = new TreeNode[strs.length];
+        for (int i = 0; i < list.length; i++) {
+            if (strs[i].equals("#")) list[i] = null;
+            else list[i] = new TreeNode(Integer.parseInt(strs[i]));
+        }
+
+        int pa = 0;
+        int child = 1;
+        while (child < list.length) {
+            if (list[pa] != null) {
+                list[pa].left = list[child++];
+                if (child < list.length)
+                    list[pa].right = list[child++];
+            }
+            pa++;
+        }
+
+        return list[0];
     }
 }
