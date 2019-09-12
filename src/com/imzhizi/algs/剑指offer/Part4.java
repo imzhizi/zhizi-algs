@@ -2,11 +2,55 @@ package com.imzhizi.algs.剑指offer;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Part4 {
+    private PriorityQueue<Integer> left = new PriorityQueue<>(Comparator.comparingInt((integer) -> -1 * integer));
+    private PriorityQueue<Integer> right = new PriorityQueue<>();
+
+    /**
+     * [数据流中的中位数_牛客网]( https://www.nowcoder.com/practice/9be0172896bd43948f8a32fb954e1be1 )
+     */
+    @Test
+    public void No41() {
+        Insert(3);
+        System.out.println(GetMedian());
+        Insert(6);
+        System.out.println(GetMedian());
+        Insert(2);
+        System.out.println(GetMedian());
+        Insert(4);
+        System.out.println(GetMedian());
+    }
+
+    public void Insert(Integer num) {
+        if (left.isEmpty() || num <= left.peek()) {
+            left.add(num);
+        } else {
+            right.add(num);
+        }
+
+        if (left.size() - right.size() > 1) {
+            for (int i = 1; i < left.size() - right.size(); i++) {
+                right.add(left.poll());
+            }
+        } else if (right.size() - left.size() > 1) {
+            for (int i = 1; i < right.size() - left.size(); i++) {
+                left.add(right.poll());
+            }
+        }
+    }
+
+    public Double GetMedian() {
+        if (left.size() == right.size()) {
+            return (left.peek() + right.peek()) / 2.0;
+        } else if (left.size() > right.size()) {
+            return left.peek() * 1.0;
+        } else {
+            return right.peek() * 1.0;
+        }
+    }
+
 
     /**
      * 从1到n中1的个数

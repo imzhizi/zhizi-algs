@@ -331,10 +331,34 @@ public class Part5 {
     }
 
     /**
-     *
+     * [滑动窗口的最大值_牛客网]( https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788 )
      */
     @Test
     public void No59() {
 
+    }
+
+    public ArrayList<Integer> maxInWindows(int [] num, int size)
+    {
+        ArrayList<Integer> list=new ArrayList<>();
+        int max=Integer.MIN_VALUE;
+        int loc=-1;
+        for(int i=size-1;i>=0&&i<num.length;i++){
+            if(loc==i-size){
+                max=Integer.MIN_VALUE;
+                for(int j=i-size+1;j<=i;j++){
+                    if(max<num[j]){
+                        max=num[j];
+                        loc=j;
+                    }
+                }
+            }else if(max<num[i]){
+                max=num[i];
+                loc=i;
+            }
+            list.add(max);
+        }
+
+        return list;
     }
 }
