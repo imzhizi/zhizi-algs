@@ -1,4 +1,4 @@
-package com.imzhizi.algs;
+package com.imzhizi.algs.剑指offer;
 
 import java.util.PriorityQueue;
 

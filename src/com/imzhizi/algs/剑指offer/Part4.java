@@ -2,9 +2,39 @@ package com.imzhizi.algs.剑指offer;
 
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
 
 public class Part4 {
+    /**
+     * [最小的K个数_牛客网]( https://www.nowcoder.com/practice/6a296eb82cf844ca8539b57c23e6e9bf )
+     */
+    @Test
+    public void No40() {
+        System.out.println(GetLeastNumbers_Solution(new int[]{4, 5, 1, 6, 8, 2}, 4));
+    }
+
+    // 最小的K个数
+    public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (k > input.length) return result;
+
+        for (int i = 0; i < k; i++) {
+            for (int j = i + 1; j < input.length; j++) {
+                if (input[i] > input[j]) {
+                    int temp = input[i];
+                    input[i] = input[j];
+                    input[j] = temp;
+                }
+            }
+            result.add(input[i]);
+        }
+        return result;
+    }
+
+
     private PriorityQueue<Integer> left = new PriorityQueue<>(Comparator.comparingInt((integer) -> -1 * integer));
     private PriorityQueue<Integer> right = new PriorityQueue<>();
 
@@ -51,9 +81,31 @@ public class Part4 {
         }
     }
 
+    /**
+     * [连续子数组的最大和_牛客网]( https://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484 )
+     */
+    @Test
+    public void No42() {
+
+    }
+
+    public int FindGreatestSumOfSubArray(int[] array) {
+        int[] result = new int[array.length];
+        result[0] = array[0];
+        int max = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (result[i - 1] > 0) {
+                result[i] = array[i] + result[i - 1];
+            } else {
+                result[i] = array[i];
+            }
+            if (result[i] > max) max = result[i];
+        }
+
+        return max;
+    }
 
     /**
-     * 从1到n中1的个数
      * [整数中1出现的次数（从1到n整数中1出现的次数）_牛客网]( https://www.nowcoder.com/practice/bd7f978302044eee894445e244c7eee6?tpId=13&tqId=11184&rp=2&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking )
      */
     @Test
@@ -95,8 +147,8 @@ public class Part4 {
         return sum;
     }
 
-    //    理解错题意了，是1出现的次数，而不是含1的数字的个数
     public int NumberOf1Between1AndN_Solution(int n) {
+        //    理解错题意了，是1出现的次数，而不是含1的数字的个数
         int[] count = new int[10];
         count[0] = 1;
         int sum = 0;
@@ -113,12 +165,21 @@ public class Part4 {
     }
 
     /**
-     * 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
-     * 例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
+     * 面试题44 :数字序列中某一位的数字. 未找到
      */
     @Test
     public void test44() {
         //    todo
+    }
+
+    /**
+     * [把数组排成最小的数_牛客网]( https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993 )
+     * 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+     * 例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
+     * todo
+     */
+    @Test
+    public void test45() {
     }
 
     public String PrintMinNumber(int[] numbers) {
@@ -139,43 +200,16 @@ public class Part4 {
         return sb.toString();
     }
 
-    @Test
-    public void No45() {
-
-    }
-
     /**
-     * [第一个只出现一次的字符_牛客网]( https://www.nowcoder.com/practice/1c82e8cf713b4bbeb2a5b31cf5b0417c )
+     * 面试题46 :把数字翻译成字符串. 未找到
      */
     @Test
-    public void No46() {
-
-    }
-
-    public int FirstNotRepeatingChar(String str) {
-        char[] cs = str.toCharArray();
-        int[] record = new int[58];
-
-        int length = cs.length;
-
-        int[] count = new int[58];
-        Arrays.fill(count, length);
-
-        for (int i = 0; i < length; i++) {
-            record[cs[i] - 'A']++;
-            if (record[cs[i] - 'A'] == 1) {
-                count[cs[i] - 'A'] = i;
-            } else {
-                count[cs[i] - 'A'] = length;
-            }
-        }
-
-        Arrays.sort(count);
-        return count[0] == length ? -1 : count[0];
+    public void test46() {
+        //    todo
     }
 
     /**
-     *
+     * 面试题47 :礼物的最大价值. 未找到
      */
     @Test
     public void No47() {
@@ -183,7 +217,7 @@ public class Part4 {
     }
 
     /**
-     *
+     * 面试题48 :最长不含重复字符的子字符串. 未找到
      */
     @Test
     public void No48() {
@@ -191,10 +225,10 @@ public class Part4 {
     }
 
     /**
-     *
+     * [丑数_牛客网]( https://www.nowcoder.com/practice/6aa9e04fc3794f68acf8778237ba065b )
+     * todo
      */
     @Test
     public void No49() {
-
     }
 }

@@ -4,7 +4,10 @@ import com.imzhizi.algs.ListNode;
 import com.imzhizi.algs.TreeNode;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 public class Part2 {
     /**
@@ -44,6 +47,7 @@ public class Part2 {
 
     /**
      * 重排列，使得奇数位于偶数前面
+     * [调整数组顺序使奇数位于偶数前面_牛客网]( https://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593 )
      */
     @Test
     public void No21() {
@@ -72,18 +76,40 @@ public class Part2 {
         System.arraycopy(even, 0, array, o, e);
     }
 
+    /**
+     * [链表中倒数第k个结点_牛客网]( https://www.nowcoder.com/practice/529d3ae5a407492994ad2a246518148a )
+     */
     @Test
-//        复杂链表的复制
     public void No22() {
     }
 
+    public ListNode FindKthToTail(ListNode head, int k) {
+        ListNode fast = head;
+        while (k != 0 && fast != null) {
+            fast = fast.next;
+            k--;
+        }
+
+        if (k != 0) return null;
+
+        ListNode slow = head;
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        return slow;
+    }
+
+    /**
+     * [链表中环的入口结点_牛客网]( https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4 )
+     * 18ms
+     */
     @Test
-    //
     public void No23() {
         System.out.println(EntryNodeOfLoop(new ListNode(1)).val);
     }
 
-    // 18ms
     public ListNode EntryNodeOfLoop(ListNode pHead) {
         List<ListNode> list = new ArrayList<>();
 
@@ -101,136 +127,194 @@ public class Part2 {
     }
 
     // 使用HashSet优化了一丢丢
-    public ListNode EntryNodeOfLoop2(ListNode pHead)
-    {
-        HashSet<Integer> set=new HashSet<>();
+    public ListNode EntryNodeOfLoop2(ListNode pHead) {
+        HashSet<Integer> set = new HashSet<>();
 
-        while(pHead!=null){
-            if(set.contains(pHead.val)){
+        while (pHead != null) {
+            if (set.contains(pHead.val)) {
                 return pHead;
             }
             set.add(pHead.val);
-            pHead=pHead.next;
+            pHead = pHead.next;
         }
 
         return null;
     }
 
-
     /**
-     * [数组中重复的数字_牛客网]( https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8 )
+     * [反转链表_牛客网]( https://www.nowcoder.com/practice/75e878df47f24fdc9dc3e400ec6058ca )
      */
     @Test
-    public void No23_2() {
-        int[] duplication = new int[]{-1};
-        System.out.println(duplicate(new int[]{}, 0, duplication));
-        System.out.println(duplication[0]);
-    }
-
-    public boolean duplicate(int[] numbers, int length, int[] duplication) {
-        boolean[] k = new boolean[length];
-        for (int i = 0; i < k.length; i++) {
-            if (k[numbers[i]]) {
-                duplication[0] = numbers[i];
-                return true;
-            }
-            k[numbers[i]] = true;
-        }
-        return false;
-    }
-
-    @Test
-//        字符串的排列
     public void No24() {
-        char[] str = new char[10];
-        String s = String.valueOf(str);
-        char[] newStr = str.clone();
+
     }
 
+    public ListNode ReverseList(ListNode head) {
+        ListNode result = new ListNode(0);
+
+        while (head != null) {
+            ListNode temp = head;
+            head = head.next;
+            temp.next = result.next;
+            result.next = temp;
+        }
+
+        return result.next;
+    }
+
+    /**
+     * [合并两个排序的链表_牛客网]( https://www.nowcoder.com/practice/d8b6b4358f774294a89de2a6ac4d9337 )
+     */
     @Test
-// 数组中出现次数超过一半的数字
     public void No25() {
+
     }
 
-    public int MoreThanHalfNum_Solution(int[] array) {
-        HashMap<Integer, Integer> map = new HashMap<>();
-        int length = array.length;
-        for (int i = 0; i < length; i++) {
-            if (map.containsKey(array[i])) {
-                map.put(array[i], map.get(array[i]) + 1);
-            } else {
-                map.put(array[i], 1);
+    public ListNode Merge(ListNode list1, ListNode list2) {
+        ListNode head = new ListNode(0);
+
+        head.next = list1;
+
+        ListNode node = head;
+
+        while (list2 != null) {
+            if (node.next == null) {
+                node.next = list2;
+                break;
             }
-            if (map.get(array[i]) > length / 2) {
-                return array[i];
+
+            if (list2.val <= node.next.val) {
+                ListNode temp = list2;
+                list2 = list2.next;
+
+                temp.next = node.next;
+                node.next = temp;
             }
+            node = node.next;
         }
-        return 0;
+
+        return head.next;
     }
 
-
+    /**
+     * [树的子结构_牛客网]( https://www.nowcoder.com/practice/6e196c44c7004d15b1610b9afca8bd88 )
+     */
     @Test
-    // 最小的K个数
     public void No26() {
+
     }
 
-    public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
-        ArrayList<Integer> result = new ArrayList<>();
-        if (k > input.length) return result;
+    // 在root1种寻找所有val 为 root2 的结点
+    public boolean HasSubtree(TreeNode root1, TreeNode root2) {
+        if (root1 == null || root2 == null) return false;
 
-        for (int i = 0; i < k; i++) {
-            for (int j = i + 1; j < input.length; j++) {
-                if (input[i] > input[j]) {
-                    int temp = input[i];
-                    input[i] = input[j];
-                    input[j] = temp;
-                }
-            }
-            result.add(input[i]);
+        if (root1.val == root2.val) {
+            return compareChild(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
         }
-        return result;
+
+        return HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
     }
 
+    // 原来子结构不是完全一致, 而是局部一致, 因此root2遍历结束即可
+    public boolean compareChild(TreeNode root1, TreeNode root2) {
+        if (root2 == null) return true;
+        if (root1 == null) return false;
+        if (root1.val != root2.val) return false;
 
+        return compareChild(root1.left, root2.left) && compareChild(root1.right, root2.right);
+
+    }
+
+    /**
+     * [二叉树的镜像_牛客网]( https://www.nowcoder.com/practice/564f4c26aa584921bc75623e48ca3011 )
+     */
     @Test
-    // 最大连续子串和
     public void No27() {
+
     }
 
-    public int FindGreatestSumOfSubArray(int[] array) {
-        int[] result = new int[array.length];
-        result[0] = array[0];
-        int max = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (result[i - 1] > 0) {
-                result[i] = array[i] + result[i - 1];
-            } else {
-                result[i] = array[i];
-            }
-            if (result[i] > max) max = result[i];
-        }
+    public void Mirror(TreeNode root) {
+        if (root == null) return;
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
 
-        return max;
+        Mirror(root.left);
+        Mirror(root.right);
     }
 
     /**
      * [对称的二叉树_牛客网]( https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb )
      */
     @Test
-    public void No28(){
-        
+    public void No28() {
+
     }
 
-    boolean isSymmetrical(TreeNode pRoot){
-        if(pRoot==null) return true;
-        return compare(pRoot.left,pRoot.right);
+    boolean isSymmetrical(TreeNode pRoot) {
+        if (pRoot == null) return true;
+        return compare(pRoot.left, pRoot.right);
     }
-    
-    boolean compare(TreeNode left, TreeNode right){
-        if(left==null&&right==null) return true;
-        if(left==null||right==null) return false;
-        if(left.val!=right.val) return false;
-        
-        return compare(left.left,right.right)&&compare(left.right,right.left);
+
+    boolean compare(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        if (left.val != right.val) return false;
+
+        return compare(left.left, right.right) && compare(left.right, right.left);
+    }
+
+    /**
+     * [顺时针打印矩阵_牛客网]( https://www.nowcoder.com/practice/9b4c81a02cd34f76be2659fa0d54342a )
+     */
+    @Test
+    public void No29() {
+        int[][] matrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}};
+        ArrayList<Integer> result = printMatrix(matrix);
+        result.forEach(integer -> System.out.print(integer + " "));
+    }
+
+    public ArrayList<Integer> printMatrix(int[][] matrix) {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        int h = matrix.length;
+        int w = matrix[0].length;
+
+        int i = 0;
+        int j = 0;
+        int loop = 0;
+        int count = h * w;
+        while (count > 0) {
+            while (count > 0 && j < w - loop) {
+                count--;
+                result.add(matrix[i][j++]);
+            }
+            j--;
+            i++;
+            while (count > 0 && i < h - loop) {
+                count--;
+                result.add(matrix[i++][j]);
+            }
+            j--;
+            i--;
+            while (count > 0 && j >= loop) {
+                count--;
+                result.add(matrix[i][j--]);
+            }
+
+            j++;
+            i--;
+            loop++;
+
+            while (count > 0 && i >= loop) {
+                count--;
+                result.add(matrix[i--][j]);
+            }
+
+            i++;
+            j++;
+        }
+
+        return result;
     }
 }

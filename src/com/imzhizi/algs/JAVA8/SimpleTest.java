@@ -1,4 +1,4 @@
-package com.imzhizi.algs;
+package com.imzhizi.algs.JAVA8;
 
 
 import org.junit.Test;

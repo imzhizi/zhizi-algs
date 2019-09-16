@@ -1,10 +1,14 @@
 package com.imzhizi.algs.剑指offer;
 
+import com.imzhizi.algs.ListNode;
 import com.imzhizi.algs.TreeNode;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class Part5 {
     /**
@@ -74,7 +78,7 @@ public class Part5 {
         int min = Integer.MAX_VALUE;
         for (char c : map.keySet()) {
             if (map.get(c) < min) {
-                min=map.get(c);
+                min = map.get(c);
                 ch = c;
             }
         }
@@ -127,11 +131,16 @@ public class Part5 {
     }
 
     /**
-     *
+     * [两个链表的第一个公共结点_牛客网]( https://www.nowcoder.com/practice/6ab1d9a29e88450685099d45c9e31e46 )
+     * todo
      */
     @Test
     public void No52() {
 
+    }
+
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        return null;
     }
 
     /**
@@ -198,11 +207,48 @@ public class Part5 {
     }
 
     /**
-     *
+     * [zhizi-algs/A268_MissingNumber.java ]( https://github.com/imzhizi/zhizi-algs/blob/a67c67bd593e94b1b56642b0026da380c2d7cddf/src/com/imzhizi/algs/LeetCode/LeetCode2018/A268_MissingNumber.java )
+     * [ 268 Missing Number - leetcode]( https://leetcode.com/problems/missing-number )
+     */
+    @Test
+    public void No53_2() {
+
+    }
+
+
+    /**
+     * [二叉搜索树的第k个结点_牛客网]( https://www.nowcoder.com/practice/ef068f602dde4d28aab2b210e859150a )
+     * 先移动到最左下角, 按照中序遍历, 第几个就是第几个
+     * 需要递归
      */
     @Test
     public void No54() {
 
+    }
+
+    TreeNode KthNode(TreeNode pRoot, int k)
+    {
+        List<TreeNode> list =new ArrayList<>();
+        mid(pRoot,list);
+        if(k==0||k>list.size()) return null;
+        return list.get(k-1);
+    }
+
+    void mid(TreeNode pRoot, List<TreeNode> list)
+    {
+        if(pRoot==null){
+            return;
+        }
+
+        if(pRoot.left!=null){
+            mid(pRoot.left,list);
+        }
+
+        list.add(pRoot);
+
+        if(pRoot.right!=null){
+            mid(pRoot.right,list);
+        }
     }
 
     /**
@@ -281,17 +327,46 @@ public class Part5 {
     }
 
     /**
-     *
+     * [和为S的两个数字_牛客网]( https://www.nowcoder.com/practice/390da4f7a00f44bea7c2f3d19491311b )
      */
     @Test
-    public void No57() {
+    public void No57_1() {
+
+
+    }
+
+    public ArrayList<Integer> FindNumbersWithSum(int [] array,int sum) {
+        int head=0;
+        int tail=array.length-1;
+        ArrayList<Integer> result=new ArrayList<Integer>();
+
+        while(head<tail){
+            if(array[head]+array[tail]==sum){
+                result.add(array[head]);
+                result.add(array[tail]);
+                break;
+            }else if(array[head]+array[tail]>sum){
+                tail--;
+            }else{
+                head++;
+            }
+        }
+
+        return result;
     }
 
     /**
-     * 运行时间：16ms
+     * [和为S的连续正数序列_牛客网]( https://www.nowcoder.com/practice/c451a3fd84b64cb19485dad758a55ebe )
+     * todo
+     */
+    @Test
+    public void No57_2() {
+
+    }
+
+    /**
      * [翻转单词顺序列_牛客网]( https://www.nowcoder.com/practice/3194a4f4cf814f63919d0790578d51f3 )
-     * <p>
-     * 占用内存：9404k
+     * 运行时间：16ms
      */
     @Test
     public void No58_1() {
@@ -338,23 +413,22 @@ public class Part5 {
 
     }
 
-    public ArrayList<Integer> maxInWindows(int [] num, int size)
-    {
-        ArrayList<Integer> list=new ArrayList<>();
-        int max=Integer.MIN_VALUE;
-        int loc=-1;
-        for(int i=size-1;i>=0&&i<num.length;i++){
-            if(loc==i-size){
-                max=Integer.MIN_VALUE;
-                for(int j=i-size+1;j<=i;j++){
-                    if(max<num[j]){
-                        max=num[j];
-                        loc=j;
+    public ArrayList<Integer> maxInWindows(int[] num, int size) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int max = Integer.MIN_VALUE;
+        int loc = -1;
+        for (int i = size - 1; i >= 0 && i < num.length; i++) {
+            if (loc == i - size) {
+                max = Integer.MIN_VALUE;
+                for (int j = i - size + 1; j <= i; j++) {
+                    if (max < num[j]) {
+                        max = num[j];
+                        loc = j;
                     }
                 }
-            }else if(max<num[i]){
-                max=num[i];
-                loc=i;
+            } else if (max < num[i]) {
+                max = num[i];
+                loc = i;
             }
             list.add(max);
         }

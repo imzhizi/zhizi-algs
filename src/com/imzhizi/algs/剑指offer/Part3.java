@@ -3,10 +3,24 @@ package com.imzhizi.algs.剑指offer;
 import com.imzhizi.algs.TreeNode;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Part3 {
+    /**
+     * [包含min函数的栈_牛客网]( https://www.nowcoder.com/practice/4c776177d2c04c2494f2555c9fcc1e49 )
+     */
+    @Test
+    public void No30() {
+        MinStack minStack = new MinStack();
+    }
+
+    /**
+     * [栈的压入、弹出序列_牛客网]( https://www.nowcoder.com/practice/d77d11405cc7470d82554cb392585106 )
+     */
     @Test
     public void No31() {
         int[] push = {1, 2, 3, 4, 5};
@@ -56,6 +70,34 @@ public class Part3 {
         }
     }
 
+
+    /**
+     * [从上往下打印二叉树_牛客网]( https://www.nowcoder.com/practice/7fe2212963db4790b57431d9ed259701 )
+     */
+    @Test
+    public void No32_1() {
+
+    }
+
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<TreeNode> nodes = new ArrayList<>();
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+        else nodes.add(root);
+        while (!nodes.isEmpty()) {
+            TreeNode node = nodes.get(0);
+            result.add(node.val);
+            nodes.remove(0);
+            if (node.left != null) {
+                nodes.add(node.left);
+            }
+            if (node.right != null) {
+                nodes.add(node.right);
+            }
+        }
+
+        return result;
+    }
 
     /**
      * [把二叉树打印成多行_牛客网]( https://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288 )
@@ -120,8 +162,41 @@ public class Part3 {
         return result;
     }
 
+    /**
+     * [二叉搜索树的后序遍历序列_牛客网]( https://www.nowcoder.com/practice/a861533d45854474ac791d90e447bafd )
+     */
+    @Test
+    public void No33() {
+        System.out.println(VerifySquenceOfBST(new int[]{3, 5, 4, 7, 9, 8, 6}));
+        System.out.println(VerifySquenceOfBST(new int[]{1, 2, 3, 4, 5}));
+        System.out.println(VerifySquenceOfBST(new int[]{7, 4, 6, 5}));
+    }
+
+    public boolean VerifySquenceOfBST(int[] sequence) {
+        return Verify(sequence, 0, sequence.length - 1);
+    }
+
+    public boolean Verify(int[] sequence, int head, int tail) {
+        if (head >= tail) return true;
+
+        int root = sequence[tail];
+        int i = 0;
+        // find root
+        for (i = head; i <= tail; i++) {
+            if (sequence[i] < root) {
+                break;
+            }
+        }
+
+        for (int j = i + 1; j < tail; j++) {
+            if (sequence[j] > root) return false;
+        }
+
+        return Verify(sequence, 0, i - 1) && Verify(sequence, i, tail - 1);
+    }
 
     /**
+     * [二叉树中和为某一值的路径_牛客网]( https://www.nowcoder.com/practice/b736e784e3e34731af99065031301bca )
      * 二叉树中和为某一值的路径
      * 感觉路径的计算非常困难，只能够朴实的层层递归，先全部加进去，然后排序，再记一次，Comparator o2-o1是降序
      */
@@ -169,30 +244,93 @@ public class Part3 {
     }
 
     /**
+     * [复杂链表的复制_牛客网]( https://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba )
+     */
+    @Test
+    public void No35() {
+
+    }
+
+    public RandomListNode Clone(RandomListNode pHead) {
+        if (pHead == null) return null;
+
+        RandomListNode node = new RandomListNode(pHead.label);
+        HashMap<Integer, RandomListNode> map = new HashMap<>();
+        map.put(pHead.label, node);
+
+
+        RandomListNode head = node;
+        RandomListNode p = pHead;
+        while (pHead.next != null) {
+            head.next = new RandomListNode(pHead.next.label);
+            map.put(pHead.next.label, head.next);
+            pHead = pHead.next;
+            head = head.next;
+        }
+
+        head = node;
+
+        while (p != null) {
+            if (p.random != null)
+                head.random = map.get(p.random.label);
+            head = head.next;
+            p = p.next;
+        }
+        return node;
+    }
+
+    /**
+     * [二叉搜索树与双向链表_牛客网]( https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5 )
+     */
+    @Test
+    public void No36() {
+
+    }
+
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        TreeNode left = Convert(pRootOfTree, true);
+        if (left == null) return null;
+        while (left.left != null) {
+            left = left.left;
+        }
+        return left;
+    }
+
+    public TreeNode Convert(TreeNode pRootOfTree, boolean flag) {
+        if (pRootOfTree == null) return null;
+        if (pRootOfTree.left == null && pRootOfTree.right == null) {
+            return pRootOfTree;
+        }
+        TreeNode left = Convert(pRootOfTree.left, true);
+        pRootOfTree.left = left;
+        TreeNode right = Convert(pRootOfTree.right, false);
+        pRootOfTree.right = right;
+        if (left != null) left.right = pRootOfTree;
+        if (right != null) right.left = pRootOfTree;
+        if (flag) return right == null ? pRootOfTree : right;
+        else return left == null ? pRootOfTree : left;
+    }
+
+    /**
      * [序列化二叉树_牛客网]( https://www.nowcoder.com/practice/cf7e25aa97c04cc1a68c8f040e71fb84 )
      */
     @Test
     public void No37() {
-//        TreeNode node = new TreeNode(1);
-//        node.left = new TreeNode(2);
-//        node.right = new TreeNode(3);
-//        node.left.right = new TreeNode(4);
-//        node.right.left = new TreeNode(5);
-//        node.right.right = new TreeNode(6);
-//
-//        String str = Serialize(node);
-//        System.out.println(str);
-//        TreeNode root = Deserialize(str);
-//        System.out.println(root);
+        TreeNode node = new TreeNode(1);
+        node.left = new TreeNode(2);
+        node.right = new TreeNode(3);
+        node.left.right = new TreeNode(4);
+        node.right.left = new TreeNode(5);
+        node.right.right = new TreeNode(6);
 
-        String str = Serialize(null);
+        String str = Serialize(node);
         System.out.println(str);
         TreeNode root = Deserialize(str);
         System.out.println(root);
 
     }
 
-    private String Serialize(TreeNode root) {
+    String Serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
         List<TreeNode> list = new ArrayList<TreeNode>();
         list.add(root);
@@ -223,7 +361,7 @@ public class Part3 {
         return sb.toString();
     }
 
-    private TreeNode Deserialize(String str) {
+    TreeNode Deserialize(String str) {
         String[] strs = str.split("!");
         TreeNode[] list = new TreeNode[strs.length];
         for (int i = 0; i < list.length; i++) {
@@ -244,4 +382,64 @@ public class Part3 {
 
         return list[0];
     }
+
+    /**
+     * [字符串的排列_牛客网]( https://www.nowcoder.com/practice/fe6b651b66ae47d7acce78ffdd9a96c7 )
+     */
+    @Test
+    public void No38() {
+
+    }
+
+    public ArrayList<String> Permutation(String str) {
+        List<String> result = new ArrayList<>();
+        if (str.length() == 0)
+            return (ArrayList) result;
+        find(str.toCharArray(), 0, result);
+        return (ArrayList) result;
+    }
+
+    public void find(char[] str, int loc, List<String> result) {
+        if (loc == str.length) {
+            String s = String.valueOf(str);
+            if (!result.contains(s)) result.add(s);
+            return;
+        }
+
+        char[] newStr = str.clone();
+        find(newStr, loc + 1, result);
+
+        for (int i = loc + 1; i < str.length; i++) {
+            char temp = str[loc];
+            str[loc] = str[i];
+            str[i] = temp;
+            char[] copy = str.clone();
+            find(copy, loc + 1, result);
+        }
+    }
+
+    /**
+     * [数组中出现次数超过一半的数字_牛客网]( https://www.nowcoder.com/practice/e8a1b01a2df14cb2b228b30ee6a92163 )
+     */
+    @Test
+    public void No39() {
+
+    }
+
+    public int MoreThanHalfNum_Solution(int[] array) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int length = array.length;
+        for (int i = 0; i < length; i++) {
+            if (map.containsKey(array[i])) {
+                map.put(array[i], map.get(array[i]) + 1);
+            } else {
+                map.put(array[i], 1);
+            }
+            if (map.get(array[i]) > length / 2) {
+                return array[i];
+            }
+        }
+        return 0;
+    }
+
 }
