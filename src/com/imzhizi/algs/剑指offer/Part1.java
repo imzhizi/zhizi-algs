@@ -5,10 +5,7 @@ import com.imzhizi.algs.TreeNode;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class Part1 {
     /**
@@ -344,20 +341,140 @@ public class Part1 {
 
     /**
      * [矩阵中的路径_牛客网]( https://www.nowcoder.com/practice/c61c6999eecb4b8f88a98f66b273a3cc )
+     * todo
      */
     @Test
     public void No12() {
-        //todo
+        System.out.println(hasPath1("ABCESFCEADEE".toCharArray(), 3, 4, "ABCCED".toCharArray()));
+        System.out.println(hasPath1("ABCEHJIGSFCSLOPQADEEMNOEADIDEJFMVCEIFGGS".toCharArray(),
+                5, 8, "SGGFIECVAASABCEHJIGQEMS".toCharArray()));
     }
 
     boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
-        int index = findFirst(matrix, 0, str[0]);
-        if (index == -1) return false;
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i] == str[0]) {
+                HashSet<Integer> visited = new HashSet<>();
+                visited.add(i);
+                if (hasPath(matrix, rows, cols, str, i, 1, visited)) {
+                    return true;
+                }
+                visited.remove(i);
+            }
+        }
+        return false;
+    }
 
-        int row = index / rows;
-        int col = index % rows;
+    boolean hasPath(char[] matrix, int rows, int cols, char[] str, int loc, int index, HashSet<Integer> visited) {
+        if (index == str.length) return true;
+        if (loc < 0 || loc >= rows * cols) return false;
+
+        int up = loc - cols;
+        if (up >= 0 && !visited.contains(up)) {
+            if (matrix[up] == str[index]) {
+                visited.add(up);
+                if (hasPath(matrix, rows, cols, str, up, index + 1, visited)) {
+                    return true;
+                } else {
+                    visited.remove(up);
+                }
+            }
+        }
+
+        int down = loc + cols;
+        if (down < rows * cols && !visited.contains(down)) {
+            if (matrix[down] == str[index]) {
+                visited.add(down);
+                if (hasPath(matrix, rows, cols, str, down, index + 1, visited)) {
+                    return true;
+                } else {
+                    visited.remove(down);
+                }
+            }
+        }
+
+        int left = loc - 1;
+        if (loc % cols > 0 && !visited.contains(left)) {
+            if (matrix[left] == str[index]) {
+                visited.add(left);
+                if (hasPath(matrix, rows, cols, str, left, index + 1, visited)) {
+                    return true;
+                } else {
+                    visited.remove(left);
+                }
+            }
+        }
+
+        int right = loc + 1;
+        if (loc % cols < cols - 1 && !visited.contains(right)) {
+            if (matrix[right] == str[index]) {
+                visited.add(right);
+                if (hasPath(matrix, rows, cols, str, right, index + 1, visited)) {
+                    return true;
+                } else {
+                    visited.remove(right);
+                }
+            }
+        }
 
         return false;
+    }
+
+
+    boolean hasPath1(char[] matrix, int rows, int cols, char[] str) {
+        for (int i = 0; i < matrix.length; i++) {
+            boolean[] visited = new boolean[matrix.length];
+            if (matrix[i] == str[0] && hasPath1(matrix, rows, cols, str, i, 0, visited)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean hasPath1(char[] matrix, int rows, int cols, char[] str, int loc, int index, boolean[] visited) {
+        if (loc < 0 || loc >= rows * cols || index < 0 || index >= str.length || visited[loc] || matrix[loc] != str[index])
+            return false;
+
+        if (index == str.length - 1) return true;
+
+        visited[loc] = true;
+        if (hasPath1(matrix, rows, cols, str, loc - cols, index + 1, visited)
+                || hasPath1(matrix, rows, cols, str, loc + cols, index + 1, visited)
+                || loc % cols > 0 && hasPath1(matrix, rows, cols, str, loc - 1, index + 1, visited)
+                || loc % cols != cols - 1 && hasPath1(matrix, rows, cols, str, loc + 1, index + 1, visited)
+        ) {
+            return true;
+        }
+
+        visited[loc] = false;
+        return false;
+    }
+
+    boolean hasPath2(char[] matrix, int rows, int cols, char[] str) {
+        // 失败，由于无法过滤无效格子
+        int[] stack = new int[str.length];
+        int index = -1; // stack 目前的位置
+
+        while (index != str.length - 1) {
+            if (index == -1) {
+                index++;
+                stack[index] = findFirst(matrix, stack[index], str[index]);
+            } else if (stack[index] / cols != 0 && matrix[stack[index] - cols] != ' ' && matrix[stack[index] - cols] == str[index + 1]) {
+                stack[++index] = stack[index - 1] - cols;
+            } else if (stack[index] / cols != rows - 1 && matrix[stack[index] + cols] != ' ' && matrix[stack[index] + cols] == str[index + 1]) {
+                stack[++index] = stack[index - 1] + cols;
+            } else if (stack[index] % cols != 0 && matrix[stack[index] - 1] != ' ' && matrix[stack[index] - 1] == str[index + 1]) {
+                stack[++index] = stack[index - 1] - 1;
+            } else if (stack[index] % cols != cols - 1 && matrix[stack[index] + 1] != ' ' && matrix[stack[index] + 1] == str[index + 1]) {
+                stack[++index] = stack[index - 1] + 1;
+            } else {
+                matrix[stack[index]] = str[index];
+                index--;
+            }
+            if (index >= 0) matrix[stack[index]] = ' ';
+            else stack[0]++;
+        }
+
+        return true;
     }
 
     int findFirst(char[] matrix, int start, char cs) {

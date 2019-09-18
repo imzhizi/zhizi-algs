@@ -166,10 +166,10 @@ public class Part4 {
 
     /**
      * 面试题44 :数字序列中某一位的数字. 未找到
+     * todo
      */
     @Test
     public void test44() {
-        //    todo
     }
 
     /**
@@ -202,10 +202,10 @@ public class Part4 {
 
     /**
      * 面试题46 :把数字翻译成字符串. 未找到
+     * todo
      */
     @Test
     public void test46() {
-        //    todo
     }
 
     /**
