@@ -341,7 +341,7 @@ public class Part1 {
 
     /**
      * [矩阵中的路径_牛客网]( https://www.nowcoder.com/practice/c61c6999eecb4b8f88a98f66b273a3cc )
-     * todo
+     * hasPath 和 hasPath1 的思路是相同的，只是简化缩略了。
      */
     @Test
     public void No12() {
@@ -550,33 +550,91 @@ public class Part1 {
 
     /**
      * [二进制中1的个数_牛客网]( https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8 )
+     * 负数的就是二进制取反加一，所以二进制是减一取反, 还是放弃了，可能是不熟悉二进制吧，应该有一些其他情况
+     * 但其实用库函数就可以拿到 二进制字符串
      * todo
      */
     @Test
     public void No15() {
+        System.out.println(Integer.toBinaryString(12));
+//        Assert.assertEquals(NumberOf1(27), NumbersOf1(27));
+//        Assert.assertEquals(NumberOf1(-9), NumbersOf1(-9));
+//        Assert.assertEquals(NumberOf1(Integer.MIN_VALUE), NumbersOf1(Integer.MIN_VALUE));
     }
 
     int NumberOf1(int n) {
-        return 0;
+        String str = Integer.toBinaryString(n);
+        int count = 0;
+        for (char c : str.toCharArray()) {
+            if (c == '1') count++;
+        }
+        return count;
     }
+
+    int NumbersOf1(int n) {
+        int count = 0;
+        while (n != 0) {
+            if ((n & 1) == 1) {
+                count++;
+            }
+            n >>= 1;
+        }
+        return count;
+    }
+
 
     /**
      * [数值的整数次方_牛客网]( https://www.nowcoder.com/practice/1a834e5e3e1a4b7ba251417554e07c00 )
+     * 本来自己实现的方法用的是循环，也就是要执行 n 次，现在通过平方来计算，只需要O(n/2)
      */
     @Test
     public void No16() {
-
+        System.out.println(Power(2, 8) == Power2(2, 8));
     }
 
     double Power(double base, int exponent) {
         return Math.pow(base, exponent);
     }
 
+    public double Power2(double base, int exponent) {
+        if (exponent < 0) {
+            base = 1 / base;
+            exponent *= -1;
+        } else if (exponent == 0) {
+            return 1.0;
+        }
+
+        return PurePower(base, exponent);
+    }
+
+    double PurePower(double base, int exponent) {
+        double result = 1.0;
+        if (exponent > 1 && exponent % 2 != 0) {
+            result = base;
+            exponent--;
+        }
+
+        for (int i = 1; i < exponent; i <<= 1) {
+            base *= base;
+        }
+
+        return result * base;
+    }
+
+
+    /**
+     * 17. 打印从1到最大的n位数
+     * 刚看到这道题有点懵逼，
+     * todo
+     */
     @Test
     public void No17() {
 
     }
 
+    /**
+     * todo
+     */
     @Test
     public void No18_1() {
 
