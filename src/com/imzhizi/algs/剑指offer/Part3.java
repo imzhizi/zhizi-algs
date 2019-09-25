@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class Part3 {
     /**
      * [包含min函数的栈_牛客网]( https://www.nowcoder.com/practice/4c776177d2c04c2494f2555c9fcc1e49 )
+     * [ MinStack ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/MinStack.java )
      */
     @Test
     public void No30() {
@@ -245,6 +246,7 @@ public class Part3 {
 
     /**
      * [复杂链表的复制_牛客网]( https://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba )
+     * [ 独立类文件 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/RandomListNode.java )
      */
     @Test
     public void No35() {

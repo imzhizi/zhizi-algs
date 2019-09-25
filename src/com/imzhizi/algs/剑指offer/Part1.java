@@ -4,7 +4,9 @@ import com.imzhizi.algs.ListNode;
 import com.imzhizi.algs.TreeNode;
 import org.junit.Assert;
 import org.junit.Test;
+import org.omg.PortableInterceptor.INACTIVE;
 
+import java.awt.font.LineMetrics;
 import java.util.*;
 
 public class Part1 {
@@ -551,18 +553,15 @@ public class Part1 {
     /**
      * [二进制中1的个数_牛客网]( https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8 )
      * 负数的就是二进制取反加一，所以二进制是减一取反, 还是放弃了，可能是不熟悉二进制吧，应该有一些其他情况
-     * 但其实用库函数就可以拿到 二进制字符串
-     * todo
+     * 但其实用库函数就可以拿到二进制字符串
      */
     @Test
     public void No15() {
-        System.out.println(Integer.toBinaryString(12));
-//        Assert.assertEquals(NumberOf1(27), NumbersOf1(27));
-//        Assert.assertEquals(NumberOf1(-9), NumbersOf1(-9));
-//        Assert.assertEquals(NumberOf1(Integer.MIN_VALUE), NumbersOf1(Integer.MIN_VALUE));
+        System.out.println(Integer.toBinaryString(-9));
+        System.out.println(NumberOf11(-9));
     }
 
-    int NumberOf1(int n) {
+    int NumberOf11(int n) {
         String str = Integer.toBinaryString(n);
         int count = 0;
         for (char c : str.toCharArray()) {
@@ -571,9 +570,13 @@ public class Part1 {
         return count;
     }
 
-    int NumbersOf1(int n) {
+    int NumberOf12(int n) {
+        // 如果不包含负数，则可以正常工作
+        // 但如果是负数，因为符号位始终为符号位，所以符号位的 1 会被不断复制出来
+        // 但一个整型数字一共32位，因此直接循环32次即可
         int count = 0;
-        while (n != 0) {
+        int i = 32;
+        while (i-- > 0) {
             if ((n & 1) == 1) {
                 count++;
             }
@@ -623,17 +626,52 @@ public class Part1 {
 
 
     /**
-     * 17. 打印从1到最大的n位数
-     * 刚看到这道题有点懵逼，
-     * todo
+     * 打印从1到最大的n位数
+     * 刚看到这道题有点懵逼, 后来发现是n大于32时会超支
      */
     @Test
     public void No17() {
+        printNumbers(3);
+    }
 
+    public void printNumbers(int n) {
+        for (int index = 1; index < Math.pow(10, n); index++) {
+            System.out.print(index + " ");
+        }
+        if (n > 32) {
+            int[] num = new int[n];
+
+            for (int i = 0; i < 32; i++) {
+                num[i] = 9;
+            }
+
+            int index = 31;
+            while (index < n) {
+                int i = 0;
+                num[i]++;
+                while (num[i] != 10) {
+                    printNumber(num, index);
+                    num[i]++;
+                }
+                while (num[i] == 10) {
+                    num[i] = 0;
+                    num[i + 1]++;
+                    index = Math.max(index, n);
+                }
+                printNumber(num, index);
+            }
+        }
+    }
+
+    public void printNumber(int[] num, int count) {
+        for (int i = count; i >= 0; i--) {
+            System.out.print(num[i]);
+        }
+        System.out.print(" ");
     }
 
     /**
-     * todo
+     * todo O(1)时间内删除链表结点
      */
     @Test
     public void No18_1() {

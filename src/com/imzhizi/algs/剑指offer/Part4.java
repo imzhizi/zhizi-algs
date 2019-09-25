@@ -165,18 +165,16 @@ public class Part4 {
     }
 
     /**
-     * 面试题44 :数字序列中某一位的数字. 未找到
-     * todo
+     * todo 数字序列中某一位的数字
      */
     @Test
     public void test44() {
     }
 
     /**
-     * [把数组排成最小的数_牛客网]( https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993 )
+     * todo [把数组排成最小的数_牛客网]( https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993 )
      * 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
      * 例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
-     * todo
      */
     @Test
     public void test45() {
@@ -201,15 +199,14 @@ public class Part4 {
     }
 
     /**
-     * 面试题46 :把数字翻译成字符串. 未找到
-     * todo
+     * todo 把数字翻译成字符串. 未找到
      */
     @Test
     public void test46() {
     }
 
     /**
-     * 面试题47 :礼物的最大价值. 未找到
+     * todo 面试题47 :礼物的最大价值. 未找到
      */
     @Test
     public void No47() {
@@ -217,7 +214,7 @@ public class Part4 {
     }
 
     /**
-     * 面试题48 :最长不含重复字符的子字符串. 未找到
+     * todo 面试题48 :最长不含重复字符的子字符串. 未找到
      */
     @Test
     public void No48() {
@@ -225,8 +222,7 @@ public class Part4 {
     }
 
     /**
-     * [丑数_牛客网]( https://www.nowcoder.com/practice/6aa9e04fc3794f68acf8778237ba065b )
-     * todo
+     * todo [丑数_牛客网]( https://www.nowcoder.com/practice/6aa9e04fc3794f68acf8778237ba065b )
      */
     @Test
     public void No49() {
