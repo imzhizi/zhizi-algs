@@ -165,52 +165,138 @@ public class Part4 {
     }
 
     /**
-     * todo 数字序列中某一位的数字
+     * 数字序列中某一位的数字
+     * 数字序列为 1234567891011
+     * 那么第10位数字是1，第十一位为0，那可以找到的规律是一位数9个，二位数90个
      */
     @Test
     public void test44() {
+        System.out.println(getNumberFromNumberSeq(1023));
+    }
+
+    public int getNumberFromNumberSeq(int k) {
+        int limit = 9;
+        int layer = 1;
+
+        while (k > limit) {
+            k -= limit;
+            layer++;
+            limit = (int) (9 * Math.pow(10, layer - 1) * layer);
+        }
+
+        int count = k / layer - 1;
+        int mod = k % layer;
+        int target = (int) (Math.pow(10, layer - 1) + count);
+
+        if (mod == 0) return target % 10;
+        else return String.valueOf(target + 1).charAt(mod - 1) - '0';
     }
 
     /**
-     * todo [把数组排成最小的数_牛客网]( https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993 )
+     * [把数组排成最小的数_牛客网]( https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993 )
      * 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
      * 例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
+     * #大数处理
      */
     @Test
     public void test45() {
+        System.out.println(PrintMinNumber(new int[]{3, 32, 321}));
     }
 
     public String PrintMinNumber(int[] numbers) {
-        StringBuilder sb = new StringBuilder();
-        List<String> nums = new ArrayList<>();
-        for (int number : numbers) {
-            nums.add(String.valueOf(number));
+        if (numbers.length == 1) return String.valueOf(numbers[0]);
+        int[] results = new int[numbers.length];
+        results[0] = numbers[0];
+        int length = 1;
+
+        for (int i = 1; i < numbers.length; i++) {
+            order(results, length, numbers[i]);
+            length++;
         }
-        for (int i = 0; i < nums.size(); i++) {
-            char min = nums.get(0).charAt(0);
 
-            for (String num : nums) {
+        StringBuilder result = new StringBuilder();
+        for (int value : results) {
+            result.append(value);
+        }
 
+        return result.toString();
+    }
+
+    void order(int[] results, int length, int num) {
+        for (int i = 0; i < length; i++) {
+            if ((num + "" + results[i]).compareTo(results[i] + "" + num) < 0) {
+                System.arraycopy(results, i, results, i + 1, length - i);
+                results[i] = num;
+                break;
             }
-
         }
-
-        return sb.toString();
+        if (results[length] == 0) {
+            // 说明未插入，即大于所有数字
+            results[length] = num;
+        }
     }
 
     /**
-     * todo 把数字翻译成字符串. 未找到
+     * 46. 把数字翻译成字符串
+     * 用 0～25 表示字母 a～z，此时对于一个序列，123可以有不同的翻译——「abc」「mc」「ax」
+     * 希望知道可以翻译的种类
      */
     @Test
     public void test46() {
+        System.out.println(strCountFromNumber(12258));
+    }
+
+    int strCountFromNumber(int number) {
+        return strCountFromStr(String.valueOf(number));
+    }
+
+    int strCountFromStr(String str) {
+        if (str.length() == 1) return 1;
+
+        if (str.charAt(0) == '1' || (str.charAt(0) == '2' && str.charAt(1) < '6')) {
+            if (str.length() == 2) return 2;
+            return strCountFromStr(str.substring(1)) + strCountFromStr(str.substring(2));
+        } else {
+            return strCountFromStr(str.substring(1));
+        }
     }
 
     /**
-     * todo 面试题47 :礼物的最大价值. 未找到
+     * 47. 礼物的最大价值
+     * 在一个m×n的棋盘的每一格都放有一个礼物，每个礼物都有一定的价值（价值大于0）。
+     * 你可以从棋盘的左上角开始拿格子里的礼物，并每次向右或者向下移动一格直到到达棋盘的右下角。
+     * 给定一个棋盘及其上面的礼物，请计算你最多能拿到多少价值的礼物？
      */
     @Test
     public void No47() {
+        int[][] matrix = {
+                {1, 10, 3, 8},
+                {12, 2, 9, 6},
+                {5, 7, 4, 11},
+                {3, 7, 16, 5}
+        };
+        int[][] matrix2 = {
+                {1, 10, 3, 8}
+        };
+        System.out.println(highestValue(matrix));
+        System.out.println(highestValue(matrix2));
+    }
 
+    int highestValue(int[][] matrix) {
+        return highestValue(matrix, matrix.length - 1, matrix[0].length - 1);
+    }
+
+    int highestValue(int[][] matrix, int r, int c) {
+        if (r != 0 && c != 0) {
+            return Math.max(highestValue(matrix, r, c - 1), highestValue(matrix, r - 1, c))
+                    + matrix[r][c];
+        } else if (r == 0 && c == 0) {
+            return matrix[r][c];
+        } else if (r == 0) {
+            return matrix[r][c] + highestValue(matrix, r, c - 1);
+        } else {
+            return matrix[r][c] + highestValue(matrix, r - 1, c);
+        }
     }
 
     /**

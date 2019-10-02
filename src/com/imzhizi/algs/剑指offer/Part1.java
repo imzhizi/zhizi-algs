@@ -628,6 +628,7 @@ public class Part1 {
     /**
      * 打印从1到最大的n位数
      * 刚看到这道题有点懵逼, 后来发现是n大于32时会超支
+     * #大数处理
      */
     @Test
     public void No17() {
@@ -671,11 +672,32 @@ public class Part1 {
     }
 
     /**
-     * todo O(1)时间内删除链表结点
+     * O(1)时间内删除链表结点
      */
     @Test
     public void No18_1() {
+        ListNode root = new ListNode(1);
+        ListNode node1=new ListNode(2);
+        ListNode node2=new ListNode(3);
+        root.next=node1;
+        node1.next=node2;
+        deleteListNode(root,root);
+        System.out.println(root);
+    }
 
+    public void deleteListNode(ListNode root, ListNode node) {
+        if (node.next != null) {
+            node.val = node.next.val;
+            node.next = node.next.next;
+        } else {
+            if (root.next == null) {
+                root = null;
+            } else {
+                ListNode temp = root;
+                while (temp.next != null && temp.next.next != null) temp = temp.next;
+                temp.next = null;
+            }
+        }
     }
 
     /**
