@@ -2,10 +2,8 @@ package com.imzhizi.algs.剑指offer;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
+import java.util.logging.Logger;
 
 public class Part4 {
     /**
@@ -301,10 +299,65 @@ public class Part4 {
 
     /**
      * todo 面试题48 :最长不含重复字符的子字符串. 未找到
+     * 比如说一个字符串 "arabacdf"，那么最长的不含重复子字符串的就是 "bacdf"
+     * 最基本的思路：
+     * 为每一位都建立一个HashSet，依次注入，如果已存在，那就停止注入
+     * 此时HashSet中的个数就是子字符串的长度，HashSet的位置就是子字符串的开始位置
+     * 时间复杂度：O(n^2)， 还有一些具体的问题需要处理，比如说停止注入的判断
+     *
+     * 动态规划方法：
+     * 计算出以每一位开始的子字符串的长度，比较即可得出最大长度
+     * 应该是从上一个未出现重复的字符到上一个冲突字符之间的子字符串长度可以确定
+     * 而长度就是这一个冲突字符到每个字符的距离，显然最大距离就是第一个未重复字符到这个冲突字符的距离
      */
     @Test
     public void No48() {
+        System.out.println(LongestDiffSubString2("arabacdf"));
+        System.out.println(LongestDiffSubString2("aracacdf"));
+    }
 
+    int LongestDiffSubString1(String str) {
+        int[] map = new int[26];
+        int[] lengths = new int[str.length()];
+        int loc = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            int cr = str.charAt(i) - 'a';
+            if (map[cr] != 0) {
+                // 如果先前已经存在，需要进行的处理
+                // 应该是从上一个未出现重复的字符到冲突字符之间的子字符串长度都确定了
+                while (loc < map[cr]) {
+                    lengths[loc] = i - loc;
+                    loc++;
+                }
+            }
+            map[cr] = i + 1;
+        }
+
+        while (loc < str.length()) {
+            lengths[loc] = str.length() - loc;
+            loc++;
+        }
+
+        Arrays.sort(lengths);
+        return lengths[lengths.length - 1];
+    }
+
+    int LongestDiffSubString2(String str) {
+        int[] map = new int[26];
+        int loc = 0;
+        int max = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            int cr = str.charAt(i) - 'a';
+            if (map[cr] != 0) {
+                max = Math.max(max, i - loc);
+                loc = map[cr];
+            }
+            map[cr] = i + 1;
+        }
+        max = Math.max(max, str.length() - loc);
+        return max;
     }
 
     /**
