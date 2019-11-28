@@ -13,18 +13,6 @@ public class ListNode {
         val = x;
     }
 
-    public void setNext(ListNode node) {
-        this.next = node;
-    }
-
-    public int getVal() {
-        return val;
-    }
-
-    public ListNode getNext() {
-        return next;
-    }
-
     /**
      * [Delete Node in a Linked List - LeetCode](https://leetcode.com/problems/delete-node-in-a-linked-list/)
      */

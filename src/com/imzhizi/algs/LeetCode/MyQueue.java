@@ -1,4 +1,4 @@
-package com.imzhizi.algs;
+package com.imzhizi.algs.LeetCode;
 
 /**
  * Implement the following operations of a queue using stacks.
