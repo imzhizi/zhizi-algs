@@ -1,20 +1,41 @@
-# Folder view configuration files
-.DS_Store
-Desktop.ini
-
-# Thumbnail cache files
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
 ._*
 Thumbs.db
 
-# Files that might appear on external disks
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+### Files from macOS ###
+Desktop.ini
+
+### Files from macOS ###
+.DS_Store
 .Spotlight-V100
 .Trashes
-
-# Config files from IDEA
-.idea
-.idea/*.*
-*.iml
-
-# Compiled Java files
-*.class
-out
