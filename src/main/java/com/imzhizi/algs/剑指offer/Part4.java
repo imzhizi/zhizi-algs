@@ -299,13 +299,13 @@ public class Part4 {
     }
 
     /**
-     * todo 面试题48 :最长不含重复字符的子字符串. 未找到
+     * 面试题48 :最长不含重复字符的子字符串. 未找到
      * 比如说一个字符串 "arabacdf"，那么最长的不含重复子字符串的就是 "bacdf"
      * 最基本的思路：
      * 为每一位都建立一个HashSet，依次注入，如果已存在，那就停止注入
      * 此时HashSet中的个数就是子字符串的长度，HashSet的位置就是子字符串的开始位置
      * 时间复杂度：O(n^2)， 还有一些具体的问题需要处理，比如说停止注入的判断
-     *
+     * <p>
      * 动态规划方法：
      * 计算出以每一位开始的子字符串的长度，比较即可得出最大长度
      * 应该是从上一个未出现重复的字符到上一个冲突字符之间的子字符串长度可以确定
@@ -313,7 +313,7 @@ public class Part4 {
      */
     @Test
     public void No48() {
-        System.out.println(LongestDiffSubString2("arabacdf"));
+        System.out.println(LongestDiffSubString1("arabacdf"));
         System.out.println(LongestDiffSubString2("aracacdf"));
     }
 
@@ -362,9 +362,26 @@ public class Part4 {
     }
 
     /**
-     * todo [丑数_牛客网]( https://www.nowcoder.com/practice/6aa9e04fc3794f68acf8778237ba065b )
+     * [丑数_牛客网]( https://www.nowcoder.com/practice/6aa9e04fc3794f68acf8778237ba065b )
      */
     @Test
     public void No49() {
+
+    }
+
+    public int GetUglyNumber_Solution(int index) {
+        if(index<=0) return 0;
+        int[] result=new int[index];
+        result[0] = 1;
+        int p2=0;
+        int p3=0;
+        int p5=0;
+        for(int i=1;i<index;i++){
+            result[i] = Math.min(result[p2]*2, Math.min(result[p3]*3, result[p5]*5));
+            if(result[i] == result[p2]*2)p2++;//为了防止重复需要三个if都能够走到
+            if(result[i] == result[p3]*3)p3++;//为了防止重复需要三个if都能够走到
+            if(result[i] == result[p5]*5)p5++;//为了防止重复需要三个if都能够走到
+        }
+        return result[index-1];
     }
 }

@@ -5,10 +5,7 @@ import com.imzhizi.algs.TreeNode;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Part5 {
     /**
@@ -132,14 +129,48 @@ public class Part5 {
 
     /**
      * [两个链表的第一个公共结点_牛客网]( https://www.nowcoder.com/practice/6ab1d9a29e88450685099d45c9e31e46 )
-     * todo
      */
     @Test
     public void No52() {
 
     }
 
-    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+    // 链表的公共节点, 首先是最朴实的便利法, 时间复杂度为 O(n^2)
+    public ListNode FindFirstCommonNode1(ListNode pHead1, ListNode pHead2) {
+        while (pHead1 != null) {
+            ListNode node = pHead2;
+            while (node != null) {
+                if (pHead1 == node) {
+                    return pHead1;
+                } else {
+                    node = node.next;
+                }
+            }
+            pHead1 = pHead1.next;
+        }
+        return null;
+    }
+
+// 一种可能的方法是把两个链表的数据都复制到list中, 然后反向遍历, 遇到的第一个不同的next即为公共节点, 时间复杂度为O(2.5n)
+// 还有一种方法, 首先把一个链表哈希化, 然后遍历另一个链表, 测试hash中是否包含此链表中的节点
+
+    public ListNode FindFirstCommonNode2(ListNode pHead1, ListNode pHead2) {
+        if (pHead1 == null || pHead2 == null) return null;
+        HashSet<ListNode> set = new HashSet<>();
+
+        while (pHead1 != null) {
+            set.add(pHead1);
+            pHead1 = pHead1.next;
+        }
+
+        while (pHead2 != null) {
+            if (set.contains(pHead2)) {
+                return pHead2;
+            } else {
+                pHead2 = pHead2.next;
+            }
+        }
+
         return null;
     }
 
@@ -226,28 +257,26 @@ public class Part5 {
 
     }
 
-    TreeNode KthNode(TreeNode pRoot, int k)
-    {
-        List<TreeNode> list =new ArrayList<>();
-        mid(pRoot,list);
-        if(k==0||k>list.size()) return null;
-        return list.get(k-1);
+    TreeNode KthNode(TreeNode pRoot, int k) {
+        List<TreeNode> list = new ArrayList<>();
+        mid(pRoot, list);
+        if (k == 0 || k > list.size()) return null;
+        return list.get(k - 1);
     }
 
-    void mid(TreeNode pRoot, List<TreeNode> list)
-    {
-        if(pRoot==null){
+    void mid(TreeNode pRoot, List<TreeNode> list) {
+        if (pRoot == null) {
             return;
         }
 
-        if(pRoot.left!=null){
-            mid(pRoot.left,list);
+        if (pRoot.left != null) {
+            mid(pRoot.left, list);
         }
 
         list.add(pRoot);
 
-        if(pRoot.right!=null){
-            mid(pRoot.right,list);
+        if (pRoot.right != null) {
+            mid(pRoot.right, list);
         }
     }
 
@@ -335,19 +364,19 @@ public class Part5 {
 
     }
 
-    public ArrayList<Integer> FindNumbersWithSum(int [] array,int sum) {
-        int head=0;
-        int tail=array.length-1;
-        ArrayList<Integer> result=new ArrayList<Integer>();
+    public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
+        int head = 0;
+        int tail = array.length - 1;
+        ArrayList<Integer> result = new ArrayList<Integer>();
 
-        while(head<tail){
-            if(array[head]+array[tail]==sum){
+        while (head < tail) {
+            if (array[head] + array[tail] == sum) {
                 result.add(array[head]);
                 result.add(array[tail]);
                 break;
-            }else if(array[head]+array[tail]>sum){
+            } else if (array[head] + array[tail] > sum) {
                 tail--;
-            }else{
+            } else {
                 head++;
             }
         }
@@ -356,11 +385,59 @@ public class Part5 {
     }
 
     /**
-     * todo [和为S的连续正数序列_牛客网]( https://www.nowcoder.com/practice/c451a3fd84b64cb19485dad758a55ebe )
+     * [和为S的连续正数序列_牛客网]( https://www.nowcoder.com/practice/c451a3fd84b64cb19485dad758a55ebe )
      */
     @Test
     public void No57_2() {
+        ArrayList<ArrayList<Integer>> result = FindContinuousSequence(100);
+        result.forEach(System.out::println);
+    }
 
+    public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+
+        // 首先求出来所有质因数
+        for (int i = sum / 2; i > 2; i--) {
+            if (isPrime(i) && sum % i == 0) {
+                ArrayList<Integer> list = generateFromPrime(sum / i, i);
+                if (!list.isEmpty()) result.add(list);
+            } else if (sum / (i * 1.0) % 1.0 == 0.5) {
+                ArrayList<Integer> list = generateFromOdd(sum / i, i);
+                if (!list.isEmpty()) result.add(list);
+            }
+        }
+
+        if (sum % 2 != 0) {
+            ArrayList<Integer> list = generateFromOdd(sum / 2, 2);
+            if (!list.isEmpty()) result.add(list);
+        }
+
+        return result;
+    }
+
+    public boolean isPrime(int n) {
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public ArrayList<Integer> generateFromPrime(int mid, int n) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (int i = mid - n / 2; i > 0 && i <= mid + n / 2; i++) {
+            list.add(i);
+        }
+        return list;
+    }
+
+    public ArrayList<Integer> generateFromOdd(int mid, int n) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (int i = mid - n / 2 + 1; i > 0 && i <= mid + n / 2; i++) {
+            list.add(i);
+        }
+        return list;
     }
 
     /**
