@@ -13,8 +13,6 @@ public class SimplePractices {
         for (int i = 0; i < nums.length; i++) {
             System.out.printf(nums[i] + ",");
         }
-
-        ArrayList<int[]> ss=new ArrayList<>();
     }
 
     public void sort(int[] nums, int start, int end) {

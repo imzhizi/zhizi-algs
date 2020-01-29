@@ -837,22 +837,19 @@ public class ArrayPros {
         return xxx;
     }
 
-
     public void sort(int[][] intervals, int start, int end) {
         if (start >= end) return;
 
         int tail = end;
         for (int i = start + 1; i <= tail; i++) {
+            int t0 = intervals[i][0];
+            int t1 = intervals[i][1];
             if (intervals[i][0] < intervals[i - 1][0]) {
-                int t0 = intervals[i][0];
-                int t1 = intervals[i][1];
                 intervals[i][0] = intervals[i - 1][0];
                 intervals[i][1] = intervals[i - 1][1];
                 intervals[i - 1][0] = t0;
                 intervals[i - 1][1] = t1;
             } else {
-                int t0 = intervals[i][0];
-                int t1 = intervals[i][1];
                 intervals[i][0] = intervals[tail][0];
                 intervals[i][1] = intervals[tail][1];
                 intervals[tail][0] = t0;
@@ -867,4 +864,292 @@ public class ArrayPros {
     }
 
 
+    /**
+     * [ 57. 插入区间 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/insert-interval/ )
+     * 两种方法没有本质区别，第二种方法思路更清晰一些，因为是有序、不重叠区间，所以其他的区间不需要考虑合并问题
+     * 只有 newInterval 插入后才需要考虑合并问题，所以一共分为三个阶段
+     */
+    @Test
+    public void No57() {
+
+    }
+
+    public int[][] insert1(int[][] intervals, int[] newInterval) {
+        if (intervals.length == 0 && newInterval.length == 2) {
+            int[][] result = new int[1][2];
+            result[0] = newInterval;
+            return result;
+        } else if (intervals.length == 0 && newInterval.length == 0) {
+            int[][] result = new int[1][2];
+            return result;
+        }
+        boolean flag = true;
+        int i = 0;
+        List<int[]> stack = new ArrayList<>();
+        if (newInterval[0] <= intervals[0][0]) {
+            stack.add(newInterval);
+            flag = false;
+        } else {
+            stack.add(intervals[0]);
+            i++;
+        }
+
+
+        for (; i <= intervals.length; i++) {
+            int size = stack.size() - 1;
+
+            if (flag && ((i == intervals.length) || (newInterval[0] >= intervals[i - 1][0] && newInterval[0] <= intervals[i][0]))) {
+                if (newInterval[0] <= stack.get(size)[1]) {
+                    newInterval[0] = Math.min(newInterval[0], stack.get(size)[0]);
+                    newInterval[1] = Math.max(newInterval[1], stack.get(size)[1]);
+                    stack.set(size, newInterval);
+                } else {
+                    stack.add(newInterval);
+                    size++;
+                }
+                flag = false;
+            }
+            if (i < intervals.length) {
+                if (intervals[i][0] <= stack.get(size)[1]) {
+                    intervals[i][0] = Math.min(intervals[i][0], stack.get(size)[0]);
+                    intervals[i][1] = Math.max(intervals[i][1], stack.get(size)[1]);
+                    stack.set(size, intervals[i]);
+                } else {
+                    stack.add(intervals[i]);
+                }
+            }
+        }
+
+        return stack.toArray(new int[stack.size()][2]);
+    }
+
+    public int[][] insert2(int[][] intervals, int[] newInterval) {
+        List<int[]> stack = new ArrayList<>();
+        int l = intervals.length;
+        int i = 0;
+
+        while (i < l && intervals[i][0] < newInterval[0]) {
+            stack.add(intervals[i++]);
+        }
+
+        if (stack.isEmpty() || newInterval[0] > intervals[i - 1][1]) {
+            stack.add(newInterval);
+        } else {
+            intervals[i - 1][1] = Math.max(intervals[i - 1][1], newInterval[1]);
+            stack.set(stack.size() - 1, intervals[i - 1]);
+        }
+
+        for (; i < l; i++) {
+            int size = stack.size() - 1;
+            if (intervals[i][0] <= stack.get(size)[1]) {
+                intervals[i][0] = Math.min(intervals[i][0], stack.get(size)[0]);
+                intervals[i][1] = Math.max(intervals[i][1], stack.get(size)[1]);
+                stack.set(size, intervals[i]);
+            } else {
+                stack.add(intervals[i]);
+            }
+        }
+
+        return stack.toArray(new int[stack.size()][2]);
+    }
+
+
+    /**
+     * [ 59. 螺旋矩阵 II - 力扣（LeetCode） ](https://leetcode-cn.com/problems/spiral-matrix-ii/ )
+     */
+    @Test
+    public void No59() {
+
+    }
+
+    // 矩阵的遍历
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        for (int i = 0; i < n / 2; i++) {
+            int loc = 1;
+            if (i != 0) loc = matrix[i][i - 1] - i + 1;
+            for (int j = i; j < n - 1 - i; j++) {
+                int step = n - 1 - i * 2;
+                matrix[i][j] = loc + j;
+                matrix[j][n - 1 - i] = loc + 1 * step + j;
+                matrix[n - 1 - i][n - 1 - j] = loc + 2 * step + j;
+                matrix[n - 1 - j][i] = loc + 3 * step + j;
+            }
+        }
+
+        if (n % 2 != 0) matrix[n / 2][n / 2] = n * n;
+
+        return matrix;
+    }
+
+    /**
+     * [ 62. 不同路径 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/unique-paths/ )
+     */
+    @Test
+    public void No62() {
+
+    }
+
+    public int uniquePaths(int m, int n) {
+        if (m == 1 || n == 1) return 1;
+        if (m == 2) return n;
+        if (n == 2) return m;
+        if (m == n) return 2 * uniquePaths(m - 1, n);
+        else return uniquePaths(m - 1, n) + uniquePaths(m, n - 1);
+    }
+
+    public int uniquePaths1(int m, int n) {
+        int[][] matrix = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 || j == 0) {
+                    matrix[i][j] = 1;
+                } else if (i == 1) {
+                    matrix[i][j] = j + 1;
+                } else if (j == 1) {
+                    matrix[i][j] = i + 1;
+                } else {
+                    matrix[i][j] = matrix[i - 1][j] + matrix[i][j - 1];
+                }
+            }
+        }
+        return matrix[m - 1][n - 1];
+    }
+
+
+    /**
+     * [ 63. 不同路径 II - 力扣（LeetCode） ](https://leetcode-cn.com/problems/unique-paths-ii/ )
+     */
+    @Test
+    public void No63() {
+
+    }
+
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m=obstacleGrid.length;
+        if(m==0) return 0;
+        int n=obstacleGrid[0].length;
+        if(n==0) return 0;
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(obstacleGrid[i][j]!=1){
+                    if(i==0&&j==0){
+                        obstacleGrid[i][j]=1;
+                    }else if(i==0&&j!=0){
+                        obstacleGrid[i][j]=obstacleGrid[i][j-1];
+                    }else if(i!=0&&j==0){
+                        obstacleGrid[i][j]=obstacleGrid[i-1][j];
+                    }else{
+                        if(obstacleGrid[i-1][j]!=-1&&obstacleGrid[i][j-1]!=-1){
+                            obstacleGrid[i][j]=obstacleGrid[i-1][j]+obstacleGrid[i][j-1];
+                        }else if(obstacleGrid[i-1][j]==-1&&obstacleGrid[i][j-1]==-1){
+                            obstacleGrid[i][j]=-1;
+                        }else if(obstacleGrid[i-1][j]==-1){
+                            obstacleGrid[i][j]=obstacleGrid[i][j-1];;
+                        }else{
+                            obstacleGrid[i][j]=obstacleGrid[i-1][j];
+                        }
+                    }
+                }else{
+                    obstacleGrid[i][j]=-1;
+                }
+            }
+        }
+
+        return obstacleGrid[m-1][n-1]==-1?0:obstacleGrid[m-1][n-1];
+    }
+
+    /**
+     * [ 64. 最小路径和 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/minimum-path-sum/ )
+     */
+    @Test
+    public void No64() {
+
+    }
+
+    public int minPathSum(int[][] grid) {
+        int m=grid.length;
+        if(m==0)return 0;
+        int n=grid[0].length;
+        if(n==0) return 0;
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(i!=0&&j!=0){
+                    grid[i][j]+=Math.min(grid[i-1][j],grid[i][j-1]);
+                }else if(i==0&&j!=0){
+                    grid[i][j]+=grid[i][j-1];
+                }else if(i!=0&&j==0){
+                    grid[i][j]+=grid[i-1][j];
+                }
+            }
+        }
+
+        return grid[m-1][n-1];
+    }
+
+    /**
+     * [ 73. 矩阵置零 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/set-matrix-zeroes/ )
+     */
+    @Test
+    public void No73() {
+
+    }
+
+    // 尝试一下，使用了 m+n 的空间，时间复杂度为 O(m*n)+O(m+n)*(log_m+n)
+    public void setZeroes(int[][] matrix) {
+        int m=matrix.length;
+        if(m==0) return;
+        int n=matrix[0].length;
+        if(n==0) return;
+
+        int[] index=new int[m+n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(matrix[i][j]==0) {
+                    index[i%m]=1;
+                    index[j%n+m]=1;
+                }
+            }
+        }
+
+        for(int i=0;i<m+n;i++){
+            if(index[i]==1){
+                if(i<m) {
+                    for(int j=0;j<n;j++){
+                        matrix[i][j]=0;
+                    }
+                }else{
+                    for(int j=0;j<m;j++){
+                        matrix[j][i-m]=0;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No74() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No75() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No78() {
+
+    }
 }
