@@ -9,6 +9,15 @@ import java.util.List;
 public class ArrayPros {
 
     /**
+     * [1. 两数之和 - 力扣（LeetCode）](https://leetcode-cn.com/problems/two-sum/ )
+     * # todo
+     */
+    @Test
+    public void No1() {
+
+    }
+
+    /**
      * [4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)
      * 求多个数列的中位数
      */
@@ -131,7 +140,6 @@ public class ArrayPros {
         }
         return max;
     }
-
 
     @Test
     public void No15() {
@@ -265,7 +273,26 @@ public class ArrayPros {
         return result;
     }
 
-    // https://leetcode-cn.com/problems/next-permutation/
+    /**
+     * [26. 删除排序数组中的重复项 - 力扣（LeetCode）](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ )
+     * # todo
+     */
+    @Test
+    public void No26() {
+
+    }
+
+    /**
+     * # todo
+     */
+    @Test
+    public void No27() {
+
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/next-permutation/
+     */
     @Test
     public void No31() {
 
@@ -310,7 +337,9 @@ public class ArrayPros {
     }
 
 
-    // [ 33. 搜索旋转排序数组 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/ )
+    /**
+     * [ 33. 搜索旋转排序数组 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/ )
+     */
     @Test
     public void No33() {
 
@@ -345,7 +374,9 @@ public class ArrayPros {
         }
     }
 
-    // [ 34. 在排序数组中查找元素的第一个和最后一个位置 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/ )
+    /**
+     * [ 34. 在排序数组中查找元素的第一个和最后一个位置 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/ )
+     */
     @Test
     public void No34() {
 
@@ -430,6 +461,14 @@ public class ArrayPros {
         }
 
         return result;
+    }
+
+    /**
+     * # todo
+     */
+    @Test
+    public void No35() {
+
     }
 
     // [ 39. 组合总和 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/combination-sum/ )
@@ -669,7 +708,9 @@ public class ArrayPros {
         return ans;
     }
 
-    //
+    /**
+     * [45. 跳跃游戏 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/jump-game-ii/ )
+     */
     @Test
     public void No45() {
         int[] nums1 = {2, 3, 1, 1, 4};
@@ -745,6 +786,23 @@ public class ArrayPros {
                 matrix[i][n - j] = temp;
             }
         }
+    }
+
+    /**
+     * [53. 最大子序和 - 力扣（LeetCode）](https://leetcode-cn.com/problems/maximum-subarray/ )
+     * # todo
+     */
+    @Test
+    public void No53() {
+
+    }
+
+    /**
+     * # todo
+     */
+    @Test
+    public void No54() {
+
     }
 
     /**
@@ -1026,38 +1084,39 @@ public class ArrayPros {
     }
 
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
-        int m=obstacleGrid.length;
-        if(m==0) return 0;
-        int n=obstacleGrid[0].length;
-        if(n==0) return 0;
+        int m = obstacleGrid.length;
+        if (m == 0) return 0;
+        int n = obstacleGrid[0].length;
+        if (n == 0) return 0;
 
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(obstacleGrid[i][j]!=1){
-                    if(i==0&&j==0){
-                        obstacleGrid[i][j]=1;
-                    }else if(i==0&&j!=0){
-                        obstacleGrid[i][j]=obstacleGrid[i][j-1];
-                    }else if(i!=0&&j==0){
-                        obstacleGrid[i][j]=obstacleGrid[i-1][j];
-                    }else{
-                        if(obstacleGrid[i-1][j]!=-1&&obstacleGrid[i][j-1]!=-1){
-                            obstacleGrid[i][j]=obstacleGrid[i-1][j]+obstacleGrid[i][j-1];
-                        }else if(obstacleGrid[i-1][j]==-1&&obstacleGrid[i][j-1]==-1){
-                            obstacleGrid[i][j]=-1;
-                        }else if(obstacleGrid[i-1][j]==-1){
-                            obstacleGrid[i][j]=obstacleGrid[i][j-1];;
-                        }else{
-                            obstacleGrid[i][j]=obstacleGrid[i-1][j];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (obstacleGrid[i][j] != 1) {
+                    if (i == 0 && j == 0) {
+                        obstacleGrid[i][j] = 1;
+                    } else if (i == 0 && j != 0) {
+                        obstacleGrid[i][j] = obstacleGrid[i][j - 1];
+                    } else if (i != 0 && j == 0) {
+                        obstacleGrid[i][j] = obstacleGrid[i - 1][j];
+                    } else {
+                        if (obstacleGrid[i - 1][j] != -1 && obstacleGrid[i][j - 1] != -1) {
+                            obstacleGrid[i][j] = obstacleGrid[i - 1][j] + obstacleGrid[i][j - 1];
+                        } else if (obstacleGrid[i - 1][j] == -1 && obstacleGrid[i][j - 1] == -1) {
+                            obstacleGrid[i][j] = -1;
+                        } else if (obstacleGrid[i - 1][j] == -1) {
+                            obstacleGrid[i][j] = obstacleGrid[i][j - 1];
+                            ;
+                        } else {
+                            obstacleGrid[i][j] = obstacleGrid[i - 1][j];
                         }
                     }
-                }else{
-                    obstacleGrid[i][j]=-1;
+                } else {
+                    obstacleGrid[i][j] = -1;
                 }
             }
         }
 
-        return obstacleGrid[m-1][n-1]==-1?0:obstacleGrid[m-1][n-1];
+        return obstacleGrid[m - 1][n - 1] == -1 ? 0 : obstacleGrid[m - 1][n - 1];
     }
 
     /**
@@ -1069,25 +1128,35 @@ public class ArrayPros {
     }
 
     public int minPathSum(int[][] grid) {
-        int m=grid.length;
-        if(m==0)return 0;
-        int n=grid[0].length;
-        if(n==0) return 0;
+        int m = grid.length;
+        if (m == 0) return 0;
+        int n = grid[0].length;
+        if (n == 0) return 0;
 
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(i!=0&&j!=0){
-                    grid[i][j]+=Math.min(grid[i-1][j],grid[i][j-1]);
-                }else if(i==0&&j!=0){
-                    grid[i][j]+=grid[i][j-1];
-                }else if(i!=0&&j==0){
-                    grid[i][j]+=grid[i-1][j];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i != 0 && j != 0) {
+                    grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+                } else if (i == 0 && j != 0) {
+                    grid[i][j] += grid[i][j - 1];
+                } else if (i != 0 && j == 0) {
+                    grid[i][j] += grid[i - 1][j];
                 }
             }
         }
 
-        return grid[m-1][n-1];
+        return grid[m - 1][n - 1];
     }
+
+
+    /**
+     * # todo
+     */
+    @Test
+    public void No66() {
+
+    }
+
 
     /**
      * [ 73. 矩阵置零 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/set-matrix-zeroes/ )
@@ -1099,30 +1168,30 @@ public class ArrayPros {
 
     // 尝试一下，使用了 m+n 的空间，时间复杂度为 O(m*n)+O(m+n)*(log_m+n)
     public void setZeroes(int[][] matrix) {
-        int m=matrix.length;
-        if(m==0) return;
-        int n=matrix[0].length;
-        if(n==0) return;
+        int m = matrix.length;
+        if (m == 0) return;
+        int n = matrix[0].length;
+        if (n == 0) return;
 
-        int[] index=new int[m+n];
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(matrix[i][j]==0) {
-                    index[i%m]=1;
-                    index[j%n+m]=1;
+        int[] index = new int[m + n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    index[i % m] = 1;
+                    index[j % n + m] = 1;
                 }
             }
         }
 
-        for(int i=0;i<m+n;i++){
-            if(index[i]==1){
-                if(i<m) {
-                    for(int j=0;j<n;j++){
-                        matrix[i][j]=0;
+        for (int i = 0; i < m + n; i++) {
+            if (index[i] == 1) {
+                if (i < m) {
+                    for (int j = 0; j < n; j++) {
+                        matrix[i][j] = 0;
                     }
-                }else{
-                    for(int j=0;j<m;j++){
-                        matrix[j][i-m]=0;
+                } else {
+                    for (int j = 0; j < m; j++) {
+                        matrix[j][i - m] = 0;
                     }
                 }
             }
@@ -1130,26 +1199,270 @@ public class ArrayPros {
     }
 
     /**
-     *
+     * [ 74. 搜索二维矩阵 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/search-a-2d-matrix/submissions/ )
      */
     @Test
     public void No74() {
 
     }
 
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        if (m == 0) return false;
+        int n = matrix[0].length;
+        if (n == 0) return false;
+
+        int i = 0;
+        while (true) {
+            if (i >= m) return false;
+            if (target > matrix[i][n - 1]) i++;
+            else break;
+        }
+
+        for (int j = 0; j < n; j++) {
+            if (matrix[i][j] == target) {
+                return true;
+            } else if (matrix[i][j] > target) {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     /**
-     *
+     * [ 75. 颜色分类 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/sort-colors/ )
      */
     @Test
     public void No75() {
 
     }
 
+    public void sortColors(int[] nums) {
+        int head = 0;
+        int fast = 0;
+        int tail = nums.length - 1;
+        while (fast <= tail) {
+            if (nums[fast] == 0) {
+                if (head == fast) {
+                    head++;
+                    fast++;
+                } else {
+                    nums[fast++] = 1;
+                    nums[head++] = 0;
+                }
+            } else if (nums[fast] == 2) {
+                nums[fast] = nums[tail];
+                nums[tail] = 2;
+                tail--;
+            } else {
+                fast++;
+            }
+        }
+    }
+
+    /**
+     * [ 78. 子集 - 力扣（LeetCode） ](https://leetcode-cn.com/problems/subsets/ )
+     */
+    @Test
+    public void No78() {
+
+    }
+
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
+
+        if (nums.length == 0) return result;
+
+        for (int i = 0; i < nums.length; i++) {
+            int size = result.size();
+            for (int j = 0; j < size; j++) {
+                List<Integer> list = new ArrayList<>(result.get(j));
+                list.add(nums[i]);
+                result.add(list);
+            }
+        }
+
+        return result;
+    }
+
+
+    /**
+     * [79. 单词搜索 - 力扣（LeetCode）](https://leetcode-cn.com/problems/word-search/ )
+     */
+    @Test
+    public void No79() {
+
+    }
+
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        if (m == 0) return false;
+        int n = board[0].length;
+        if (n == 0) return false;
+
+        char[] array = word.toCharArray();
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == array[0] && check(m - 1, n - 1, i, j, board, 1, array)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean check(int m, int n, int r, int c, char[][] board, int index, char[] array) {
+        if (index == array.length) {
+            return true;
+        }
+
+        char temp = board[r][c];
+        board[r][c] = '0';
+
+        // 上
+        if (r > 0 && board[r - 1][c] == array[index]) {
+            if (check(m, n, r - 1, c, board, index + 1, array)) {
+                return true;
+            }
+        }
+
+        // 下
+        if (r < m && board[r + 1][c] == array[index]) {
+            if (check(m, n, r + 1, c, board, index + 1, array)) {
+                return true;
+            }
+        }
+
+        // 左
+        if (c > 0 && board[r][c - 1] == array[index]) {
+            if (check(m, n, r, c - 1, board, index + 1, array)) {
+                return true;
+            }
+        }
+
+        // 右
+        if (c < n && board[r][c + 1] == array[index]) {
+            if (check(m, n, r, c + 1, board, index + 1, array)) {
+                return true;
+            }
+        }
+
+        board[r][c] = temp;
+
+        return false;
+    }
+
+    /**
+     * [80. 删除排序数组中的重复项 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/ )
+     */
+    @Test
+    public void No80() {
+        System.out.println(removeDuplicates(new int[]{1, 1, 1, 1, 2, 2, 3, 4, 4, 4}));
+    }
+
+    // 应该使用双指针, 一个做保存指针, 另一个用于遍历指针
+    // 无论如何都应该存一份，如果存在重复的就保存第二份
+    public int removeDuplicates(int[] nums) {
+        if (nums.length < 2) return nums.length;
+
+        int save = 0;
+        int loop = 0;
+
+        while (loop < nums.length && save <= loop) {
+            nums[save++] = nums[loop++];
+
+            if (loop < nums.length && nums[loop] == nums[loop - 1]) {
+                nums[save++] = nums[loop++];
+                while (loop < nums.length && nums[loop] == nums[loop - 1]) {
+                    loop++;
+                }
+            }
+        }
+
+        return save;
+    }
+
     /**
      *
      */
     @Test
-    public void No78() {
+    public void No81() {
+
+    }
+
+    // 代码结构不是很好，逻辑不太清晰
+    public boolean searchII(int[] nums, int target) {
+        int head = 0;
+        int tail = nums.length - 1;
+        if (tail < 0) return false;
+
+        if (target == nums[head] || target == nums[tail]) {
+            return true;
+        } else if (target > nums[head]) {
+            head++;
+            while (head <= tail && target > nums[head] && nums[head] >= nums[head - 1]) {
+                head++;
+            }
+            if (head <= tail && target == nums[head]) {
+                return true;
+            }
+        } else {
+            tail--;
+            while (tail >= head && target < nums[tail] && nums[tail] <= nums[tail + 1]) {
+                tail--;
+            }
+            if (tail >= head && target == nums[tail]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No84() {
+
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void No85() {
+
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void No88() {
+
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void No90() {
+
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void No105() {
 
     }
 }
