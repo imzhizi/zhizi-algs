@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 public class ArrayPros {
 
@@ -1423,13 +1424,55 @@ public class ArrayPros {
     }
 
     /**
-     *
+     * [84. 柱状图中最大的矩形 - 力扣（LeetCode）](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/submissions/ )
      */
     @Test
     public void No84() {
 
     }
 
+    public int largestRectangleArea0(int[] heights) {
+        int len=heights.length;
+        int max=0;
+        for(int i=0;i<len;i++){
+            int value=heights[i];
+            max=Math.max(max,heights[i]);
+            for(int j=i+1;j<len;j++){
+                if(heights[j]<value)value=heights[j];
+                max=Math.max(max,(j-i+1)*value);
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 整体思路是构建一个单调不减的数列，这样每个值能取得的最大面积就是该值到最后一位的距离与其值的成绩
+     * 问题在于如何处理数列变小的情况
+     */
+    public int largestRectangleArea1(int[] heights) {
+        if (heights == null || heights.length == 0) {
+            return 0;
+        }
+        int maxSize = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (int i=0; i<heights.length; i++) {
+            while(!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
+                int cur = stack.pop();
+                int left = stack.isEmpty() ? -1 : stack.peek();
+                int curArea = (i - left - 1) * heights[cur];
+                maxSize = Math.max(curArea, maxSize);
+            }
+            stack.push(i);
+        }
+        while(!stack.isEmpty()) {
+            int cur = stack.pop();
+            int left = stack.isEmpty() ? -1 : stack.peek();
+            int curArea = (heights.length - left - 1) * heights[cur];
+            maxSize = Math.max(curArea, maxSize);
+        }
+
+        return maxSize;
+    }
 
     /**
      *
