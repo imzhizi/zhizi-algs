@@ -1,17 +1,15 @@
 package com.imzhizi.algs.LeetCode2020;
 
+import com.imzhizi.algs.TreeNode;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class ArrayPros {
 
     /**
      * [1. 两数之和 - 力扣（LeetCode）](https://leetcode-cn.com/problems/two-sum/ )
-     * # todo
+     * todo
      */
     @Test
     public void No1() {
@@ -276,7 +274,7 @@ public class ArrayPros {
 
     /**
      * [26. 删除排序数组中的重复项 - 力扣（LeetCode）](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ )
-     * # todo
+     * todo
      */
     @Test
     public void No26() {
@@ -284,7 +282,7 @@ public class ArrayPros {
     }
 
     /**
-     * # todo
+     * todo
      */
     @Test
     public void No27() {
@@ -465,7 +463,7 @@ public class ArrayPros {
     }
 
     /**
-     * # todo
+     * todo
      */
     @Test
     public void No35() {
@@ -791,7 +789,7 @@ public class ArrayPros {
 
     /**
      * [53. 最大子序和 - 力扣（LeetCode）](https://leetcode-cn.com/problems/maximum-subarray/ )
-     * # todo
+     * todo
      */
     @Test
     public void No53() {
@@ -799,7 +797,7 @@ public class ArrayPros {
     }
 
     /**
-     * # todo
+     * todo
      */
     @Test
     public void No54() {
@@ -1151,7 +1149,7 @@ public class ArrayPros {
 
 
     /**
-     * # todo
+     * todo
      */
     @Test
     public void No66() {
@@ -1432,14 +1430,14 @@ public class ArrayPros {
     }
 
     public int largestRectangleArea0(int[] heights) {
-        int len=heights.length;
-        int max=0;
-        for(int i=0;i<len;i++){
-            int value=heights[i];
-            max=Math.max(max,heights[i]);
-            for(int j=i+1;j<len;j++){
-                if(heights[j]<value)value=heights[j];
-                max=Math.max(max,(j-i+1)*value);
+        int len = heights.length;
+        int max = 0;
+        for (int i = 0; i < len; i++) {
+            int value = heights[i];
+            max = Math.max(max, heights[i]);
+            for (int j = i + 1; j < len; j++) {
+                if (heights[j] < value) value = heights[j];
+                max = Math.max(max, (j - i + 1) * value);
             }
         }
         return max;
@@ -1455,8 +1453,8 @@ public class ArrayPros {
         }
         int maxSize = 0;
         Stack<Integer> stack = new Stack<>();
-        for (int i=0; i<heights.length; i++) {
-            while(!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
+        for (int i = 0; i < heights.length; i++) {
+            while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
                 int cur = stack.pop();
                 int left = stack.isEmpty() ? -1 : stack.peek();
                 int curArea = (i - left - 1) * heights[cur];
@@ -1464,7 +1462,7 @@ public class ArrayPros {
             }
             stack.push(i);
         }
-        while(!stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             int cur = stack.pop();
             int left = stack.isEmpty() ? -1 : stack.peek();
             int curArea = (heights.length - left - 1) * heights[cur];
@@ -1475,37 +1473,331 @@ public class ArrayPros {
     }
 
     /**
-     *
+     * [85. 最大矩形 - 力扣（LeetCode）](https://leetcode-cn.com/problems/maximal-rectangle/)
+     * mark
      */
     @Test
     public void No85() {
 
     }
 
+    public int maximalRectangle1(char[][] matrix) {
+        int m = matrix.length;
+        if (m == 0) return 0;
+        int n = matrix[0].length;
+        if (n == 0) return 0;
+
+        Stack<Integer> stack = new Stack<>();
+        int max = 0;
+
+        for (int r = 0; r < m; r++) {
+            // 构建单调增栈
+            for (int c = 0; c < n; c++) {
+                matrix[r][c] -= '0';
+                if (matrix[r][c] != 0 && r != 0) {
+                    matrix[r][c] += matrix[r - 1][c];
+                }
+                while (!stack.isEmpty() && matrix[r][stack.peek()] >= matrix[r][c]) {
+                    // 如果下一个小于当前栈顶元素, 那么以它为高的矩形到c就结束了
+                    int cur = stack.pop();
+                    int left = stack.isEmpty() ? -1 : stack.peek();
+                    max = Math.max(max, (c - left - 1) * matrix[r][cur]);
+                }
+                stack.push(c);
+            }
+            while (!stack.isEmpty()) {
+                int cur = stack.pop();
+                int left = stack.isEmpty() ? -1 : stack.peek();
+                max = Math.max(max, (n - left - 1) * matrix[r][cur]);
+            }
+        }
+
+        return max;
+    }
+
+    // todo DP
+    public int maximalRectangle2(char[][] matrix) {
+        return 0;
+    }
 
     /**
-     *
+     * [88. 合并两个有序数组 - 力扣（LeetCode）](https://leetcode-cn.com/problems/merge-sorted-array/)
      */
     @Test
     public void No88() {
 
     }
 
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int[] r = new int[m + n];
+        int j = 0;
+        int k = 0;
+        for (int i = 0; i < m + n; i++) {
+            if (j < m && (k == n || nums1[j] <= nums2[k])) {
+                r[i] = nums1[j++];
+            } else {
+                r[i] = nums2[k++];
+            }
+        }
+
+        if (m + n >= 0) System.arraycopy(r, 0, nums1, 0, m + n);
+    }
 
     /**
-     *
+     * [90. 子集 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/subsets-ii/)
+     * mark
      */
     @Test
     public void No90() {
 
     }
 
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        result.add(new ArrayList<>());
+        Arrays.sort(nums);
+
+        int dup = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int size = result.size();
+
+            for (int s = dup; s < size; s++) {
+                List<Integer> list = new ArrayList<>(result.get(s));
+                list.add(nums[i]);
+                result.add(list);
+            }
+
+            dup = 0;
+            if (i < nums.length - 1 && nums[i] == nums[i + 1]) {
+                dup = size;
+            }
+        }
+
+        return result;
+    }
 
     /**
-     *
+     * [105. 从前序与中序遍历序列构造二叉树 - 力扣（LeetCode）](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+     * 从一开始就把二叉树重建的思路搞错了，左子树结点数由中序遍历中的长度直接决定，HashMap能有效加快执行效率
      */
     @Test
     public void No105() {
 
     }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        Map<Integer, Integer> inmap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            inmap.put(inorder[i], i);
+        }
+
+        return buildSubTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inmap);
+    }
+
+    public TreeNode buildSubTree(int[] preorder, int ph, int pt, int[] inorder, int ih, int it, Map<Integer, Integer> inmap) {
+        if (ph > pt || ih > it || ph < 0 || ih < 0 || pt >= preorder.length || it >= inorder.length) return null;
+
+        TreeNode node = new TreeNode(preorder[ph]);
+        int imid = inmap.get(preorder[ph]);
+        int pmid = imid - ih + ph;
+        node.left = buildSubTree(preorder, ph + 1, pmid, inorder, ih, imid - 1, inmap);
+        node.right = buildSubTree(preorder, pmid + 1, pt, inorder, imid + 1, it, inmap);
+
+        return node;
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void No106() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No118() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No119() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No120() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No121() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No122() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No123() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No126() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No128() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No152() {
+
+    }
+
+    /**
+     * [153. 寻找旋转排序数组中的最小值 - 力扣（LeetCode）](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/)
+     */
+    @Test
+    public void No153() {
+
+    }
+
+    // 双头指针也不够快了
+    public int findMin(int[] nums) {
+        int h = 0;
+        int t = nums.length - 1;
+        while (nums[h] > nums[t]) {
+            h++;
+            t--;
+        }
+
+        if (h > 0 && nums[h] < nums[h - 1]) return nums[h];
+        else if (t < nums.length - 1) return nums[t + 1];
+
+        return nums[0];
+    }
+
+    // 二分查找，时间复杂度为多少呢？时间复杂度为logn
+    public int findMin2(int[] nums) {
+        int h = 0;
+        int t = nums.length - 1;
+        while (h < t) {
+            int m = h + (t - h) / 2;
+            if (nums[m] > nums[t]) {
+                h = m + 1;
+            } else {
+                t = m;
+            }
+        }
+        return nums[h];
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No154() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No162() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No163() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No167() {
+
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void No169() {
+
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void No89() {
+
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void No209() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No216() {
+
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void No217() {
+
+    }
+
 }

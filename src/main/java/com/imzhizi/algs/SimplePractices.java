@@ -2,8 +2,6 @@ package com.imzhizi.algs;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 public class SimplePractices {
     @Test
     public void 快速排序() {
