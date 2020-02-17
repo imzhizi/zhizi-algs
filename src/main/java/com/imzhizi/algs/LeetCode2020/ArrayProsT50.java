@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-public class ArrayPros {
+public class ArrayProsT50 {
 
     /**
      * [1. 两数之和 - 力扣（LeetCode）](https://leetcode-cn.com/problems/two-sum/ )
@@ -1093,9 +1093,9 @@ public class ArrayPros {
                 if (obstacleGrid[i][j] != 1) {
                     if (i == 0 && j == 0) {
                         obstacleGrid[i][j] = 1;
-                    } else if (i == 0 && j != 0) {
+                    } else if (i == 0) {
                         obstacleGrid[i][j] = obstacleGrid[i][j - 1];
-                    } else if (i != 0 && j == 0) {
+                    } else if (j == 0) {
                         obstacleGrid[i][j] = obstacleGrid[i - 1][j];
                     } else {
                         if (obstacleGrid[i - 1][j] != -1 && obstacleGrid[i][j - 1] != -1) {
@@ -1585,74 +1585,192 @@ public class ArrayPros {
 
     }
 
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
+    public TreeNode buildTreeFromPrIn(int[] preorder, int[] inorder) {
         Map<Integer, Integer> inmap = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
             inmap.put(inorder[i], i);
         }
 
-        return buildSubTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inmap);
+        return buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inmap);
     }
 
-    public TreeNode buildSubTree(int[] preorder, int ph, int pt, int[] inorder, int ih, int it, Map<Integer, Integer> inmap) {
+    public TreeNode buildTree(int[] preorder, int ph, int pt, int[] inorder, int ih, int it, Map<Integer, Integer> inmap) {
         if (ph > pt || ih > it || ph < 0 || ih < 0 || pt >= preorder.length || it >= inorder.length) return null;
 
         TreeNode node = new TreeNode(preorder[ph]);
         int imid = inmap.get(preorder[ph]);
         int pmid = imid - ih + ph;
-        node.left = buildSubTree(preorder, ph + 1, pmid, inorder, ih, imid - 1, inmap);
-        node.right = buildSubTree(preorder, pmid + 1, pt, inorder, imid + 1, it, inmap);
+        node.left = buildTree(preorder, ph + 1, pmid, inorder, ih, imid - 1, inmap);
+        node.right = buildTree(preorder, pmid + 1, pt, inorder, imid + 1, it, inmap);
 
         return node;
     }
 
 
     /**
-     *
+     * [106. 从中序与后序遍历序列构造二叉树 - 力扣（LeetCode）](https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
      */
     @Test
     public void No106() {
 
     }
 
+    public TreeNode buildTreeFromInPo(int[] inorder, int[] postorder) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        return buildTree(map, inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+    }
+
+    public TreeNode buildTree(Map<Integer, Integer> map, int[] inorder, int ih, int it, int[] postorder, int ph, int pt) {
+        if (ih > it || ph > pt || ih < 0 || ph < 0 || it >= inorder.length || ph >= inorder.length) return null;
+
+        TreeNode node = new TreeNode(postorder[pt]);
+        int iroot = map.get(postorder[pt]);
+        int pleft = ph + iroot - ih - 1;
+
+        node.left = buildTree(map, inorder, ih, iroot - 1, postorder, ph, pleft);
+        node.right = buildTree(map, inorder, iroot + 1, it, postorder, pleft + 1, pt - 1);
+        return node;
+    }
+
     /**
-     *
+     * [118. 杨辉三角 - 力扣（LeetCode）](https://leetcode-cn.com/problems/pascals-triangle/)
      */
     @Test
     public void No118() {
 
     }
 
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (numRows == 0) return result;
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        result.add(list);
+
+        for (int i = 1; i < numRows; i++) {
+            List<Integer> last = result.get(i - 1);
+            List<Integer> newList = new ArrayList<>();
+
+            newList.add(1);
+            for (int j = 1; j < last.size(); j++) {
+                newList.add(last.get(j - 1) + last.get(j));
+            }
+            newList.add(1);
+            result.add(newList);
+        }
+
+        return result;
+    }
+
     /**
-     *
+     * [119. 杨辉三角 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/pascals-triangle-ii/)
      */
     @Test
     public void No119() {
 
     }
 
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> result = new ArrayList<>();
+        result.add(1);
+        for (int i = 1; i <= rowIndex; i++) {
+            result.add(1);
+            for (int j = i - 1; j > 0; j--) {
+                result.set(j, result.get(j) + result.get(j - 1));
+            }
+        }
+        return result;
+    }
+
     /**
-     *
+     * [120. 三角形最小路径和 - 力扣（LeetCode）](https://leetcode-cn.com/problems/triangle/)
      */
     @Test
     public void No120() {
 
     }
 
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int size = triangle.size();
+        int[] result = new int[size];
+        result[0] = triangle.get(0).get(0);
+        for (int i = 1; i < size; i++) {
+            result[i] = triangle.get(i).get(i) + result[i - 1];
+            for (int j = i - 1; j > 0; j--) {
+                result[j] = triangle.get(i).get(j) + Math.min(result[j], result[j - 1]);
+            }
+            result[0] += triangle.get(i).get(0);
+        }
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < size; i++) {
+            min = Math.min(min, result[i]);
+        }
+        return min;
+    }
+
     /**
-     *
+     * [121. 买卖股票的最佳时机 - 力扣（LeetCode）](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
      */
     @Test
     public void No121() {
 
     }
 
+    public int maxProfit(int[] prices) {
+        int maxValue = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                maxValue = Math.max(maxValue, prices[i] - prices[i - 1]);
+                prices[i] = prices[i - 1];
+            }
+        }
+        return maxValue;
+    }
+
     /**
-     *
+     * [122. 买卖股票的最佳时机 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)¬
      */
     @Test
     public void No122() {
 
+    }
+
+    // 朴实的贪心算法，时间复杂度O(n) 空间为O(1)，但操作过于繁琐
+    // 主要问题在于还是对购买行为进行了模拟
+    public int maxProfitII(int[] prices) {
+        int hold = -1;
+        int profit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (i + 1 < prices.length) {
+                if (prices[i] < prices[i + 1] && hold == -1) {
+                    hold = prices[i];
+                }
+                if (prices[i] > prices[i + 1] && hold != -1) {
+                    profit += prices[i] - hold;
+                    hold = -1;
+                }
+            } else {
+                if (hold != -1 && hold < prices[i]) {
+                    profit += prices[i] - hold;
+                }
+            }
+        }
+        return profit;
+    }
+
+    // 时间复杂度O(n) 空间为O(1)，最简洁的解答
+    public int maxProfitII2(int[] prices) {
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                profit += prices[i] - prices[i - 1];
+            }
+        }
+        return profit;
     }
 
     /**
@@ -1684,119 +1802,6 @@ public class ArrayPros {
      */
     @Test
     public void No152() {
-
-    }
-
-    /**
-     * [153. 寻找旋转排序数组中的最小值 - 力扣（LeetCode）](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/)
-     */
-    @Test
-    public void No153() {
-
-    }
-
-    // 双头指针也不够快了
-    public int findMin(int[] nums) {
-        int h = 0;
-        int t = nums.length - 1;
-        while (nums[h] > nums[t]) {
-            h++;
-            t--;
-        }
-
-        if (h > 0 && nums[h] < nums[h - 1]) return nums[h];
-        else if (t < nums.length - 1) return nums[t + 1];
-
-        return nums[0];
-    }
-
-    // 二分查找，时间复杂度为多少呢？时间复杂度为logn
-    public int findMin2(int[] nums) {
-        int h = 0;
-        int t = nums.length - 1;
-        while (h < t) {
-            int m = h + (t - h) / 2;
-            if (nums[m] > nums[t]) {
-                h = m + 1;
-            } else {
-                t = m;
-            }
-        }
-        return nums[h];
-    }
-
-    /**
-     *
-     */
-    @Test
-    public void No154() {
-
-    }
-
-    /**
-     *
-     */
-    @Test
-    public void No162() {
-
-    }
-
-    /**
-     *
-     */
-    @Test
-    public void No163() {
-
-    }
-
-    /**
-     *
-     */
-    @Test
-    public void No167() {
-
-    }
-
-
-    /**
-     *
-     */
-    @Test
-    public void No169() {
-
-    }
-
-
-    /**
-     *
-     */
-    @Test
-    public void No89() {
-
-    }
-
-
-    /**
-     *
-     */
-    @Test
-    public void No209() {
-
-    }
-
-    /**
-     *
-     */
-    @Test
-    public void No216() {
-
-    }
-
-    /**
-     *
-     */
-    @Test
-    public void No217() {
 
     }
 
