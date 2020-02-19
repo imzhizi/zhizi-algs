@@ -1774,11 +1774,73 @@ public class ArrayProsT50 {
     }
 
     /**
-     *
+     * [123. 买卖股票的最佳时机 III - 力扣（LeetCode）](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/)
      */
     @Test
     public void No123() {
 
+    }
+
+    // 所谓的状态转移方程，所谓的动态规划，有内味儿了
+    public int maxProfitIII(int[] prices) {
+        int length = prices.length;
+        if (length < 2) return 0;
+
+        int[][] dp = new int[length][5];
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+        for (int i = 0; i < length; i++) {
+            dp[i][3] = Integer.MIN_VALUE;
+        }
+
+        for (int i = 1; i < length; i++) {
+            dp[i][0] = 0;
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+            dp[i][2] = Math.max(dp[i - 1][2], dp[i - 1][1] + prices[i]);
+            dp[i][3] = Math.max(dp[i - 1][3], dp[i - 1][2] - prices[i]);
+            dp[i][4] = Math.max(dp[i - 1][4], dp[i - 1][3] + prices[i]);
+        }
+
+        return Math.max(dp[length - 1][2], dp[length - 1][4]);
+    }
+
+    // 轻微改良版
+    public int maxProfitIII2(int[] prices) {
+        int length = prices.length;
+        if (length < 2) return 0;
+
+        int[][] dp = new int[length][4];
+        dp[0][0] = -prices[0];
+        dp[0][2] = Integer.MIN_VALUE;
+        dp[1][2] = Integer.MIN_VALUE;
+
+        for (int i = 1; i < length; i++) {
+            if (i < length - 1) dp[i + 1][2] = Integer.MIN_VALUE;
+            dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
+            dp[i][2] = Math.max(dp[i - 1][2], dp[i - 1][1] - prices[i]);
+            dp[i][3] = Math.max(dp[i - 1][3], dp[i - 1][2] + prices[i]);
+        }
+        return Math.max(dp[length - 1][1], dp[length - 1][3]);
+    }
+
+    // 进一步优化
+    public int maxProfitIII3(int[] prices) {
+        int length = prices.length;
+        if (length < 2) return 0;
+
+        int dp_0 = -prices[0];
+        int dp_1 = 0;
+        int dp_2 = Integer.MIN_VALUE;
+        int dp_3 = 0;
+
+        for (int i = 1; i < length; i++) {
+            dp_0 = Math.max(dp_0, -prices[i]);
+            dp_1 = Math.max(dp_1, dp_0 + prices[i]);
+            dp_2 = Math.max(dp_2, dp_1 - prices[i]);
+            dp_3 = Math.max(dp_3, dp_2 + prices[i]);
+        }
+        return Math.max(dp_1, dp_3);
     }
 
     /**
@@ -1786,7 +1848,115 @@ public class ArrayProsT50 {
      */
     @Test
     public void No126() {
+        findLadders2("hit", "cog",
+                new ArrayList<>(Arrays.asList("hot", "dot", "dog", "lot", "log", "cog"))).forEach(System.out::println);
+        findLadders2("red", "tax",
+                new ArrayList<>(Arrays.asList("ted", "tex", "red", "tax", "tad", "den", "rex", "pee"))).forEach(System.out::println);
+    }
 
+    // 比较是否为neighbor的函数太慢了
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> result = new ArrayList<>();
+        if (!wordList.contains(endWord)) {
+            return result;
+        }
+
+        Queue<List<String>> queue = new LinkedList<>();
+        List<String> list = new ArrayList<>();
+        list.add(beginWord);
+        queue.add(list);
+
+        boolean flag = true;
+        Set<String> visited = new HashSet<>();
+        while (!queue.isEmpty() && flag) {
+            int size = queue.size();
+            Set<String> subVisited = new HashSet<>();
+            for (int i = 0; i < size; i++) {
+                List<String> strs = queue.poll();
+                String source = strs.get(strs.size() - 1);
+                for (String target : wordList) {
+                    if (compare(source, target) && !visited.contains(target)) {
+                        List<String> ll = new ArrayList<>(strs);
+                        ll.add(target);
+                        if (target.equals(endWord)) {
+                            result.add(ll);
+                            flag = false;
+                        } else {
+                            queue.add(ll);
+                            subVisited.add(target);
+                        }
+                    }
+                }
+            }
+            visited.addAll(subVisited);
+        }
+
+        return result;
+    }
+
+    public boolean compare(String source, String target) {
+        boolean flag = true;
+        char[] as = source.toCharArray();
+        char[] bs = target.toCharArray();
+        for (int i = 0; i < as.length; i++) {
+            if (as[i] != bs[i]) {
+                if (flag) {
+                    flag = false;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public List<List<String>> findLadders2(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> result = new ArrayList<>();
+        Set<String> wordSet = new HashSet<>(wordList);
+        if (!wordSet.contains(endWord)) {
+            return result;
+        }
+
+        Queue<List<String>> queue = new LinkedList<>();
+
+        List<String> list = new ArrayList<>();
+        list.add(beginWord);
+        queue.add(list);
+
+        boolean flag = true;
+        Set<String> visited = new HashSet<>();
+        while (!queue.isEmpty() && flag) {
+            int size = queue.size();
+            Set<String> subVisited = new HashSet<>();
+            for (int i = 0; i < size; i++) {
+                List<String> strs = queue.poll();
+                char[] source = strs.get(strs.size() - 1).toCharArray();
+                for (int j = 0; j < source.length; j++) {
+                    char temp = source[j];
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        if (temp != ch) {
+                            source[j] = ch;
+                            String target = new String(source);
+                            if (wordSet.contains(target) && !visited.contains(target)) {
+                                List<String> ll = new ArrayList<>(strs);
+                                ll.add(target);
+                                if (target.equals(endWord)) {
+                                    result.add(ll);
+                                    flag = false;
+                                } else {
+                                    queue.add(ll);
+                                    subVisited.add(target);
+                                }
+                            }
+                            source[j] = temp;
+                        }
+                    }
+                }
+            }
+            visited.addAll(subVisited);
+        }
+
+        return result;
     }
 
     /**
