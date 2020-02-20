@@ -1960,19 +1960,75 @@ public class ArrayProsT50 {
     }
 
     /**
-     *
+     * [128. 最长连续序列 - 力扣（LeetCode）](https://leetcode-cn.com/problems/longest-consecutive-sequence/)
      */
     @Test
     public void No128() {
-
+        System.out.println(longestConsecutive(new int[]{-4, -4, 2, -6, 9, 6, 8, -6, -9, -1, 9, 5, 2, -6, 0}));
     }
 
     /**
-     *
+     * 思路其实比较简单, 就是把数组哈希化为 numSet, 对 numSet 进行遍历, 检查每一个数字的临近数字是否存在于数组中
+     * 若存在则继续向left, right两侧延伸, 而此连续序列的长度就是 right-left.
+     * 已经访问过的数字都保存在另一个哈希数组 visitedSet 中, 优化包括如果数字已经被访问过则 continue
+     * 同时若 numSet 中剩余的已经小于 max, 那么必然不会再产生更长的序列, 所以可以直接结束.
+     */
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> numSet = new HashSet<>();
+        for (int n : nums) numSet.add(n);
+        Set<Integer> visited = new HashSet<>();
+        int max = 0;
+
+        for (int n : numSet) {
+            if (visited.contains(n)) {
+                continue;
+            }
+            int left = n - 1;
+            int right = n + 1;
+            visited.add(n);
+
+            while (!visited.contains(left) && numSet.contains(left)) {
+                visited.add(left);
+                left--;
+            }
+            while (!visited.contains(right) && numSet.contains(right)) {
+                visited.add(right);
+                right++;
+            }
+            max = Math.max(max, right - left - 1);
+        }
+        return max;
+    }
+
+    /**
+     * 不包含
+     */
+    public int longestConsecutive2(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) set.add(num);
+        int longest = 0;
+        for (int num : set) {
+            if (!set.contains(num - 1)) {
+                int curnum = num;
+                int curlongest = 1;
+                while (set.contains(curnum + 1)) {
+                    curnum++;
+                    curlongest++;
+                }
+                longest = Math.max(longest, curlongest);
+            }
+        }
+        return longest;
+    }
+
+    /**
+     * [152. 乘积最大子序列 - 力扣（LeetCode）](https://leetcode-cn.com/problems/maximum-product-subarray/)
      */
     @Test
     public void No152() {
 
     }
+
 
 }
