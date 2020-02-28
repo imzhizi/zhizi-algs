@@ -1,4 +1,4 @@
-package com.imzhizi.algs;
+package com.imzhizi.algs.base;
 
 /**
  * Definition for a binary tree node.

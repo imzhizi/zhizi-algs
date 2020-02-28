@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode2018;
 
-import com.imzhizi.algs.ListNode;
+import com.imzhizi.algs.base.ListNode;
 
 /**
  * Merge two sorted linked lists and return it as a new list.

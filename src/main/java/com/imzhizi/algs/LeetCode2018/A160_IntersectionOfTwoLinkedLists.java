@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode2018;
 
-import com.imzhizi.algs.ListNode;
+import com.imzhizi.algs.base.ListNode;
 
 /**
  * Write a program to find the node at which the intersection of two singly linked lists begins.

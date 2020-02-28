@@ -1,6 +1,6 @@
 package com.imzhizi.algs.剑指offer;
 
-import com.imzhizi.algs.TreeNode;
+import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
 import java.util.ArrayList;

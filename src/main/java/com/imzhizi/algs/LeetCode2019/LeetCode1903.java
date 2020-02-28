@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode2019;
 
-import com.imzhizi.algs.ListNode;
+import com.imzhizi.algs.base.ListNode;
 import org.junit.Assert;
 import org.junit.Test;
 

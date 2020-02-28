@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode2018;
 
-import com.imzhizi.algs.ListNode;
+import com.imzhizi.algs.base.ListNode;
 
 /**
  * Given a sorted linked list, delete all duplicates such that each element appear only once.

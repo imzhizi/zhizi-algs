@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode2018;
 
-import com.imzhizi.algs.TreeNode;
+import com.imzhizi.algs.base.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;

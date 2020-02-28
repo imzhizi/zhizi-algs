@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode2020;
 
-import com.imzhizi.algs.TreeNode;
+import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
 import java.util.*;
@@ -2030,5 +2030,20 @@ public class ArrayProsT50 {
 
     }
 
+    public int maxProduct(int[] nums) {
+        int max = Integer.MIN_VALUE, imax = 1, imin = 1;
+        for (int num : nums) {
+            if (num < 0) {
+                int tmp = imax;
+                imax = imin;
+                imin = tmp;
+            }
+            imax = Math.max(imax * num, num);
+            imin = Math.min(imin * num, num);
+
+            max = Math.max(max, imax);
+        }
+        return max;
+    }
 
 }

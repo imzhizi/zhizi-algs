@@ -6,6 +6,8 @@ target/
 ._*
 Thumbs.db
 
+src/main/java/com/imzhizi/algs/demo
+
 ### STS ###
 .apt_generated
 .classpath

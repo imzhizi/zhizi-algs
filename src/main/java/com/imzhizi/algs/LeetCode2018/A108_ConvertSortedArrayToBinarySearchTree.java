@@ -1,6 +1,6 @@
 package com.imzhizi.algs.LeetCode2018;
 
-import com.imzhizi.algs.TreeNode;
+import com.imzhizi.algs.base.TreeNode;
 
 /**
  * Given an array where elements are sorted in ascending order, convert it to a height balanced BST.

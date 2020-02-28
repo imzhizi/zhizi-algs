@@ -1,4 +1,4 @@
-package com.imzhizi.algs;
+package com.imzhizi.algs.base;
 
 import java.util.Objects;
 
