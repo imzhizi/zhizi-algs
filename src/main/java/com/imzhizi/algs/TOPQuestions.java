@@ -4,6 +4,8 @@ import com.imzhizi.algs.base.ListNode;
 import org.junit.Test;
 
 /**
+ * created by zhizi
+ * on 2/23/20 20:28
  * [探索算法面试题汇总 - 力扣 (LeetCode)](https://leetcode-cn.com/explore/interview/card/top-interview-quesitons-in-2018/261/before-you-start/ ）
  */
 public class TOPQuestions {
@@ -124,44 +126,44 @@ public class TOPQuestions {
     // 归并相当于两个有序链表合并
     // 要用头插法、尾插法之类的方法
     public ListNode sortList(ListNode head) {
-        if(head==null||head.next==null){
+        if (head == null || head.next == null) {
             return head;
         }
 
-        ListNode fast=head.next;
-        ListNode slow=head;
-        while(fast!=null&&fast.next!=null){
-            fast=fast.next.next;
-            slow=slow.next;
+        ListNode fast = head.next;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
         }
 
-        ListNode mid=slow.next;
-        slow.next=null;
-        ListNode first=sortList(head);
-        ListNode second=sortList(mid);
-        return merge(first,second);
+        ListNode mid = slow.next;
+        slow.next = null;
+        ListNode first = sortList(head);
+        ListNode second = sortList(mid);
+        return merge(first, second);
     }
 
-    public ListNode merge(ListNode a,ListNode b){
-        ListNode result=new ListNode(0);
-        ListNode node=result;
-        while(a!=null&&b!=null){
-            if(a.val<b.val){
+    public ListNode merge(ListNode a, ListNode b) {
+        ListNode result = new ListNode(0);
+        ListNode node = result;
+        while (a != null && b != null) {
+            if (a.val < b.val) {
                 ListNode temp = a;
-                a=a.next;
-                node.next=temp;
-            }else{
+                a = a.next;
+                node.next = temp;
+            } else {
                 ListNode temp = b;
-                b=b.next;
-                node.next=temp;
+                b = b.next;
+                node.next = temp;
             }
-            node=node.next;
+            node = node.next;
         }
 
-        if(a!=null){
-            node.next=a;
-        }else{
-            node.next=b;
+        if (a != null) {
+            node.next = a;
+        } else {
+            node.next = b;
         }
         return result.next;
     }

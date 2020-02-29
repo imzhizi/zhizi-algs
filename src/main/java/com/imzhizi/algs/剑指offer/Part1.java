@@ -317,7 +317,7 @@ public class Part1 {
 
     int minNumberInRotateArray(int[] array) {
         // 二分查找
-        // 找到第一个比最后一个数大的数字
+        // 找最后一个一个比最后一个数大的数字
         int head = 0;
         int tail = array.length - 1;
         int mid = (head + tail) / 2;
