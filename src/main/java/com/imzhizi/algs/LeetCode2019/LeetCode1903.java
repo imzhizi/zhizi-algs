@@ -4,7 +4,9 @@ import com.imzhizi.algs.base.ListNode;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * created by zhizi on 2019-03-04

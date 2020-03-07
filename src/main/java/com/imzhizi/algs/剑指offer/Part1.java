@@ -495,7 +495,6 @@ public class Part1 {
     int movingCount(int threshold, int rows, int cols) {
         int count = 0;
         int limit = getLimit(threshold);
-        int[][] matrix = new int[rows][cols];
         for (int i = 0; i < rows && i <= limit; i++) {
             for (int j = 0; j < cols && j <= limit - i; j++) {
                 if ((getSum(i) + getSum(j)) <= threshold) count++;
@@ -543,9 +542,7 @@ public class Part1 {
             result *= 3;
             target -= 3;
         }
-        result *= target;
-
-        return result;
+        return result * target;
     }
 
     /**

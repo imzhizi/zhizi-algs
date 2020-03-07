@@ -1,5 +1,6 @@
 package com.imzhizi.algs.剑指LeetCode;
 
+import com.imzhizi.algs.base.ListNode;
 import org.junit.Test;
 
 /**
@@ -144,7 +145,8 @@ public class TOP20 {
 
 
     /**
-     *
+     * [面试题13. 机器人的运动范围 - 力扣（LeetCode）](https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/ )
+     * todo
      */
     @Test
     public void No13() {
@@ -153,20 +155,111 @@ public class TOP20 {
 
 
     /**
-     *
+     * [面试题14- I. 剪绳子 - 力扣（LeetCode）](https://leetcode-cn.com/problems/jian-sheng-zi-lcof/ )
      */
     @Test
-    public void No14() {
+    public void No14I() {
 
+    }
+
+    public int cuttingRope(int n) {
+        if (n == 2) return 1;
+        if (n == 3) return 2;
+
+        int result = 1;
+        while (n >= 5) {
+            result *= 3;
+            n -= 3;
+        }
+        return result * n;
+    }
+
+    /**
+     * [面试题14- II. 剪绳子 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/jian-sheng-zi-ii-lcof/ )
+     * todo 大数处理
+     */
+    @Test
+    public void No14II() {
+
+    }
+
+    public int cuttingRopeII(int n) {
+        if (n < 4) return n - 1;
+
+        long result = 1;
+        long mod = (int) 1e9 + 7;
+
+        while (n > 4) {
+            result *= 3;
+            result %= mod;
+            n -= 3;
+        }
+
+        return (int) (result * n % mod);
+    }
+
+    public int cuttingRopeII2(int n) {
+        if (n < 4) return n - 1;
+
+        int result = 1;
+        int mod = (int) 1e9 + 7;
+
+        while (n > 4) {
+            if (result * 2 > mod) {
+                int temp = result;
+                result = temp * 2 - mod;
+                result += temp;
+            } else {
+                result *= 3;
+            }
+            result %= mod;
+            n -= 3;
+        }
+
+        int temp = result;
+        result = (2 * temp) % mod;
+        result += ((n - 2) * temp) % mod;
+        return result % mod;
     }
 
 
     /**
-     *
+     * [面试题15. 二进制中1的个数 - 力扣（LeetCode）](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/ )
+     * 位运算
      */
     @Test
     public void No15() {
 
+    }
+
+    public int hammingWeight(int n) {
+        int count = 0;
+
+        while (n != 0) {
+            count += n & 1;
+            n >>>= 1;
+        }
+
+        return count;
+    }
+
+    public int hammingWeight2(int n) {
+        int count = 0;
+        boolean flag = false;
+
+        if (n < 0) {
+            n = ~n;
+            flag = true;
+        }
+
+        while (n != 0) {
+            if ((n & 1) == 1) {
+                count++;
+            }
+            n >>= 1;
+        }
+
+        return flag ? 32 - count : count;
     }
 
     /**
@@ -177,20 +270,69 @@ public class TOP20 {
 
     }
 
+    public double myPow(double x, int n) {
+        if(n==0||x==1.0) return 1;
+        if(x==0) return 0;
+
+        double result=1.0;
+        long b=n;
+
+        if(b < 0) {
+            x = 1 / x;
+            b = -b;
+        }
+
+        while(b > 0) {
+            if((b & 1) == 1) result *= x;
+            x *= x;
+            b >>= 1;
+        }
+        return result;
+    }
+
     /**
-     *
+     * [面试题17. 打印从1到最大的n位数 - 力扣（LeetCode）](https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/ )
+     * 索然无味
      */
     @Test
     public void No17() {
 
     }
 
+    public int[] printNumbers(int n) {
+        int l=(int)Math.pow(10,n)-1;
+        int[] result=new int[l];
+        for(int i=0;i<l;i++){
+            result[i]=i+1;
+        }
+
+        return result;
+    }
+
+
     /**
-     *
+     * [面试题18. 删除链表的节点 - 力扣（LeetCode）](https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof/ )
      */
     @Test
     public void No18() {
 
+    }
+
+    public ListNode deleteNode(ListNode head, int val) {
+        if(head==null) return null;
+        ListNode result=new ListNode(0);
+        ListNode node=result;
+        result.next=head;
+
+        while(node.next!=null){
+            if(node.next.val==val){
+                node.next=node.next.next;
+                break;
+            }
+            node=node.next;
+        }
+
+        return result.next;
     }
 
     /**

@@ -1,10 +1,11 @@
 package com.imzhizi.algs.剑指offer;
 
-import com.sun.xml.internal.ws.server.SingletonResolver;
 import org.junit.Test;
 
-import java.util.*;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class Part4 {
     /**

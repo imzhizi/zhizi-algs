@@ -1,4 +1,4 @@
-package com.imzhizi.algs;
+package com.imzhizi.algs.LeetCode2020;
 
 import com.imzhizi.algs.base.ListNode;
 import org.junit.Test;
