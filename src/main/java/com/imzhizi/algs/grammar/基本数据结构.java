@@ -12,7 +12,7 @@ import java.util.*;
 public class 基本数据结构 {
 
     /**
-     * 通过 Arrays 创建 final list，无法 add
+     * 通过 Arrays 创建 final list，无法修改
      */
     @Test
     public void 序列() {
@@ -34,12 +34,15 @@ public class 基本数据结构 {
      * 如果构造时不传参，那么直接使用默认数组，如果构造时容量为0，那么直接食用空数组
      * <p>
      * 如何扩容
-     * 通过函数 ensureCapacity(int minCapacity) 扩容, minCapacity 为size+1
-     * 首先确认是否为空list，因为扩容改变结构所以 modCount++，然后通过 grow(int minCapacity) 完成扩容
-     * 扩容的长度如何确定？相当于原来容量的1.5倍
-     * newCapacity = oldCapacity + (oldCapacity >> 1)
-     * 若 newCapacity 大于 MAX_ARRAY_SIZE，则需要边界处理
-     * 扩容思路也不复杂，创建长度为新容量的数组，然后将原来的数据拷贝进来
+     * 首先确认是否为空list，若为空可以直接扩充为默认长度
+     * 扩容会改变数组结构所以需要 modCount++
+     * 然后通过 grow 方法完成扩容
+     * 扩容后的长度 newCapacity = oldCapacity + (oldCapacity >> 1)，相当于原来容量的1.5倍
+     * 最后进行数据迁移，过程也不复杂，创建长度为新容量的数组，然后将原来的数据拷贝进来即可
+     * <p>
+     * 扩容中，方法间始终传递 minCapacity，minCapacity 为size+1
+     * ensureCapacity(int minCapacity) grow(int minCapacity)
+     * 若 newCapacity 过大、过小时，进行相应的边界处理
      * <p>
      * 对数组使用了 transient 标记，该标记意思是在对象序列化的时候会忽略该字段
      * 忽略的话如何做到序列化呢？有私有的 writeObject readObject 做更精细的控制
@@ -66,7 +69,7 @@ public class 基本数据结构 {
     }
 
     /**
-     * LinkedList
+     * 链表 LinkedList
      * 线程不安全、 双向链表
      * 继承自 AbstractSequentialList，实现了 List、Deque 接口
      * 其中 AbstractSequentialList 继承自 AbstractList，实现了顺序访问序列的一些基本方法
@@ -93,17 +96,22 @@ public class 基本数据结构 {
     }
 
     /**
-     * 队列
+     * 队列 LinkedList
      * 由于 LinkedList 实现了 Deque 接口，而 Deque 继承了 Queue
      * 所以 Queue 类型可以通过 LinkedList 实例化
      */
     @Test
     public void 队列() {
         Queue<Integer> queue = new LinkedList<>();
+        queue.add(3);
+        queue.add(1);
+        queue.add(4);
+        System.out.println(queue.peek());
+
     }
 
     /**
-     * 双向队列
+     * 双向队列 ArrayDeque
      * 其实 LinkedList 也是 Deque 的一个实现
      * 但还有另外一个实现就是 ArrayDeque
      * 线程不安全，不允许插入空值
@@ -136,10 +144,10 @@ public class 基本数据结构 {
      * 如果需要扩容
      * 会执行 doubleCapacity 来使容量翻倍，然后通过 System.arraycopy() 迁移
      * 具体如何拷贝呢？
-     * 由于 ArrayDeque 中 head 和 tail 的奇特构造，在扩容时会把原来的两端合并，成为新的左侧
-     * System.arraycopy(elements, p, a, 0, r);  // head 从数组的最前端开始拷贝
-     * System.arraycopy(elements, 0, a, r, p); // tail 紧跟着前面的数据拷贝
-     * 接着 head 变为 0，一旦 addFirst就再一次来到数组的末端，而 tail 则从拷贝来数据的位置 addLast
+     * 由于 ArrayDeque 中 head 和 tail 的奇特构造，扩容后迁移时，会把原来的两端合并全部拷贝到新队列的左侧
+     * System.arraycopy(elements, p, a, 0, r); head 从数组的最前端开始拷贝
+     * System.arraycopy(elements, 0, a, r, p); tail 紧跟着前面的数据拷贝
+     * 接着 head 变为 0，一旦 addFirst 就再一次来到数组的末端，而 tail 则从拷贝来数据的位置逐个 addLast
      * <p>
      * ArrayDeque 没有使用 modCount 机制来进行并发检查，而是通过比较指针位置实现，但无法防范污读问题？
      */
@@ -158,14 +166,27 @@ public class 基本数据结构 {
         Field tail = dequeClass.getDeclaredField("tail");
         tail.setAccessible(true);
         System.out.println("tail " + tail.get(deque));
+
     }
 
-
     /**
-     * 栈
+     * 栈 Stack
+     * *** Vector 和 Stack 都已经不推荐使用，如果想使用栈，可以使用 ArrayDeque ***
+     * <p>
+     * Stack 继承自 Vector，主要功能都来自于 Vector
+     * Vector 继承自 AbstractList，实现了 List、RandomAccess
+     * Vector 可以通过索引随机访问，能够根据对象的增删而扩容或收缩
+     * 和 ArrayList 的主要不同是 Vector 线程安全
+     * 跟 ArrayList 类似，默认容量是 10
+     * <p>
+     * 主要方法都使用 synchronized 标注，保证线程安全
+     * 扩容时使用 capacityIncrement 来标记步长
+     * 如果未定义 capacityIncrement，则直接将容量翻倍
+     * <p>
+     * 同样使用 modCount 实现 fail-fast 机制
      */
     @Test
-    public void stack() {
+    public void 栈() {
         Stack<Integer> stack = new Stack<>();
         stack.push(3);
         stack.push(1);
@@ -174,10 +195,26 @@ public class 基本数据结构 {
     }
 
     /**
-     * 基于优先队列实现大根堆、小根堆
+     * 线程安全的线性表 synchronizedList
+     * 可以使用 Collections.synchronizedList 来包裹 List，得到线程安全的 List
+     * 依赖内部类 SynchronizedList 保证同步
+     * SynchronizedRandomAccessList 是实现了 RandomAccess 接口的 SynchronizedList
      */
     @Test
-    public void heap() {
+    public void 同步线性表() {
+        List<Integer> synchronizedList = Collections.synchronizedList(new ArrayList<>());
+        synchronizedList.add(3);
+        synchronizedList.add(1);
+        synchronizedList.add(4);
+        System.out.println(synchronizedList);
+    }
+
+    /**
+     * 基于优先队列 PriorityQueue
+     * 可以实现大根堆、小根堆
+     */
+    @Test
+    public void 堆() {
         PriorityQueue<Integer> smallHeap = new PriorityQueue<>();
         smallHeap.offer(3);
         smallHeap.offer(1);
@@ -190,21 +227,5 @@ public class 基本数据结构 {
 
         System.out.println("small-head peek " + smallHeap.peek());
         System.out.println("big-head peek " + bigHead.peek());
-    }
-
-    /**
-     * 集合
-     */
-    @Test
-    public void set() {
-
-    }
-
-    /**
-     * 映射
-     */
-    @Test
-    public void map() {
-
     }
 }

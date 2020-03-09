@@ -29,8 +29,8 @@
 
 ### 按照标签爬题中
 首先在做的标签是 [ 数组 (Array) 标签  ](https://leetcode-cn.com/tag/array/ )
-- 标签下 No.1~No.50 题解法放在 [ LeetCode2020/ArrayProsT50 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/LeetCode2020/ArrayProsT50.java ) 中.
-- 标签下 N0.51~No.100 题解法放在 [ LeetCode2020/ArrayProsT100 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/LeetCode2020/ArrayProsT100.java ) 中.
+- 标签下 No.1 ~ 50 题解法放在 [ LeetCode2020/ArrayProsT50 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/LeetCode2020/ArrayProsT50.java ) 中.
+- 标签下 No.51 ~ 100 题解法放在 [ LeetCode2020/ArrayProsT100 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/LeetCode2020/ArrayProsT100.java ) 中.
 
 
 ### 归档
