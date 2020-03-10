@@ -1,4 +1,4 @@
-package com.imzhizi.algs.剑指offer;
+package com.imzhizi.algs.剑指NowCoder;
 
 /**
  * [求1+2+3+...+n_牛客网]( https://www.nowcoder.com/practice/7a0da8fc483247ff8800059e12d7caf1 )

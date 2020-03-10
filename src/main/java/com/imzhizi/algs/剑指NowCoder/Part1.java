@@ -1,4 +1,4 @@
-package com.imzhizi.algs.剑指offer;
+package com.imzhizi.algs.剑指NowCoder;
 
 import com.imzhizi.algs.base.ListNode;
 import com.imzhizi.algs.base.TreeNode;

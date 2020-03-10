@@ -1,4 +1,4 @@
-package com.imzhizi.algs.grammar;
+package com.imzhizi.algs.语言基础;
 
 import org.junit.Test;
 
@@ -137,7 +137,7 @@ public class 基本数据结构 {
      * 所以在实现层面，ArrayDeque 的head是尾部，tail却在头部，从两端向中间不断移动
      * 一旦 head==tail，说明需要扩容
      * <p>
-     * ArrayDeque 要求容量必须是 2 的幂，最小容量 MIN_INITIAL_CAPACITY = 8，默认容量是 16
+     * ArrayDeque 要求容量必须是 2 的幂，MIN_INITIAL_CAPACITY = 8，默认容量是 16
      * 可以在构造函数直接传入元素数量进行初始化
      * 若元素数量不为2的幂，需要通过 calculateSize() 计算，保证为2的幂
      * <p>

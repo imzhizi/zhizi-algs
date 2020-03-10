@@ -1,4 +1,4 @@
-package com.imzhizi.algs.grammar;
+package com.imzhizi.algs.语言基础;
 
 import com.imzhizi.algs.base.Student1;
 import com.imzhizi.algs.base.Student2;
