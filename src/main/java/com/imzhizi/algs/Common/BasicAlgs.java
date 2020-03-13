@@ -1,4 +1,4 @@
-package com.imzhizi.algs;
+package com.imzhizi.algs.Common;
 
 import com.imzhizi.algs.base.ListNode;
 import com.imzhizi.algs.base.TreeNode;

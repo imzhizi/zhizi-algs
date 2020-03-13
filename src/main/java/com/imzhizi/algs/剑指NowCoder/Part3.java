@@ -3,10 +3,7 @@ package com.imzhizi.algs.剑指NowCoder;
 import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Part3 {
@@ -17,6 +14,29 @@ public class Part3 {
     @Test
     public void No30() {
         MinStack minStack = new MinStack();
+    }
+
+    class MinStack {
+        private int[] stack = new int[100];
+        private int index = -1;
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        public void push(int node) {
+            stack[++index] = node;
+            pq.add(node);
+        }
+
+        public void pop() {
+            pq.remove(stack[index--]);
+        }
+
+        public int top() {
+            return stack[index];
+        }
+
+        public int min() {
+            return pq.peek();
+        }
     }
 
     /**
@@ -246,7 +266,6 @@ public class Part3 {
 
     /**
      * [复杂链表的复制_牛客网]( https://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba )
-     * [ 独立类文件 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/RandomListNode.java )
      */
     @Test
     public void No35() {
@@ -279,6 +298,16 @@ public class Part3 {
             p = p.next;
         }
         return node;
+    }
+
+    class RandomListNode {
+        int label;
+        RandomListNode next = null;
+        RandomListNode random = null;
+
+        RandomListNode(int label) {
+            this.label = label;
+        }
     }
 
     /**

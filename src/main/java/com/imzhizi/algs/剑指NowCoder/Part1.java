@@ -225,6 +225,17 @@ public class Part1 {
         return null;
     }
 
+    class TreeLinkNode {
+        public int val;
+        public TreeLinkNode left = null;
+        public TreeLinkNode right = null;
+        public TreeLinkNode next = null;
+
+        public TreeLinkNode(int val) {
+            this.val = val;
+        }
+    }
+
     /**
      * [用两个栈实现队列_牛客网]( https://www.nowcoder.com/practice/54275ddae22f475981afa2244dd448c6 )
      */

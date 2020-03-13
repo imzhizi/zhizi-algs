@@ -85,6 +85,16 @@ public class Part6 {
         return Solution.sum;
     }
 
+    static class Solution {
+        static int sum = 0;
+        static int n = 0;
+
+        public Solution() {
+            n++;
+            sum += n;
+        }
+    }
+
 
     /**
      * [不用加减乘除做加法_牛客网]( https://www.nowcoder.com/practice/59ac416b4b944300b617d4f7f111b215 )

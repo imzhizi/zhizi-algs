@@ -2,7 +2,7 @@ package com.imzhizi.algs.剑指NowCoder;
 
 import org.junit.Test;
 
-public class Others {
+public class Part7 {
     /**
      * [矩形覆盖_牛客网]( https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6 )
      */
