@@ -26,13 +26,13 @@
 ## 剑指牛客
 该部分题目全部来自于 [ 《剑指Offer》 - 牛客网 ](https://www.nowcoder.com/ta/coding-interviews ), 并通过所有测试用例.
 
-- [x] [ 第1题～第19题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/Part1.java )
-- [x] [ 第20题～第29题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/Part2.java )
-- [x] [ 第30题～第39题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/Part3.java )
-- [x] [ 第40题～第49题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/Part4.java )
-- [x] [ 第50题～第59题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/Part5.java )
-- [x] [ 第60题～第69题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/Part6.java )
-- [x] [ 其他题目 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87offer/Others.java )
+- [x] [ 第1题～第19题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87NowCoder/Part1.java )
+- [x] [ 第20题～第29题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87NowCoder/Part2.java )
+- [x] [ 第30题～第39题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87NowCoder/Part3.java )
+- [x] [ 第40题～第49题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87NowCoder/Part4.java )
+- [x] [ 第50题～第59题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87NowCoder/Part5.java )
+- [x] [ 第60题～第69题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87NowCoder/Part6.java )
+- [x] [ 其他题目 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E5%89%91%E6%8C%87NowCoder/Part7.java )
 
 ## 按照标签爬题中 （LeetCode）
 首先在做的标签是 [ 数组 (Array) 标签  ](https://leetcode-cn.com/tag/array/ )
