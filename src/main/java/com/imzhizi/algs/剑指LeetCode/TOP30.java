@@ -4,10 +4,7 @@ import com.imzhizi.algs.base.ListNode;
 import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * created by zhizi

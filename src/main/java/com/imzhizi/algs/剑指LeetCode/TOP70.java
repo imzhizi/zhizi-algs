@@ -1,8 +1,10 @@
 package com.imzhizi.algs.剑指LeetCode;
 
+import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * created by zhizi
@@ -40,15 +42,12 @@ public class TOP70 {
 
     /**
      * [面试题62. 圆圈中最后剩下的数字 - 力扣（LeetCode）](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/ )
-     * todo dp
      */
     @Test
     public void No62() {
 
     }
 
-    // DP
-    // todo
     public int lastRemaining1(int n, int m) {
         int last = 0;   //存活的最后一个人的位置
         for (int i = 2; i <= n; i++) {
@@ -71,7 +70,6 @@ public class TOP70 {
 
     /**
      * [面试题65. 不用加减乘除做加法 - 力扣（LeetCode）](https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/ )
-     * todo 位运算
      */
     @Test
     public void No65() {
@@ -145,5 +143,58 @@ public class TOP70 {
         a[0] = back[1];
         a[length - 1] = front[length - 2];
         return a;
+    }
+
+    /**
+     * [面试题68 - I. 二叉搜索树的最近公共祖先 - 力扣（LeetCode）](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/ )
+     */
+    @Test
+    public void No68() {
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (p.val == q.val) return p;
+
+        if (p.val < root.val && q.val < root.val) {
+            return lowestCommonAncestor(root.left, p, q);
+        } else if (p.val > root.val && q.val > root.val) {
+            return lowestCommonAncestor(root.right, p, q);
+        } else {
+            return root;
+        }
+    }
+
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        if (p.val == q.val) return p;
+
+        while (root != null) {
+            if (p.val < root.val && q.val < root.val) {
+                root = root.left;
+            } else if (p.val > root.val && q.val > root.val) {
+                root = root.right;
+            } else {
+                break;
+            }
+        }
+        return root;
+    }
+
+    /**
+     * [面试题68 - II. 二叉树的最近公共祖先 - 力扣（LeetCode）](https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/ )
+     * todo 这个if判断很精妙
+     */
+    @Test
+    public void No68II() {
+    }
+
+    public TreeNode lowestCommonAncestorII(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+
+        TreeNode leftNode = lowestCommonAncestorII(root.left, p, q);
+        TreeNode rightNode = lowestCommonAncestorII(root.right, p, q);
+
+        if (leftNode == null) return rightNode;
+        else if (rightNode == null) return leftNode;
+        else return root;
     }
 }

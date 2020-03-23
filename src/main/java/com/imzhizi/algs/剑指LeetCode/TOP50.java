@@ -1,9 +1,8 @@
 package com.imzhizi.algs.剑指LeetCode;
 
-import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.LinkedHashMap;
 
 /**
  * created by zhizi
