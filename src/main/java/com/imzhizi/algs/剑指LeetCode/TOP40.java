@@ -11,11 +11,27 @@ import java.util.*;
  */
 public class TOP40 {
     /**
-     *
+     * [面试题31. 栈的压入、弹出序列 - 力扣（LeetCode）](https://leetcode-cn.com/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/ )
+     * 不用想的很复杂，直接搞就行
      */
     @Test
     public void No31() {
 
+    }
+
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        int pop = 0;
+
+        for (int i : pushed) {
+            stack.push(i);
+            while (!stack.isEmpty() && pop < pushed.length && stack.peek() == popped[pop]) {
+                stack.pop();
+                pop++;
+            }
+        }
+
+        return stack.isEmpty();
     }
 
     /**
@@ -351,6 +367,54 @@ public class TOP40 {
             else res += random.val + "]";
             if (next != null) res += "->" + next;
             return res;
+        }
+    }
+
+    /**
+     * [面试题38. 字符串的排列 - 力扣（LeetCode）](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/ )
+     * 写的时候有种非常熟悉的感觉，回溯法，其实还是以前树的dfs遍历那一套，需要在最底部承接
+     * visited 的使用稍微有点巧妙，但是每次都遍历还是很累的
+     */
+    @Test
+    public void No38() {
+        for (String abc : permutation("abc")) {
+            System.out.println(abc);
+        }
+    }
+
+    public String[] permutation(String s) {
+        char[] chars = s.toCharArray();
+        Arrays.sort(chars);
+        List<String> list = new ArrayList<>();
+
+        boolean[] visited = new boolean[chars.length];
+        for (int i = 0; i < chars.length; i++) {
+            if (i > 0 && chars[i] == chars[i - 1]) {
+                continue;
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append(chars[i]);
+            visited[i] = true;
+            dfs(chars, sb, visited, list);
+            visited[i] = false;
+        }
+
+        return list.toArray(new String[0]);
+    }
+
+    public void dfs(char[] chars, StringBuilder sb, boolean[] visited, List<String> list) {
+        if (sb.length() == chars.length) {
+            list.add(sb.toString());
+            return;
+        }
+        for (int i = 0; i < chars.length; i++) {
+            if (!visited[i]) {
+                if (i > 0 && !visited[i - 1] && chars[i] == chars[i - 1]) continue;
+                visited[i] = true;
+                StringBuilder builder = new StringBuilder(sb);
+                dfs(chars, builder.append(chars[i]), visited, list);
+                visited[i] = false;
+            }
         }
     }
 

@@ -205,6 +205,64 @@ public class TOP60 {
     }
 
     /**
+     * [面试题56 - I. 数组中数字出现的次数 - 力扣（LeetCode）](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/ )
+     * xor中不为1的每一位, 都说明在这一位上a, b不同
+     * 因此任选xor的不为0的一位, 都可以用来对a、b划分，而相同的数字在这一位上也相同，所以会在异或中消失
+     * 而获取不为0的一位最简单的方法是 xor&-xor, 一种更直接、更蠢的方法是
+     * while((xor&1)!=1){
+     * flag<<=1;
+     * xor>>>=1;
+     * }
+     */
+    @Test
+    public void No56I() {
+
+    }
+
+    public int[] singleNumbers(int[] nums) {
+        int xor = 0;
+        for (int num : nums) {
+            xor ^= num;
+        }
+
+        int a = 0;
+        int b = 0;
+        xor &= -xor;
+        for (int num : nums) {
+            if ((num & xor) == 0) a ^= num;
+            else b ^= num;
+        }
+
+        return new int[]{a, b};
+    }
+
+    /**
+     * [面试题56 - II. 数组中数字出现的次数 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/ )
+     * 来数一数每一位上有多少个 1, 如果 1 的数量是 3 的整数倍, 则说明目标数字在该位做贡献了
+     * 如何把散碎的位搜集起来，要用「或」运算
+     */
+    @Test
+    public void No56II() {
+
+    }
+
+    public int singleNumber(int[] nums) {
+        int result = 0;
+        int bit = 1;
+
+        for (int i = 0; i < 32; i++) {
+            int count = 0;
+            for (int num : nums) {
+                if ((num & bit) != 0) count++;
+            }
+            if (count % 3 != 0) result |= bit;
+            bit <<= 1;
+        }
+
+        return result;
+    }
+
+    /**
      * [面试题57. 和为s的两个数字 - 力扣（LeetCode）](https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof/ )
      */
     @Test
@@ -394,5 +452,42 @@ public class TOP60 {
         }
 
         return result;
+    }
+
+    /**
+     * [面试题59 - II. 队列的最大值 - 力扣（LeetCode）](https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/ )
+     */
+    @Test
+    public void No59II() {
+
+    }
+
+    static class MaxQueue {
+        LinkedList<Integer> single;
+        LinkedList<Integer> queue;
+
+        public MaxQueue() {
+            single = new LinkedList<>();
+            queue = new LinkedList<>();
+        }
+
+        public int max_value() {
+            if (single.isEmpty()) return -1;
+            return single.peekFirst();
+        }
+
+        public void push_back(int value) {
+            queue.addLast(value);
+            while (!single.isEmpty() && value > single.peekLast()) {
+                single.pollLast();
+            }
+            single.addLast(value);
+        }
+
+        public int pop_front() {
+            if (queue.isEmpty()) return -1;
+            if (single.peekFirst().equals(queue.peekFirst())) single.pollFirst();
+            return queue.pollFirst();
+        }
     }
 }

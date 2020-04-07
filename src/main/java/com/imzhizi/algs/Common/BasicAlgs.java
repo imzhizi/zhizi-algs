@@ -4,9 +4,7 @@ import com.imzhizi.algs.base.ListNode;
 import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class BasicAlgs {
     /**
@@ -115,27 +113,23 @@ public class BasicAlgs {
 
     /**
      * [94. 二叉树的中序遍历 - 力扣（LeetCode）](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/ )
-     * 使用递归将简单许多，时刻记得空值处理
      */
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<Integer>();
-        inorderTraversal(result, root);
+        dfs(result, root);
         return result;
     }
 
-    public void inorderTraversal(List<Integer> result, TreeNode root) {
-        if (root != null) {
-            if (root.left == null && root.right == null) {
-                result.add(root.val);
-            } else {
-                inorderTraversal(result, root.left);
-                result.add(root.val);
-                inorderTraversal(result, root.right);
-            }
-        }
+    // 使用递归实现dfs，实现简单，性能也好
+    public void dfs(List<Integer> result, TreeNode root) {
+        if (root == null) return;
+
+        dfs(result, root.left);
+        result.add(root.val);
+        dfs(result, root.right);
     }
 
-    //  dfs, dfs都需要用栈，每出一次栈都要处理一下同一层次其他结点
+    //  同样的dfs，但是不用递归实现
     public List<Integer> inorderTraversal2(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         Stack<TreeNode> stack = new Stack<>();
@@ -165,64 +159,4 @@ public class BasicAlgs {
     }
 
 
-    /**
-     * [148. 排序链表 - 力扣（LeetCode）](https://leetcode-cn.com/problems/sort-list/ )
-     * 使用了插入排序，没想到这么慢
-     */
-    public ListNode sortList(ListNode head) {
-        ListNode result = new ListNode(0);
-        ListNode node = result;
-        result.next = head;
-
-        while (node.next != null) {
-            ListNode fast = node.next;
-            while (fast.next != null) {
-                if (fast.next.val < node.next.val) {
-                    ListNode temp = fast.next;
-                    fast.next = fast.next.next;
-                    temp.next = node.next;
-                    node.next = temp;
-                } else {
-                    fast = fast.next;
-                }
-            }
-            node = node.next;
-        }
-
-        return result.next;
-    }
-
-
-    @Test
-    public void 快速排序() {
-        int[] nums = {4, 7, 5, 6, 3, 8, 2};
-        sort(nums, 0, nums.length - 1);
-
-        for (int i = 0; i < nums.length; i++) {
-            System.out.printf(nums[i] + ",");
-        }
-    }
-
-    public void sort(int[] nums, int start, int end) {
-        if (start >= end) {
-            return;
-        }
-
-        int tail = end;
-        for (int i = start; i < end; i++) {
-            int temp = nums[i + 1];
-            if (nums[i] > temp) {
-                nums[i + 1] = nums[i];
-                nums[i] = temp;
-            } else {
-                nums[i + 1] = nums[end];
-                nums[end] = temp;
-                end--;
-                i--;
-            }
-        }
-
-        sort(nums, start, end);
-        sort(nums, end + 1, tail);
-    }
 }

@@ -3,6 +3,9 @@ package com.imzhizi.algs.剑指LeetCode;
 import com.imzhizi.algs.base.ListNode;
 import org.junit.Test;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * created by zhizi
  * on 2/28/20 14:28
@@ -152,6 +155,74 @@ public class TOP20 {
 
     }
 
+    // dfs，效果不错
+    public int movingCount(int m, int n, int k) {
+        target = k;
+        row = m;
+        col = n;
+        count = 0;
+        int[][] visited = new int[m][n];
+        dfs(0, 0, visited);
+        return count;
+    }
+
+    static int target;
+    static int row;
+    static int col;
+    static int count;
+
+    public void dfs(int r, int c, int[][] visited) {
+        if (getSum(r, c) > target || visited[r][c + 1] == 1) return;
+
+        if (visited[r][c] == 0) {
+            count++;
+            visited[r][c]++;
+            if (c + 1 < col && getSum(r, c + 1) <= target) {
+                dfs(r, c + 1, visited);
+            }
+            if (r + 1 < row && getSum(r + 1, c) <= target) {
+                dfs(r + 1, c, visited);
+            }
+        }
+    }
+
+    // 使用bfs实现，并使用了愚蠢的自制类
+    // 效果不太好，只有20%
+    static class Node {
+        int x;
+        int y;
+
+        public Node(int r, int c) {
+            x = r;
+            y = c;
+        }
+    }
+
+    public int bfs(int m, int n, int k) {
+        Deque<Node> deque = new ArrayDeque<>();
+        deque.addLast(new Node(0, 0));
+        int[][] visited = new int[m][n];
+        int count = 0;
+
+        while (!deque.isEmpty()) {
+            Node node = deque.pollFirst();
+            if (visited[node.x][node.y] == 0) {
+                count++;
+                visited[node.x][node.y]++;
+                if (node.y + 1 < n && visited[node.x][node.y + 1] == 0 && getSum(node.x, node.y + 1) <= k) {
+                    deque.addLast(new Node(node.x, node.y + 1));
+                }
+                if (node.x + 1 < m && visited[node.x + 1][node.y] == 0 && getSum(node.x + 1, node.y) <= k) {
+                    deque.addLast(new Node(node.x + 1, node.y));
+                }
+            }
+        }
+        return count;
+    }
+
+    public int getSum(int r, int c) {
+        return r % 10 + c % 10 + r / 10 + c / 10;
+    }
 
     /**
      * [面试题14- I. 剪绳子 - 力扣（LeetCode）](https://leetcode-cn.com/problems/jian-sheng-zi-lcof/ )
@@ -270,19 +341,19 @@ public class TOP20 {
     }
 
     public double myPow(double x, int n) {
-        if(n==0||x==1.0) return 1;
-        if(x==0) return 0;
+        if (n == 0 || x == 1.0) return 1;
+        if (x == 0) return 0;
 
-        double result=1.0;
-        long b=n;
+        double result = 1.0;
+        long b = n;
 
-        if(b < 0) {
+        if (b < 0) {
             x = 1 / x;
             b = -b;
         }
 
-        while(b > 0) {
-            if((b & 1) == 1) result *= x;
+        while (b > 0) {
+            if ((b & 1) == 1) result *= x;
             x *= x;
             b >>= 1;
         }
@@ -299,10 +370,10 @@ public class TOP20 {
     }
 
     public int[] printNumbers(int n) {
-        int l=(int)Math.pow(10,n)-1;
-        int[] result=new int[l];
-        for(int i=0;i<l;i++){
-            result[i]=i+1;
+        int l = (int) Math.pow(10, n) - 1;
+        int[] result = new int[l];
+        for (int i = 0; i < l; i++) {
+            result[i] = i + 1;
         }
 
         return result;
@@ -318,17 +389,17 @@ public class TOP20 {
     }
 
     public ListNode deleteNode(ListNode head, int val) {
-        if(head==null) return null;
-        ListNode result=new ListNode(0);
-        ListNode node=result;
-        result.next=head;
+        if (head == null) return null;
+        ListNode result = new ListNode(0);
+        ListNode node = result;
+        result.next = head;
 
-        while(node.next!=null){
-            if(node.next.val==val){
-                node.next=node.next.next;
+        while (node.next != null) {
+            if (node.next.val == val) {
+                node.next = node.next.next;
                 break;
             }
-            node=node.next;
+            node = node.next;
         }
 
         return result.next;
