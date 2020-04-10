@@ -113,4 +113,132 @@ public class Archive {
             System.out.println(count);
         }
     }
+
+    /**
+     * 网易面试
+     */
+    static class w1 {
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+            int n = input.nextInt();
+            long[] nums = new long[n];
+            for (int i = 0; i < n; i++) {
+                nums[i] = input.nextLong();
+            }
+            input.close();
+
+            long min = Long.MAX_VALUE;
+            for (int i = 1; i < n; i++) {
+                long gap = nums[i] - nums[i - 1];
+                if (gap <= 0) {
+                    System.out.println(-1);
+                    return;
+                }
+                min = Math.min(min, gap);
+            }
+
+            for (int i = 1; i < n; i++) {
+                if ((nums[i] - nums[i - 1]) % min != 0) {
+                    System.out.println(-1);
+                    return;
+                }
+            }
+
+            System.out.println(min);
+        }
+    }
+
+    static class w3 {
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+            int n = input.nextInt();
+            int m = input.nextInt();
+            boolean[] virus = new boolean[n];
+            virus[input.nextInt()] = true;
+
+            for (int i = 0; i < m; i++) {
+                int q = input.nextInt();
+                int[] qs = new int[q];
+                boolean flag = false;
+                for (int j = 0; j < q; j++) {
+                    qs[j] = input.nextInt();
+                    if (virus[qs[j]]) flag = true;
+                }
+                if (flag) {
+                    for (int j : qs) virus[j] = true;
+                }
+            }
+            input.close();
+
+            int count = 0;
+            for (int i = 0; i < n; i++) {
+                if (virus[i]) count++;
+            }
+            System.out.println(count);
+        }
+    }
+
+
+    /**
+     * 便利蜂
+     */
+    static class b1 {
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+            List<Long> list = new ArrayList<>();
+
+            long max = Long.MIN_VALUE;
+            long sum = 0;
+
+            String str = input.nextLine();
+            input.close();
+            String[] nums = str.split(",");
+            for (String num : nums) {
+                list.add(Long.valueOf(num));
+                int size = list.size();
+                sum += list.get(size - 1);
+                if (list.size() > 3) sum -= list.get(size - 4);
+                if (list.size() >= 3) max = Math.max(max, sum);
+            }
+
+            System.out.println(max);
+        }
+    }
+
+    static class b3 {
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+            String str = input.nextLine();
+            input.close();
+            String[] strs = str.split(",");
+            int[] nums = new int[strs.length];
+            for (int i = 0; i < strs.length; i++) nums[i] = Integer.parseInt(strs[i]);
+
+            int time = 1;
+            int l = nums.length;
+            if (l < 3) {
+                time = l - 1;
+            } else {
+                for (int i = 0; i < l && nums[i] < l - 1 - i; i++) {
+                    int step = 0;
+                    int stepI = 0;
+                    for (int j = 1; j <= nums[i]; j++) {
+                        if (nums[i + j] + j > step) {
+                            step = nums[i + j] + j;
+                            stepI = i + j;
+                        }
+                    }
+
+                    i = stepI - 1;
+                    if (i < 0) {
+                        System.out.println(-1);
+                        return;
+                    }
+                    time++;
+                }
+            }
+
+            System.out.println(time);
+        }
+    }
 }
