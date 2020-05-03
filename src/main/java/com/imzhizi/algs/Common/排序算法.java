@@ -1,6 +1,7 @@
 package com.imzhizi.algs.Common;
 
 import com.imzhizi.algs.base.ListNode;
+import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
 import java.util.Random;
@@ -133,12 +134,6 @@ public class 排序算法 {
         quickSort2(nums, lead + 1, tail);
     }
 
-    public void swap(int[] nums, int i, int k) {
-        int temp = nums[i];
-        nums[i] = nums[k];
-        nums[k] = temp;
-    }
-
     /**
      * 同样是基于分治思想
      * 主要分为两部分
@@ -216,10 +211,105 @@ public class 排序算法 {
 
     /**
      * 堆排序
-     * todo
+     * 以大根堆为例
+     * 堆讲求的是元素不断地加入到堆中，不断地调整堆，最终形成一个根堆
+     * 所以堆排序也需要先构造出来堆，然后再删除堆顶元素
      */
+    @Test
+    public void 堆排序() {
+        int[] nums = new int[]{-4, -7, -1, 0, 0, -5, -1};
+        heapSort(nums, 0, nums.length);
+        for (int num : nums) {
+            System.out.print(num + " ");
+        }
+    }
+
     public void heapSort(int[] nums, int head, int tail) {
+        for (int i = 1; i < tail; i++) {
+            buildHeap(nums, head, i);
+        }
+
+        for (int i = tail - 1; i > 0; i--) {
+            swap(nums, head, i);
+            rebuildHeap(nums, i, head);
+        }
+    }
+
+    public void buildHeap(int[] nums, int head, int target) {
+        if (target <= head) return;
+
+        int p = (target - 1) / 2;
+
+        if (nums[target] > nums[p]) {
+            swap(nums, target, p);
+        }
+        buildHeap(nums, head, p);
+    }
+
+    public void rebuildHeap(int[] nums, int tail, int target) {
+        int c = (target + 1) * 2;
+        if (c > tail) return;
+        else if (c == tail) {
+            c = c - 1;
+        } else {
+            c = nums[c] > nums[c - 1] ? c : c - 1;
+        }
+        if (nums[target] < nums[c]) swap(nums, target, c);
+
+        rebuildHeap(nums, tail, c);
 
     }
 
+
+    @Test
+    public void 最小数() {
+        int[] nums = new int[]{3, 30, 34, 5, 9};
+        System.out.println(minNumber(nums));
+    }
+
+    public String minNumber(int[] nums) {
+        quickSorts(nums, 0, nums.length - 1);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i : nums) {
+            sb.append(i);
+        }
+        return sb.toString();
+    }
+
+    public void quickSorts(int[] nums, int head, int tail) {
+        if (head >= tail) return;
+
+        int pivot = head;
+        for (int i = head; i < tail; i++) {
+            if (compare(nums[tail], nums[i])) {
+                swap(nums, pivot++, i);
+            }
+        }
+        swap(nums, pivot, tail);
+
+        quickSorts(nums, head, pivot - 1);
+        quickSorts(nums, pivot, tail);
+
+    }
+
+    public boolean compare(int a, int b) {
+        String str1 = a + "" + b;
+        String str2 = b + "" + a;
+        for (int i = 0; i < str1.length(); i++) {
+            if (str1.charAt(i) > str2.charAt(i)) {
+                return true;
+            } else if (str1.charAt(i) < str2.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public void swap(int[] nums, int i, int k) {
+        int temp = nums[i];
+        nums[i] = nums[k];
+        nums[k] = temp;
+    }
 }

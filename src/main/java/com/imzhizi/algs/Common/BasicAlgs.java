@@ -159,4 +159,131 @@ public class BasicAlgs {
     }
 
 
+    /**
+     * [最短路径__牛客网](https://www.nowcoder.com/questionTerminal/bcf3a66a571f4cd2aa4173db3dafc8ee )
+     */
+    static class Dijkstra {
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+            int n = input.nextInt();
+            int m = input.nextInt();
+            int[][] matrix = new int[n + 1][n + 1];
+            for (int i = 0; i < m; i++) {
+                int r = input.nextInt();
+                int c = input.nextInt();
+                if (matrix[r][c] != 0) matrix[r][c] = Math.min(matrix[r][c], input.nextInt());
+                else matrix[r][c] = input.nextInt();
+
+            }
+            input.close();
+
+//            floyd(matrix);
+
+            displayMatrix(matrix);
+
+            dijkstra(matrix, 1);
+
+            displayMatrix(matrix);
+        }
+
+        // 单源最短路径
+        public static void dijkstra(int[][] matrix, int source) {
+            int[] dist = new int[matrix.length];
+            dist[source]++;
+            int min = Integer.MAX_VALUE;
+            int transI = 0;
+            int minI = 0;
+
+            for (int l = 1; l < matrix.length; l++) {
+                for (int i = 1; i < matrix.length; i++) {
+                    if (dist[i] == 0) {
+                        if (matrix[source][transI] != 0 && matrix[transI][i] != 0) {
+                            if (matrix[source][i] != 0) {
+                                matrix[source][i] = Math.min(matrix[source][i], matrix[source][transI] + matrix[transI][i]);
+                            } else matrix[source][i] = matrix[source][transI] + matrix[transI][i];
+                        }
+                        if (matrix[source][i] != 0 && min > matrix[source][i]) {
+                            minI = i;
+                            min = matrix[source][i];
+                        }
+                    }
+                }
+                transI = minI;
+                dist[transI]++;
+                min = Integer.MAX_VALUE;
+            }
+
+        }
+
+        // [最短路径__牛客网](https://www.nowcoder.com/questionTerminal/a29d0b5eb46b4b90bfa22aa98cf5ff17?toCommentId=1177781 )
+
+        // 多源最短路径
+        public static void floyd(int[][] matrix) {
+            for (int trans = 1; trans < matrix.length; trans++) {
+                for (int i = 1; i < matrix.length; i++) {
+                    if (i != trans) {
+                        for (int j = 1; j < matrix.length; j++) {
+                            if (i != j) {
+                                if (matrix[i][trans] != 0 && matrix[trans][j] != 0) {
+                                    if (matrix[i][j] != 0)
+                                        matrix[i][j] = Math.min(matrix[i][j], matrix[i][trans] + matrix[trans][j]);
+                                    else matrix[i][j] = matrix[i][trans] + matrix[trans][j];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    // 失败的尝试
+    @Test
+    public void shortPath() {
+        int[][] matrix = new int[5][5];
+        visited = new boolean[4];
+        int longest = shortestPath(matrix, 1, 2);
+        System.out.println(longest == Integer.MAX_VALUE ? -1 : longest);
+    }
+
+    static boolean[] visited;
+
+    public int shortestPath(int[][] matrix, int from, int to) {
+        if (visited[from] || matrix[from][to] == Integer.MAX_VALUE) {
+            return 0;
+        }
+
+        if (matrix[from][to] < 0) {
+            return -matrix[from][to];
+        }
+
+        visited[from] = true;
+        int min = Integer.MAX_VALUE;
+        for (int i = 1; i < matrix.length; i++) {
+            int temp;
+            if (i == from || i == to) {
+                temp = matrix[i][to];
+            } else {
+                temp = shortestPath(matrix, i, to);
+                if (temp > 0 && matrix[from][i] > 0) temp += matrix[from][i];
+                else temp = 0;
+            }
+            if (temp > 0) min = Math.min(min, temp);
+        }
+        visited[from] = false;
+
+        matrix[from][to] = -min;
+        return -matrix[from][to];
+    }
+
+    public static void displayMatrix(int[][] matrix) {
+        System.out.println();
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix.length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }
