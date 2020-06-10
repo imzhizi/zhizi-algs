@@ -1,7 +1,13 @@
 package com.imzhizi.algs;
 
-import com.imzhizi.algs.剑指NowCoder.Main;
+import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.*;
 
 /**
@@ -710,7 +716,6 @@ public class Archive {
     }
 
 
-
     static class t1 {
         public static void main(String[] args) {
             Scanner input = new Scanner(System.in);
@@ -834,6 +839,99 @@ public class Archive {
 
             for (int i : result) {
                 System.out.println(i);
+            }
+        }
+    }
+
+    @Test
+    public void Y1() {
+        System.out.println(filterContent("作者大大666666666，为你点赞"));
+    }
+
+
+    public String filterContent(String content) {
+        int count = 0;
+        int length = content.length();
+        for (int i = 0; i < length; i++) {
+            if ((content.charAt(i) >= '0' && count != 0 || content.charAt(i) > '0' && count == 0) && content.charAt(i) <= '9') {
+                count++;
+            } else if (count >= 6 && count <= 10) {
+                content = content.substring(0, i - count) + content.substring(i);
+                i -= count;
+                length -= count;
+                count = 0;
+            }
+        }
+
+        return content;
+    }
+
+    @Test
+    public void Y2() {
+        System.out.println(sum(new ArrayList(Arrays.asList("20200201123456", "20200201123456789", "20200201123456789123456789"))));
+    }
+
+    // 大数求和
+    public String sum(ArrayList<String> numbers) {
+        List<Integer> result = new ArrayList<>();
+        for (String s : numbers) {
+            plusBig(s, result);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = result.size() - 1; i >= 0; i--) {
+            sb.append(result.get(i));
+        }
+        return sb.toString();
+    }
+
+    public void plusBig(String s, List<Integer> result) {
+        if (s.charAt(0) == '-') {
+            for (int i = 0; i < s.length() - 1; i++) {
+                if (result.size() < i + 1) result.add(0);
+                int a = result.get(i);
+                int b = s.charAt(s.length() - i - 1) - '0';
+                if (a < b) {
+                    if (result.size() < i + 1) result.add(0);
+                    result.set(i + 1, result.get(i + 1) - 1);
+                    a += 10;
+                }
+                result.set(i - 1, a - b);
+            }
+        } else {
+            for (int i = 0; i < s.length(); i++) {
+                if (result.size() < i + 1) result.add(0);
+                int a = result.get(i);
+                int b = s.charAt(s.length() - i - 1) - '0';
+                if (a + b > 9) {
+                    if (result.size() < i + 2) result.add(1);
+                    result.set(i + 1, result.get(i + 1) + 1);
+                    a -= 10;
+                }
+                result.set(i, a + b);
+            }
+        }
+
+    }
+
+
+    static class Y3 {
+        public static void main(String[] args) throws ParseException {
+            Scanner input = new Scanner(System.in);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Long sec1 = df.parse(input.nextLine()).getTime();
+            Long sec2 = df.parse(input.nextLine()).getTime();
+            input.close();
+            System.out.println((sec2 - sec1) / 1000 / 60);
+        }
+    }
+
+    static class Y4 {
+        public static void main(String[] args) throws ParseException {
+            Scanner input = new Scanner(System.in);
+            int n = input.nextInt();
+            for (int i = 0; i < n; i++) {
+
             }
         }
     }

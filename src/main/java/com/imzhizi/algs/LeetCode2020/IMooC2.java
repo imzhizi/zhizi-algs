@@ -192,9 +192,9 @@ public class IMooC2 {
         for (int i = 0; i < pattern.length(); i++) {
             for (int j = i + 1; j < pattern.length(); j++) {
                 if (pattern.charAt(i) == pattern.charAt(j)) {
-                    if (group[i] != group[j]) return false;
+                    if (!group[i].equals(group[j])) return false;
                 } else {
-                    if (group[i] == group[j]) return false;
+                    if (group[i].equals(group[j])) return false;
                 }
             }
         }
@@ -568,4 +568,139 @@ public class IMooC2 {
         Arrays.sort(cs);
         return new String(cs);
     }
+
+    /**
+     * [447. 回旋镖的数量 - 力扣（LeetCode）](https://leetcode-cn.com/problems/number-of-boomerangs/ )
+     */
+    @Test
+    public void Q447() {
+
+    }
+
+    // 小优化也是很有意义的，不要忽略小优化
+    // 95% beat
+    public int numberOfBoomerangs(int[][] points) {
+        int total = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < points.length; i++) {
+            map.clear();
+            for (int j = 0; j < points.length; j++) {
+                if (j != i) {
+                    int length = getLength(points[i][0], points[i][1], points[j][0], points[j][1]);
+                    if (map.containsKey(length)) {
+                        total += map.get(length) * 2;
+                        map.put(length, map.get(length) + 1);
+                    } else {
+                        map.put(length, 1);
+                    }
+                }
+            }
+        }
+
+        return total;
+    }
+
+    // 思路就是对其他结点到一个结点的距离进行统计，距离相同的放一组
+    // 非常一般的实现，25% beat
+    // 时间复杂度应该是O(n^2), 空间复杂度为n*Map
+    public int numberOfBoomerangs2(int[][] points) {
+        int total = 0;
+        for (int i = 0; i < points.length; i++) {
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int j = 0; j < points.length; j++) {
+                if (j != i) {
+                    int length = getLength(points[i][0], points[i][1], points[j][0], points[j][1]);
+                    if (map.containsKey(length)) {
+                        map.put(length, map.get(length) + 1);
+                    } else {
+                        map.put(length, 1);
+                    }
+                }
+            }
+
+            for (Integer count : map.values()) {
+                if (count > 1) total += count * (count - 1);
+            }
+        }
+
+        return total;
+    }
+
+    public int getLength(int x1, int y1, int x2, int y2) {
+        int x = x1 - x2;
+        int y = y1 - y2;
+        return x * x + y * y;
+    }
+
+    /**
+     * [219. 存在重复元素 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/contains-duplicate-ii/ )
+     * 滑动窗口+哈希表
+     */
+    @Test
+    public void Q219() {
+    }
+
+    // 精简优化版
+    // 如果窗口的长度是一个固定值，那么其实一个
+    public boolean containsNearbyDuplicate2(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int right = 0; right < nums.length; right++) {
+            if (map.put(nums[right], right) != null) return true;
+            if (map.size() > k) map.remove(nums[right - k]);
+        }
+        return false;
+    }
+
+    //这种题有一个特征就是使用哈希表的同时需要使用窗口下界对哈希值的有效性进行验证
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int left = 1, right = 0;
+        for (; right <= k && right < nums.length; right++) {
+            if (map.put(nums[right], right) != null) return true;
+        }
+
+        while (right < nums.length) {
+            if (map.containsKey(nums[right]) && map.get(nums[right]) >= left) {
+                return true;
+            }
+            map.put(nums[right], right);
+            right++;
+            left++;
+        }
+        return false;
+    }
+
+    /**
+     * [220. 存在重复元素 III - 力扣（LeetCode）](https://leetcode-cn.com/problems/contains-duplicate-iii/ )
+     */
+    @Test
+    public void Q220() {
+
+    }
+
+    // 6% beat, 无敌慢
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        int target, length = nums.length;
+        for (int left = 0, right = k < length ? k : length - 1; left < length - 1; left++, right++) {
+            target = left + 1;
+            while (target <= right && target < length) {
+                if (Math.abs((long) nums[left] - nums[target++]) <= t) return true;
+            }
+        }
+        return false;
+    }
+
+    // 更典型的滑动窗口
+    public boolean containsNearbyAlmostDuplicate2(int[] nums, int k, int t) {
+        int target, length = nums.length;
+        for (int left = 0, right = 1; right < length; right++) {
+            if (right > k) left++;
+            target = left;
+            while (target < right) {
+                if (Math.abs((long) nums[right] - nums[target++]) <= t) return true;
+            }
+        }
+        return false;
+    }
+
 }
