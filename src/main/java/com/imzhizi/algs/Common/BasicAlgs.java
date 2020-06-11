@@ -1,10 +1,11 @@
 package com.imzhizi.algs.Common;
 
-import com.imzhizi.algs.base.ListNode;
-import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class BasicAlgs {
     /**

@@ -1,7 +1,5 @@
 package com.imzhizi.algs.Common;
 
-import com.imzhizi.algs.base.ListNode;
-import com.imzhizi.algs.base.TreeNode;
 import org.junit.Test;
 
 import java.util.Random;
