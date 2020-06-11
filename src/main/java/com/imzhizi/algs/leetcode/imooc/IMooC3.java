@@ -1,4 +1,4 @@
-package com.imzhizi.algs.leetcode.n20;
+package com.imzhizi.algs.leetcode.imooc;
 
 import com.imzhizi.algs.Common.ListNode;
 import org.junit.Test;

@@ -2,7 +2,7 @@ package com.imzhizi.algs.leetcode.daily;
 
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayDeque;
 
 /**
  * created by zhizi

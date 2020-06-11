@@ -1,4 +1,4 @@
-package com.imzhizi.algs.acmcoder;
+package com.imzhizi.algs.笔试.acmcoder;
 
 import java.util.HashMap;
 import java.util.Scanner;

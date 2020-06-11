@@ -1,4 +1,4 @@
-package com.imzhizi.algs.Common;
+package com.imzhizi.algs.笔试;
 
 import org.junit.Test;
 

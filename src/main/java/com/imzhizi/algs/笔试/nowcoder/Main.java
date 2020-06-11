@@ -1,4 +1,4 @@
-package com.imzhizi.algs.nowcoder;
+package com.imzhizi.algs.笔试.nowcoder;
 
 import org.junit.Test;
 

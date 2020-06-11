@@ -1,4 +1,4 @@
-package com.imzhizi.algs.nowcoder.剑指;
+package com.imzhizi.algs.笔试.剑指;
 
 import com.imzhizi.algs.Common.TreeNode;
 import org.junit.Test;
