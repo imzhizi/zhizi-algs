@@ -1,6 +1,6 @@
 package com.imzhizi.algs.leetcode.n18;
 
-import com.imzhizi.algs.Common.ListNode;
+import com.imzhizi.algs.common.ListNode;
 
 /**
  * Merge two sorted linked lists and return it as a new list.

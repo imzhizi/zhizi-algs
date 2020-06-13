@@ -1,6 +1,6 @@
 package com.imzhizi.algs.leetcode.n18;
 
-import com.imzhizi.algs.Common.TreeNode;
+import com.imzhizi.algs.common.TreeNode;
 
 /**
  * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).

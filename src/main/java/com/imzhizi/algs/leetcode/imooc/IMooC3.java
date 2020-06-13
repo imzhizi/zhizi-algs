@@ -1,6 +1,6 @@
 package com.imzhizi.algs.leetcode.imooc;
 
-import com.imzhizi.algs.Common.ListNode;
+import com.imzhizi.algs.common.ListNode;
 import org.junit.Test;
 
 import java.util.ArrayDeque;
@@ -194,5 +194,69 @@ public class IMooC3 {
         }
 
         return ret.next;
+    }
+
+    /**
+     * [82. 删除排序链表中的重复元素 II - 力扣（LeetCode）](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/)
+     */
+    @Test
+    public void Q82() {
+
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode ret = new ListNode(0);
+        ListNode node = ret;
+        ret.next = head;
+
+        while (node.next != null && node.next.next != null) {
+            boolean flag = false;
+            while (node.next.next != null && node.next.val == node.next.next.val) {
+                node.next.next = node.next.next.next;
+                flag = true;
+            }
+
+            if (flag) {// 说明存在重复现象
+                node.next = node.next.next;
+            } else {
+                node = node.next;
+            }
+        }
+
+        return ret.next;
+    }
+
+
+    /**
+     * [24. 两两交换链表中的节点 - 力扣（LeetCode）](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+     */
+    @Test
+    public void Q24() {
+
+    }
+
+    public ListNode swapPairs(ListNode head) {
+        ListNode ret = new ListNode(0);
+        ret.next = head;
+        ListNode node = ret;
+
+        while (node.next != null && node.next.next != null) {
+            ListNode temp = node.next;
+            node.next = node.next.next;
+            temp.next = node.next.next;
+            node.next.next = temp;
+            node = node.next.next;
+        }
+
+        return ret.next;
+    }
+
+    /**
+     * [25. K 个一组翻转链表 - 力扣（LeetCode）](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+     * 想法是设计一个栈，先倒出来k个结点，再逐个尾插法组装成一个链表
+     */
+    @Test
+    public void Q25(){
+
     }
 }

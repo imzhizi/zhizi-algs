@@ -1,6 +1,6 @@
 package com.imzhizi.algs.leetcode.n18;
 
-import com.imzhizi.algs.Common.ListNode;
+import com.imzhizi.algs.common.ListNode;
 
 /**
  * Given a singly linked list, determine if it is a palindrome.

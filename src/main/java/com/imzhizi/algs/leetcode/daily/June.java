@@ -55,4 +55,25 @@ public class June {
 
         return T;
     }
+
+    /**
+     * [70. 爬楼梯 - 力扣（LeetCode）](https://leetcode-cn.com/problems/climbing-stairs/)
+     */
+    @Test
+    public void Q70() {
+
+    }
+
+    public int climbStairs(int n) {
+        int fast = 1;
+        int slow = 1;
+        for (int i = 1; i < n; i++) {
+            int temp = fast;
+            fast += slow;
+            slow = temp;
+        }
+
+        return fast;
+    }
+
 }

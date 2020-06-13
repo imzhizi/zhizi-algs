@@ -1,6 +1,6 @@
 package com.imzhizi.algs.leetcode.n18;
 
-import com.imzhizi.algs.Common.ListNode;
+import com.imzhizi.algs.common.ListNode;
 
 import java.util.HashSet;
 

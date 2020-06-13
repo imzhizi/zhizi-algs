@@ -1,6 +1,6 @@
 package com.imzhizi.algs.leetcode.剑指;
 
-import com.imzhizi.algs.Common.ListNode;
+import com.imzhizi.algs.common.ListNode;
 import org.junit.Test;
 
 import java.util.ArrayDeque;

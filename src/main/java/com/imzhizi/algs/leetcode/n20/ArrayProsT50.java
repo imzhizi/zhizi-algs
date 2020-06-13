@@ -1,6 +1,6 @@
 package com.imzhizi.algs.leetcode.n20;
 
-import com.imzhizi.algs.Common.TreeNode;
+import com.imzhizi.algs.common.TreeNode;
 import org.junit.Test;
 
 import java.util.*;

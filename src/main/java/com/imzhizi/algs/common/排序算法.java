@@ -1,4 +1,4 @@
-package com.imzhizi.algs.Common;
+package com.imzhizi.algs.common;
 
 import org.junit.Test;
 

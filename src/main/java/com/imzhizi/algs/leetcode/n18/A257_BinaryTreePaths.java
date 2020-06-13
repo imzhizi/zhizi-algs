@@ -1,6 +1,6 @@
 package com.imzhizi.algs.leetcode.n18;
 
-import com.imzhizi.algs.Common.TreeNode;
+import com.imzhizi.algs.common.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
