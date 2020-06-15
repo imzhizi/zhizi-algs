@@ -1,4 +1,4 @@
-package com.imzhizi.algs.leetcode.daily;
+package com.imzhizi.algs.leetcode.curated;
 
 import org.junit.Test;
 
@@ -8,7 +8,7 @@ import java.util.ArrayDeque;
  * created by zhizi
  * on 6/11/20 10:40
  */
-public class June {
+public class DailyJune {
     /**
      * [739. 每日温度 - 力扣（LeetCode）](https://leetcode-cn.com/problems/daily-temperatures/)
      */

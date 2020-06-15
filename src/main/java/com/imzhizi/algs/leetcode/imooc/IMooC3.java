@@ -256,7 +256,33 @@ public class IMooC3 {
      * 想法是设计一个栈，先倒出来k个结点，再逐个尾插法组装成一个链表
      */
     @Test
-    public void Q25(){
+    public void Q25() {
 
+    }
+
+    /**
+     * [14. 最长公共前缀 - 力扣（LeetCode）](https://leetcode-cn.com/problems/longest-common-prefix/)
+     */
+    @Test
+    public void Q14() {
+
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+        String prefix = strs.length == 0 ? "" : strs[0];
+        for (int i = 1; i < strs.length && !prefix.isEmpty(); i++) {
+            prefix = getPrefix(prefix, strs[i]);
+        }
+        return prefix;
+    }
+
+    public String getPrefix(String a, String b) {
+        int i;
+        for (i = 0; i < Math.min(a.length(), b.length()); i++) {
+            if (a.charAt(i) != b.charAt(i)) {
+                break;
+            }
+        }
+        return a.substring(0, i);
     }
 }
