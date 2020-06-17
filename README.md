@@ -37,15 +37,17 @@
 - [x] [ 第60题～第69题 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E7%AC%94%E8%AF%95/%E5%89%91%E6%8C%87/Part6.java )
 - [x] [ 其他题目 ]( https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/%E7%AC%94%E8%AF%95/%E5%89%91%E6%8C%87/Part7.java )
 
-## 按照标签爬题中 （LeetCode）
-首先在做的标签是 [ 数组 (Array) 标签  ](https://leetcode-cn.com/tag/array/ )
-- 标签下 No.1 ~ 50 题解法放在 [ LeetCode2020/ArrayProsT50 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/leetcode/n20/ArrayProsT50.java ) 中.
-- 标签下 No.51 ~ 100 题解法放在 [ LeetCode2020/ArrayProsT100 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/leetcode/n20/ArrayProsT100.java ) 中.
+## HOT100
+LeetCode 的热门100题，解法将会放在 [这个文件中](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/leetcode/curated/Hot100.java)
 
 ## 笔试真题
 (https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/leetcode/n18 ) 中.
 
 ## 其他算法题
+还以标签为维度刷过题，以下是[ 数组 (Array) 标签  ](https://leetcode-cn.com/tag/array/ )下的题目
+- 标签下 No.1 ~ 50 题解法放在 [ LeetCode2020/ArrayProsT50 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/leetcode/n20/ArrayProsT50.java ) 中.
+- 标签下 No.51 ~ 100 题解法放在 [ LeetCode2020/ArrayProsT100 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/leetcode/n20/ArrayProsT100.java ) 中.
+
 此前做题时, 格式与目前不一致, 每道题都单独创建一个 Java 文件:
 - 2018年的所有题解保存在 [ LeetCode2018 文件夹 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/leetcode/n18 ) 中. 
 - 2019年的所有题解则保存在 [ LeetCode2019 文件夹 ](https://github.com/imzhizi/zhizi-algs/blob/master/src/main/java/com/imzhizi/algs/leetcode/n19 ) 中.
