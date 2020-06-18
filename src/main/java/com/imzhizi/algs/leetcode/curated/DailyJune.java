@@ -175,4 +175,13 @@ public class DailyJune {
 
         return max;
     }
+
+    /**
+     * [1028. 从先序遍历还原二叉树 - 力扣（LeetCode）](https://leetcode-cn.com/problems/recover-a-tree-from-preorder-traversal/)
+     * 有点难
+     */
+    @Test
+    public void Q() {
+
+    }
 }
