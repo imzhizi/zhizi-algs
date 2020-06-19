@@ -184,4 +184,32 @@ public class DailyJune {
     public void Q() {
 
     }
+
+    /**
+     * [125. 验证回文串 - 力扣（LeetCode）](https://leetcode-cn.com/problems/valid-palindrome/)
+     */
+    @Test
+    public void Q125() {
+
+    }
+
+    public boolean isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        s = s.toLowerCase();
+        while (left < right) {
+            while (left < right && (s.charAt(left) < '0' || s.charAt(left) > '9' && s.charAt(left) < 'A' || s.charAt(left) > 'Z' && s.charAt(left) < 'a' || s.charAt(left) > 'z')) {
+                left++;
+            }
+            while (right > left && (s.charAt(right) < '0' || s.charAt(right) > '9' && s.charAt(right) < 'A' || s.charAt(right) > 'Z' && s.charAt(right) < 'a' || s.charAt(right) > 'z')) {
+                right--;
+            }
+            if (left < right && s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
 }
