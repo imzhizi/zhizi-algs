@@ -181,7 +181,7 @@ public class DailyJune {
      * 有点难
      */
     @Test
-    public void Q() {
+    public void Q1028() {
 
     }
 
@@ -211,5 +211,31 @@ public class DailyJune {
             right--;
         }
         return true;
+    }
+
+    /**
+     * [41. 缺失的第一个正数 - 力扣（LeetCode）](https://leetcode-cn.com/problems/first-missing-positive/)
+     */
+    @Test
+    public void Q41() {
+
+    }
+
+    public int firstMissingPositive(int[] nums) {
+        boolean[] flags = new boolean[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0 && nums[i] <= nums.length) {
+                flags[nums[i] - 1] = true;
+            }
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (!flags[i]) {
+                return i + 1;
+            }
+        }
+
+        return nums.length + 1;
     }
 }
