@@ -28,6 +28,36 @@ public class TOP50 {
         return maxSum;
     }
 
+
+    /**
+     * [剑指 Offer 44. 数字序列中某一位的数字 - 力扣（LeetCode）](https://leetcode-cn.com/problems/shu-zi-xu-lie-zhong-mou-yi-wei-de-shu-zi-lcof/)
+     */
+    @Test
+    public void No44() {
+
+    }
+
+    public int findNthDigit(int n) {
+        int i = 0;
+        while (n > Math.pow(10, i) * 9 * (i + 1)) {
+            n -= Math.pow(10, i) * 9 * (i + 1);
+            i++;
+        }
+
+
+        int bit = n % (i + 1);
+        if (bit == 0) {
+            // 说明刚好是数字的最后一位
+            int num = n / (i + 1) - 1 + (int) (Math.pow(10, i));
+            return String.valueOf(num).charAt(i) - '0';
+        } else {
+            // 说明不是最后一位，按照整型除法会舍一位，因此不用减一
+            int num = n / (i + 1) + (int) (Math.pow(10, i));
+            return String.valueOf(num).charAt(bit - 1) - '0';
+        }
+    }
+
+
     /**
      * [面试题47. 礼物的最大价值 - 力扣（LeetCode）](https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof/ )
      */

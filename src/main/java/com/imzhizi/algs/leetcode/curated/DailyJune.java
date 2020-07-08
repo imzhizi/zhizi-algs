@@ -2,9 +2,8 @@ package com.imzhizi.algs.leetcode.curated;
 
 import com.imzhizi.algs.common.TreeNode;
 import org.junit.Test;
-import sun.tools.java.AmbiguousClass;
 
-import java.util.ArrayDeque;
+import java.util.*;
 
 /**
  * created by zhizi
@@ -25,7 +24,7 @@ public class DailyJune {
 
     //    %83
     public int[] dailyTemperatures(int[] T) {
-        ArrayDeque<Integer> queue = new ArrayDeque();
+        Deque<Integer> queue = new ArrayDeque();
         queue.offerFirst(0);
         for (int i = 1; i < T.length; i++) {
             if (T[i] < T[queue.peekFirst()]) {
@@ -224,9 +223,9 @@ public class DailyJune {
     public int firstMissingPositive(int[] nums) {
         boolean[] flags = new boolean[nums.length];
 
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] > 0 && nums[i] <= nums.length) {
-                flags[nums[i] - 1] = true;
+        for (int num : nums) {
+            if (num > 0 && num <= nums.length) {
+                flags[num - 1] = true;
             }
         }
 
@@ -237,5 +236,53 @@ public class DailyJune {
         }
 
         return nums.length + 1;
+    }
+
+
+    /**
+     * [面试题 16.11. 跳水板 - Collarborate](https://leetcode-cn.com/problems/diving-board-lcci/)
+     */
+    @Test
+    public void Q1611() {
+
+    }
+
+    //    一种非常傻的实现，先用HashSet去重，后面还要排序
+    public int[] divingBoard(int shorter, int longer, int k) {
+        if (k == 0) return new int[0];
+
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i <= k; i++) {
+            int sum = shorter * (k - i) + longer * (i);
+            set.add(sum);
+        }
+
+        int[] ret = new int[set.size()];
+        int index = 0;
+        for (Integer i : set) {
+            ret[index++] = i;
+        }
+        Arrays.sort(ret);
+        return ret;
+    }
+
+    // 把问题复杂化了，其实根本不会出现重复的数字，也就是说能够产生的结果的数量是一定的
+    public int[] divingBoard2(int shorter, int longer, int k) {
+        int[] ret;
+        if (k == 0) {
+            ret = new int[0];
+            return ret;
+        }
+        if (shorter == longer) {
+            ret = new int[1];
+            ret[0] = shorter * k;
+            return ret;
+        }
+
+        ret = new int[k + 1];
+        for (int i = 0; i <= k; i++) {
+            ret[i] = shorter * (k - i) + longer * i;
+        }
+        return ret;
     }
 }
