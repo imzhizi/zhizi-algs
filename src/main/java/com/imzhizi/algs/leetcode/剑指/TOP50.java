@@ -44,7 +44,6 @@ public class TOP50 {
             i++;
         }
 
-
         int bit = n % (i + 1);
         if (bit == 0) {
             // 说明刚好是数字的最后一位
@@ -57,6 +56,41 @@ public class TOP50 {
         }
     }
 
+    /**
+     * [剑指 Offer 46. 把数字翻译成字符串 - 力扣（LeetCode）](https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof/)
+     * DP
+     */
+    @Test
+    public void No46() {
+
+    }
+
+    public int translateNum(int num) {
+        int[] nums = new int[11];
+        int index = 10;
+        do {
+            nums[index--] = num % 10;
+            num = num / 10;
+        } while (num > 0);
+        return translateNum(nums, index + 1, 10);
+    }
+
+    public int translateNum(int[] nums, int start, int end) {
+        if (start > end) {
+            return 0;
+        } else if (start == end) {
+            return 1;
+        }
+        if (start + 1 == end) {
+            if (nums[start] * 10 + nums[start + 1] < 26 && nums[start] > 0) return 2;
+        }
+
+        if (nums[start] * 10 + nums[start + 1] < 26 && nums[start] > 0) {
+            return translateNum(nums, start + 1, end) + translateNum(nums, start + 2, end);
+        } else {
+            return translateNum(nums, start + 1, end);
+        }
+    }
 
     /**
      * [面试题47. 礼物的最大价值 - 力扣（LeetCode）](https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof/ )
@@ -160,10 +194,10 @@ public class TOP50 {
      */
     @Test
     public void No49() {
-        nthUglyNumber(10);
+        System.out.println(nThUglyNumber(10));
     }
 
-    public int nthUglyNumber(int n) {
+    public int nThUglyNumber(int n) {
         if (n == 0) return 0;
         if (n == 1) return 1;
         int[] result = new int[n];
